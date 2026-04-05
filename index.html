@@ -3,175 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enes Deniz | Ultimate RGB</title>
+    <title>Enes Deniz | Ultimate Dashboard</title>
     <style>
-        /* GENEL AYARLAR */
+        /* FULL DINAMIK ARKA PLAN */
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
         body {
-            background-color: #050505;
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1a0a2e);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: #fff;
             font-family: 'Poppins', sans-serif;
-            min-height: 200vh; /* Kaydırma için uzun tutuldu */
-            overflow-x: hidden;
+            min-height: 200vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 80px;
+            padding: 100px 20px;
+            overflow-x: hidden;
         }
 
-        /* RGB ANIMASYONLARI */
-        @keyframes rgb-glow {
+        @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        @keyframes rgb-text {
-            0% { background-position: 0%; }
-            100% { background-position: 100%; }
-        }
 
-        /* ÜÇ ÇİZGİ MENÜ (HAMBURGER) */
+        /* ÜÇ ÇİZGİ MENÜ */
         .menu-btn {
             position: fixed;
             top: 20px;
             left: 20px;
             z-index: 1000;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ff00c8;
+            background: rgba(0, 255, 213, 0.2);
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #00ffd5;
+            box-shadow: 0 0 15px #00ffd5;
         }
-        .menu-btn div {
-            width: 30px;
-            height: 3px;
-            background: #fff;
-            margin: 6px 0;
-            transition: 0.4s;
-            box-shadow: 0 0 10px #ff00c8;
-        }
+        .menu-btn div { width: 25px; height: 3px; background: #fff; margin: 5px 0; transition: 0.4s; }
 
-        /* YAN MENÜ (SIDEBAR) */
         .sidebar {
             position: fixed;
             top: 0;
-            left: -250px;
-            width: 250px;
+            left: -280px;
+            width: 260px;
             height: 100%;
-            background: #0a0a0a;
+            background: rgba(15, 12, 41, 0.98);
+            backdrop-filter: blur(15px);
             z-index: 999;
             transition: 0.5s;
-            padding-top: 80px;
-            border-right: 2px solid #ff00c8;
+            padding-top: 100px;
+            border-right: 3px solid #00ffd5;
         }
         .sidebar.active { left: 0; }
         .sidebar a {
             display: block;
-            padding: 15px 25px;
-            color: #fff;
+            padding: 18px 30px;
+            color: #00ffd5;
             text-decoration: none;
-            font-size: 1.1rem;
-            border-bottom: 1px solid #222;
-            transition: 0.3s;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(0, 255, 213, 0.1);
         }
-        .sidebar a:hover { background: #ff00c8; color: white; }
 
-        /* BAŞLIK */
+        /* CANLI SAAT PANELİ */
+        .clock-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(0, 255, 213, 0.3);
+        }
+        #clock { font-size: 2rem; font-weight: 900; color: #fff; text-shadow: 0 0 10px #00ffd5; }
+
+        /* RGB BAŞLIK */
         h1 {
-            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-size: clamp(2.5rem, 10vw, 4rem);
             font-weight: 900;
             text-align: center;
-            background: linear-gradient(90deg, #f00, #0f0, #00f, #f00);
+            background: linear-gradient(90deg, #fff, #00ffd5, #ff00c8, #fff);
             background-size: 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: rgb-text 5s linear infinite;
-            margin-bottom: 20px;
+            animation: rgb-text 4s linear infinite;
+            margin-bottom: 10px;
         }
 
         /* KAYAN YAZI */
         .marquee {
-            width: 100%;
-            background: rgba(255,0,200,0.1);
+            width: 110%;
+            background: rgba(255, 0, 200, 0.2);
             padding: 10px;
-            border-y: 1px solid #ff00c8;
-            margin-bottom: 40px;
+            margin: 30px 0;
             overflow: hidden;
             white-space: nowrap;
+            border-top: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            transform: rotate(-1deg);
         }
         .marquee p {
             display: inline-block;
             animation: scroll 15s linear infinite;
-            color: #00ffd5;
             font-weight: bold;
-            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 5px #00ffd5;
         }
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         /* RGB KARTLAR */
-        .container { width: 90%; max-width: 480px; display: flex; flex-direction: column; gap: 30px; }
+        .container { width: 90%; max-width: 500px; display: flex; flex-direction: column; gap: 30px; }
+        
         .rgb-card {
             position: relative;
-            padding: 3px;
-            border-radius: 20px;
-            background: linear-gradient(45deg, #ff0000, #002bff, #48ff00, #ff00c8, #ff0000);
+            padding: 4px;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #00ffd5, #ff00c8, #fff, #00ffd5);
             background-size: 400%;
-            animation: rgb-glow 10s linear infinite;
+            animation: rgb-glow 8s linear infinite;
             text-decoration: none;
         }
+
         .inner {
-            background: #0f0f0f;
-            padding: 20px;
-            border-radius: 17px;
+            background: rgba(10, 10, 30, 0.9);
+            padding: 25px;
+            border-radius: 21px;
             text-align: center;
             color: #fff;
-            font-weight: bold;
-            font-size: 1.2rem;
-            display: block;
+            transition: 0.3s;
         }
-        .rgb-card:hover .inner { background: transparent; }
+        .rgb-card:hover .inner { background: transparent; transform: scale(0.97); }
 
-        /* VİDEO */
-        video { width: 100%; border-radius: 10px; margin-top: 10px; }
+        /* VİDEO VE OYNATICI */
+        video { width: 100%; border-radius: 15px; border: 1px solid #00ffd5; margin-top: 15px; }
+
+        /* ANIMASYONLAR */
+        @keyframes rgb-glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes rgb-text { 0% { background-position: 0%; } 100% { background-position: 100%; } }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         /* SCROLLBAR */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(#ff00c8, #00ffd5); border-radius: 10px; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-thumb { background: #00ffd5; border-radius: 10px; }
     </style>
 </head>
 <body>
 
     <div class="menu-btn" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
+        <div></div><div></div><div></div>
     </div>
 
     <div class="sidebar" id="sidebar">
         <a href="#home" onclick="toggleMenu()">ANASAYFA</a>
         <a href="#links" onclick="toggleMenu()">LİNKLER</a>
-        <a href="#media" onclick="toggleMenu()">MEDYA</a>
+        <a href="#media" onclick="toggleMenu()">VİDEO ARŞİVİ</a>
         <a href="#about" onclick="toggleMenu()">HAKKIMDA</a>
     </div>
 
-    <h1 id="home">ENES DENİZ LİNK</h1>
+    <div class="clock-container">
+        <div id="clock">00:00:00</div>
+    </div>
+
+    <h1 id="home">ENES DENİZ</h1>
 
     <div class="marquee">
-        <p>PYTHON DEVELOPER • ANDROID MODDING • HARDTEKK MUSIC • BRAWL STARS PRO • ENES DENİZ •</p>
+        <p>• PYTHON DEVELOPER • ANDROID MODDING • HARDTEKK MUSIC • BRAWL STARS PRO • ENES DENİZ OFFICIAL •</p>
     </div>
 
     <div class="container" id="links">
         <a href="https://www.instagram.com/hfwxq" class="rgb-card" target="_blank">
-            <span class="inner">INSTAGRAM</span>
+            <span class="inner" style="font-size: 1.5rem;">INSTAGRAM</span>
         </a>
 
         <a href="https://open.spotify.com/artist/6959ZHcGVFcNUQxjIdQswy?si=Uuze69s6T0SOKZ98Mf-G5Q" class="rgb-card" target="_blank">
-            <span class="inner">SPOTİFY</span>
+            <span class="inner" style="font-size: 1.5rem;">SPOTİFY</span>
         </a>
 
         <div class="rgb-card" id="media">
             <div class="inner">
-                <p style="font-size: 0.8rem; opacity: 0.6;">VİDEO OYNATICI</p>
+                <p style="color: #00ffd5; font-weight: bold;">MEDYA MERKEZİ</p>
                 <video controls>
                     <source src="film.mp4" type="video/mp4">
                 </video>
@@ -179,17 +189,27 @@
         </div>
 
         <div class="rgb-card" id="about">
-            <div class="inner" style="font-size: 0.9rem;">
+            <div class="inner">
                 <p>ENES DENİZ RESMİ SİTESİ</p>
-                <p style="margin-top:10px; color:#00ffd5;">Tüm hakları saklıdır © 2026</p>
+                <p style="font-size: 0.8rem; margin-top: 15px; opacity: 0.6;">Sürüm 2.0 - 2026</p>
             </div>
         </div>
     </div>
 
     <script>
+        // Yan Menü Fonksiyonu
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('active');
         }
+
+        // Canlı Saat Fonksiyonu
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('tr-TR');
+            document.getElementById('clock').innerText = time;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
     </script>
 
 </body>
