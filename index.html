@@ -1,202 +1,158 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENES DENİZ | FINAL BOSS</title>
+<title>ENES DENİZ | Eğitim Arama</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#0f172a;color:white;transition:.3s}
+body{
+ margin:0;
+ font-family:Arial;
+ background:#0f172a;
+ color:white;
+}
 
-/* LOGO */
+/* HEADER */
 header{
  padding:15px;
  text-align:center;
- font-size:26px;
+ font-size:24px;
  font-weight:bold;
  background:linear-gradient(270deg,red,orange,yellow,green,cyan,blue,purple);
  background-size:1000% 100%;
- animation:rgb 10s linear infinite;
+ animation:rgb 8s linear infinite;
 }
 @keyframes rgb{
  0%{background-position:0%}
  100%{background-position:100%}
 }
 
-/* FORM */
-.form{padding:10px;background:#1e293b}
-input,textarea{
- width:100%;margin:5px 0;padding:10px;border:none;border-radius:8px
-}
-button{
- padding:10px;width:100%;border:none;border-radius:8px;
- background:#22c55e;cursor:pointer
-}
-
-/* CARD */
-.container{padding:10px}
-.card{
- background:#1e293b;
- margin:15px 0;
- padding:15px;
- border-radius:12px;
- transition:.3s
-}
-.card:hover{transform:scale(1.02)}
-
-video{width:100%;border-radius:10px;margin-top:10px}
-
-/* ACTIONS */
-.actions{display:flex;gap:10px;margin-top:10px}
-.delete{background:red}
-.edit{background:orange}
-.star{cursor:pointer;float:right;font-size:20px}
-
 /* SEARCH */
 .search{
  width:95%;
  margin:10px;
- padding:10px;
+ padding:12px;
  border-radius:8px;
  border:none;
+ font-size:16px;
 }
 
-/* THEME */
-.light{background:white;color:black}
+/* CARD */
+.container{
+ padding:10px;
+}
 
-.stats{padding:10px;font-size:14px}
+.card{
+ margin:12px 0;
+ padding:10px;
+ border-radius:12px;
+ cursor:pointer;
+ display:flex;
+ gap:10px;
+ align-items:center;
+ transition:0.3s;
+}
+
+.card:hover{
+ transform:scale(1.03);
+}
+
+/* IMAGE */
+.card img{
+ width:120px;
+ border-radius:8px;
+}
+
+/* DERS RENKLERİ */
+.matematik{background:linear-gradient(90deg,#2563eb,#60a5fa);}
+.fizik{background:linear-gradient(90deg,#f97316,#fb923c);}
+.kimya{background:linear-gradient(90deg,#22c55e,#4ade80);}
+.biyoloji{background:linear-gradient(90deg,#10b981,#34d399);}
+.tarih{background:linear-gradient(90deg,#eab308,#facc15);}
+.cografya{background:linear-gradient(90deg,#0ea5e9,#38bdf8);}
+.felsefe{background:linear-gradient(90deg,#a855f7,#e879f9);}
+.din{background:linear-gradient(90deg,#14b8a6,#2dd4bf);}
+.ingilizce{background:linear-gradient(90deg,#ef4444,#f87171);}
+.turk{background:linear-gradient(90deg,#6366f1,#818cf8);}
+.geometri{background:linear-gradient(90deg,#f43f5e,#fb7185);}
+.psikoloji{background:linear-gradient(90deg,#8b5cf6,#a78bfa);}
+.sosyoloji{background:linear-gradient(90deg,#06b6d4,#22d3ee);}
 
 </style>
 </head>
 
 <body>
 
-<header>ENES DENİZ ⚡ FINAL BOSS</header>
+<header>ENES DENİZ 🔥 EĞİTİM ARAMA</header>
 
-<input class="search" placeholder="🔍 Ara..." onkeyup="search(this.value)">
+<input class="search" placeholder="🔍 Ders veya konu yaz..." onkeyup="search(this.value)">
 
-<div class="stats" id="stats">📊 Video: 0</div>
-
-<div class="form">
-<input id="title" placeholder="Başlık">
-<textarea id="desc" placeholder="Açıklama"></textarea>
-<input type="file" id="file">
-<button onclick="upload()">⬆ Yükle</button>
-<button onclick="toggleTheme()">🌙 Tema</button>
-</div>
-
-<div class="container" id="videos"></div>
+<div class="container" id="results"></div>
 
 <script>
 
-/* STATE */
-let videos = JSON.parse(localStorage.getItem("videos")||"[]");
+/* VIDEO DATABASE */
+let videoDB = [
+{title:"Matematik 1. dönem 1. yazılı", id:"cI-l3zXT57U"},
+{title:"Matematik 2. dönem 2. yazılı", id:"8kYl6Z0FJ7Q"},
+{title:"Fizik konu anlatımı", id:"3vYlP9Xz2A8"},
+{title:"Kimya yazılıya hazırlık", id:"7dKpL9Xc2B0"},
+{title:"Biyoloji tekrar", id:"Db8ltXb0Uz4"},
+{title:"Tarih konu anlatımı", id:"XeLppC_KnUk"},
+{title:"Coğrafya sınav", id:"GbJplVxtTEk"},
+{title:"Felsefe özet", id:"cI-l3zXT57U"},
+{title:"Din kültürü yazılı", id:"8kYl6Z0FJ7Q"},
+{title:"İngilizce grammar", id:"3vYlP9Xz2A8"},
+{title:"Türk dili anlatım", id:"7dKpL9Xc2B0"},
+{title:"Geometri konu", id:"Db8ltXb0Uz4"},
+{title:"Psikoloji ders", id:"XeLppC_KnUk"},
+{title:"Sosyoloji konu", id:"GbJplVxtTEk"}
+];
 
-/* UPLOAD */
-async function upload(){
- let file=document.getElementById("file").files[0];
- let title=document.getElementById("title").value;
- let desc=document.getElementById("desc").value;
+/* CLASS BELİRLE */
+function getClass(title){
+ title = title.toLowerCase();
 
- if(!file){alert("Video seç!");return;}
+ if(title.includes("matematik")) return "matematik";
+ if(title.includes("fizik")) return "fizik";
+ if(title.includes("kimya")) return "kimya";
+ if(title.includes("biyoloji")) return "biyoloji";
+ if(title.includes("tarih")) return "tarih";
+ if(title.includes("coğrafya")) return "cografya";
+ if(title.includes("felsefe")) return "felsefe";
+ if(title.includes("din")) return "din";
+ if(title.includes("ingilizce")) return "ingilizce";
+ if(title.includes("türk")) return "turk";
+ if(title.includes("geometri")) return "geometri";
+ if(title.includes("psikoloji")) return "psikoloji";
+ if(title.includes("sosyoloji")) return "sosyoloji";
 
- let form=new FormData();
- form.append("video",file);
-
- let res=await fetch("/upload",{method:"POST",body:form});
- let data=await res.json();
-
- videos.unshift({
-  title,desc,url:data.url,fav:false
- });
-
- save();
-}
-
-/* SAVE */
-function save(){
- localStorage.setItem("videos",JSON.stringify(videos));
- render();
-}
-
-/* DELETE */
-function del(i){
- if(confirm("Sil?")){
-  videos.splice(i,1);
-  save();
- }
-}
-
-/* FAVORI */
-function fav(i){
- videos[i].fav=!videos[i].fav;
- save();
-}
-
-/* EDIT */
-function edit(i){
- let t=prompt("Başlık:",videos[i].title);
- let d=prompt("Açıklama:",videos[i].desc);
-
- if(t) videos[i].title=t;
- if(d) videos[i].desc=d;
-
- save();
+ return "";
 }
 
 /* SEARCH */
 function search(q){
  let html="";
 
- videos.forEach((v,i)=>{
+ videoDB.forEach(v=>{
   if(v.title.toLowerCase().includes(q.toLowerCase())){
-   html+=card(v,i);
+   html += `
+   <div class="card ${getClass(v.title)}" onclick="openVideo('${v.id}')">
+    <img src="https://img.youtube.com/vi/${v.id}/0.jpg">
+    <div>${v.title}</div>
+   </div>
+   `;
   }
  });
 
- document.getElementById("videos").innerHTML=html;
+ document.getElementById("results").innerHTML = html;
 }
 
-/* CARD */
-function card(v,i){
- let star=v.fav?"⭐":"☆";
-
- return `
- <div class="card">
- <b>${v.title}</b>
- <span class="star" onclick="fav(${i})">${star}</span>
-
- <p>${v.desc}</p>
-
- <video controls src="${v.url}"></video>
-
- <div class="actions">
-  <button class="delete" onclick="del(${i})">Sil</button>
-  <button class="edit" onclick="edit(${i})">Düzenle</button>
- </div>
- </div>
- `;
+/* OPEN */
+function openVideo(id){
+ window.open("https://www.youtube.com/watch?v="+id, "_blank");
 }
-
-/* RENDER */
-function render(){
- let html="";
-
- videos.forEach((v,i)=>{
-  html+=card(v,i);
- });
-
- document.getElementById("videos").innerHTML=html;
- document.getElementById("stats").innerText="📊 Video: "+videos.length;
-}
-
-/* THEME */
-function toggleTheme(){
- document.body.classList.toggle("light");
-}
-
-/* INIT */
-render();
 
 </script>
 
