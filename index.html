@@ -21,9 +21,16 @@ position:fixed;left:-280px;top:0;
 width:280px;height:100%;
 background:white;transition:.3s;
 padding:15px;overflow:auto;
+z-index:10;
 }
 
 .sidebar.active{left:0;}
+
+.close{
+font-size:20px;
+cursor:pointer;
+text-align:right;
+}
 
 .box{
 background:white;margin:15px;padding:20px;
@@ -49,7 +56,13 @@ background:#eee;padding:8px;margin:5px 0;
 cursor:pointer;text-align:left;
 }
 
-.delete{float:right;color:red;cursor:pointer;}
+.delete{
+float:right;color:red;cursor:pointer;
+}
+
+.insta{
+font-size:13px;color:#777;text-decoration:none;
+}
 
 </style>
 </head>
@@ -64,6 +77,8 @@ cursor:pointer;text-align:left;
 
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
+
+<div class="close" onclick="toggleMenu()">✖</div>
 
 <h3>📒 Notlar</h3>
 <div id="noteList"></div>
@@ -102,14 +117,28 @@ Yıllık - 1000 TL
 <button onclick="saveNote()">Kaydet</button>
 </div>
 
+<!-- 📸 Instagram -->
+<div style="margin:20px;">
+<a href="https://instagram.com/hfwxq" target="_blank" class="insta">
+@hfwxq
+</a>
+</div>
+
 <script>
 
-// MENU
+// Menü
 function toggleMenu(){
 sidebar.classList.toggle("active");
 }
 
-// NOTLAR
+// Dışarı tıklayınca kapat
+document.addEventListener("click", function(e){
+if(!sidebar.contains(e.target) && !e.target.classList.contains("menu")){
+sidebar.classList.remove("active");
+}
+});
+
+// Notları yükle
 function loadNotes(){
 let notes=JSON.parse(localStorage.getItem("notes")||"[]");
 noteList.innerHTML="";
@@ -117,12 +146,25 @@ noteList.innerHTML="";
 notes.forEach((n,i)=>{
 let div=document.createElement("div");
 div.className="note-item";
-div.innerHTML=n.substring(0,20)+"... <span class='delete' onclick='deleteNote("+i+")'>✖</span>";
-div.onclick=()=>note.value=n;
+
+div.innerHTML=
+n.substring(0,20)+"... "+
+"<span class='delete'>✖</span>";
+
+// NOTA TIKLAMA
+div.onclick=()=> note.value=n;
+
+// SİL BUTONU (fix)
+div.querySelector(".delete").onclick=(e)=>{
+e.stopPropagation();
+deleteNote(i);
+};
+
 noteList.appendChild(div);
 });
 }
 
+// Kaydet
 function saveNote(){
 let n=note.value;
 if(!n)return;
@@ -130,10 +172,12 @@ if(!n)return;
 let notes=JSON.parse(localStorage.getItem("notes")||"[]");
 notes.push(n);
 localStorage.setItem("notes",JSON.stringify(notes));
+
 alert("Kaydedildi");
 loadNotes();
 }
 
+// Sil
 function deleteNote(i){
 let notes=JSON.parse(localStorage.getItem("notes"));
 notes.splice(i,1);
@@ -141,13 +185,14 @@ localStorage.setItem("notes",JSON.stringify(notes));
 loadNotes();
 }
 
-// ÖZET (AI backend bağlanır)
+// Özet
 async function summarize(){
 let t=text.value;
 if(!t)return;
 
 summary.innerText="Yükleniyor...";
 
+try{
 let res=await fetch("http://localhost:3000/summarize",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
@@ -156,9 +201,12 @@ body:JSON.stringify({text:t})
 
 let data=await res.json();
 summary.innerText=data.summary;
+}catch{
+summary.innerText="Hata!";
+}
 }
 
-// HASHTAG
+// Hashtag
 function hashtags(){
 let i=tagInput.value.toLowerCase().trim();
 if(!i)return;
@@ -178,9 +226,8 @@ tags=tags.map(t=>"#"+t).join(" ");
 document.getElementById("tags").innerText=tags;
 }
 
-// 💳 ÖDEME BAŞLAT
+// Ödeme
 async function startPayment(plan){
-
 let res=await fetch("http://localhost:3000/create-payment",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
@@ -188,23 +235,11 @@ body:JSON.stringify({plan})
 });
 
 let data=await res.json();
-
-// ödeme sayfasına yönlendir
 window.location.href=data.url;
 }
 
-// PREMIUM DURUM
-function checkPremium(){
-let p=localStorage.getItem("premium");
-if(p){
-premiumStatus.innerText="Aktif Plan: "+p;
-}
-}
-
-window.onload=()=>{
-loadNotes();
-checkPremium();
-};
+// Açılış
+window.onload=loadNotes;
 
 </script>
 
