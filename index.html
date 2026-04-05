@@ -3,188 +3,201 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENES DENİZ | ARAMA</title>
+<title>Mini Tools</title>
 
 <style>
-body{
- margin:0;
- font-family:Arial;
- background:#0f172a;
- color:white;
- transition:0.3s;
- text-align:center;
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-/* HEADER */
-header{
- padding:15px;
- font-size:22px;
- background:linear-gradient(270deg,red,orange,yellow,green,cyan,blue,purple);
+body {
+  margin: 0;
+  background: #f4f4f4;
+  text-align: center;
 }
 
-/* MENU BUTTON */
-.menu-btn{
- position:fixed;
- top:10px;
- left:15px;
- font-size:28px;
- cursor:pointer;
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: black;
+  color: white;
 }
 
-/* SIDEBAR */
-.sidebar{
- position:fixed;
- left:-260px;
- top:0;
- width:260px;
- height:100%;
- background:#1e293b;
- transition:0.3s;
- padding-top:60px;
+button.lang {
+  background: white;
+  color: black;
+  border-radius: 6px;
+  padding: 5px 10px;
+  border: none;
 }
 
-.sidebar.open{
- left:0;
+.container {
+  max-width: 500px;
+  margin: auto;
 }
 
-/* CLOSE */
-.close-btn{
- position:absolute;
- top:10px;
- right:15px;
- font-size:24px;
- cursor:pointer;
+.box {
+  background: white;
+  padding: 20px;
+  margin: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* BUTTON */
-.sidebar button{
- width:100%;
- padding:12px;
- border:none;
- background:none;
- color:white;
- text-align:left;
- cursor:pointer;
+textarea, input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
-.sidebar button:hover{
- background:#334155;
+button {
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: black;
+  color: white;
+  cursor: pointer;
 }
 
-/* SEARCH */
-.search{
- width:90%;
- max-width:400px;
- padding:15px;
- margin-top:40px;
- border:none;
- border-radius:10px;
- font-size:16px;
+.result {
+  margin-top: 10px;
+  background: #eee;
+  padding: 10px;
+  border-radius: 8px;
 }
 
-/* LIGHT MODE */
-.light{
- background:white;
- color:black;
+.insta {
+  color:#777;
+  text-decoration:none;
+  transition:0.3s;
+  font-size:13px;
+}
+.insta:hover {
+  color:black;
 }
 </style>
 </head>
 
 <body>
 
-<div class="menu-btn" onclick="openMenu()">☰</div>
+<header>
+  <span id="title">⚡ Mini Araçlar</span>
+  <button class="lang" onclick="toggleLang()">TR / EN</button>
+</header>
 
-<header>ENES DENİZ 🔍</header>
+<div class="container">
 
-<div class="sidebar" id="menu">
-<div class="close-btn" onclick="closeMenu()">✖</div>
+  <div class="box">
+    <h3 id="sumTitle">Metin Özetleyici</h3>
+    <textarea id="text" placeholder="Metni buraya yapıştır..."></textarea>
+    <button onclick="ozetle()" id="sumBtn">Özetle</button>
+    <div class="result" id="summary"></div>
+  </div>
 
-<!-- SINAV -->
-<button onclick="setExam('1d1y')">📘 1D1Y</button>
-<button onclick="setExam('1d2y')">📗 1D2Y</button>
-<button onclick="setExam('2d1y')">📙 2D1Y</button>
-<button onclick="setExam('2d2y')">📕 2D2Y</button>
+  <div class="box">
+    <h3 id="tagTitle">Hashtag Oluşturucu</h3>
+    <input id="tagInput" placeholder="Konu yaz">
+    <button onclick="createTags()" id="tagBtn">Oluştur</button>
+    <div class="result" id="tags"></div>
+  </div>
 
-<hr>
-
-<!-- SEVİYE -->
-<button onclick="setLevel('ilkokul')">📚 İlkokul</button>
-<button onclick="setLevel('ortaokul')">🧠 Ortaokul</button>
-<button onclick="setLevel('lise')">🎓 Lise</button>
-
-<hr>
-
-<!-- TEMA -->
-<button onclick="toggleTheme()">🌙 Tema</button>
+  <div class="box">
+    <h3 id="noteTitle">Not Defteri</h3>
+    <textarea id="note" placeholder="Notunu yaz..."></textarea>
+    <button onclick="saveNote()" id="saveBtn">Kaydet</button>
+  </div>
 
 </div>
 
-<input 
-class="search" 
-id="searchInput" 
-placeholder="Ders yaz (örn: matematik)" 
-onkeypress="enterSearch(event)"
->
-
-<br>
-
-<button onclick="goSearch()" style="margin-top:15px;padding:10px 20px;border:none;border-radius:10px;background:#22c55e;color:white;">
-ARA
-</button>
+<!-- 🔥 Instagram Link -->
+<div style="text-align:center; margin:20px 0;">
+  <a href="https://instagram.com/hfwxq" target="_blank" class="insta">
+    @hfwxq
+  </a>
+</div>
 
 <script>
+let lang = localStorage.getItem("lang") || "tr";
 
-/* STATE */
-let currentExam="2d2y";
-let currentLevel="lise";
+const texts = {
+  tr: {
+    title: "⚡ Mini Araçlar",
+    sumTitle: "Metin Özetleyici",
+    sumBtn: "Özetle",
+    tagTitle: "Hashtag Oluşturucu",
+    tagBtn: "Oluştur",
+    noteTitle: "Not Defteri",
+    saveBtn: "Kaydet",
+    placeholderText: "Metni buraya yapıştır...",
+    placeholderTag: "Konu yaz",
+    placeholderNote: "Notunu yaz..."
+  },
+  en: {
+    title: "⚡ Mini Tools",
+    sumTitle: "Text Summarizer",
+    sumBtn: "Summarize",
+    tagTitle: "Hashtag Generator",
+    tagBtn: "Generate",
+    noteTitle: "Notepad",
+    saveBtn: "Save",
+    placeholderText: "Paste your text here...",
+    placeholderTag: "Enter topic",
+    placeholderNote: "Write your note..."
+  }
+};
 
-/* MENU */
-function openMenu(){
- document.getElementById("menu").classList.add("open");
-}
-function closeMenu(){
- document.getElementById("menu").classList.remove("open");
-}
+function applyLang() {
+  const t = texts[lang];
 
-/* SET */
-function setExam(e){
- currentExam=e;
- closeMenu();
-}
-function setLevel(l){
- currentLevel=l;
- closeMenu();
-}
+  document.getElementById("title").innerText = t.title;
+  document.getElementById("sumTitle").innerText = t.sumTitle;
+  document.getElementById("sumBtn").innerText = t.sumBtn;
+  document.getElementById("tagTitle").innerText = t.tagTitle;
+  document.getElementById("tagBtn").innerText = t.tagBtn;
+  document.getElementById("noteTitle").innerText = t.noteTitle;
+  document.getElementById("saveBtn").innerText = t.saveBtn;
 
-/* ENTER */
-function enterSearch(e){
- if(e.key==="Enter"){
-  goSearch();
- }
-}
-
-/* SEARCH */
-function goSearch(){
- let q=document.getElementById("searchInput").value.trim();
-
- if(q===""){
-  alert("Bir şey yaz 😄");
-  return;
- }
-
- /* OTOMATİK EKLE */
- let fullQuery = q + " " + currentExam + " " + currentLevel;
-
- let url="https://www.youtube.com/results?search_query="+encodeURIComponent(fullQuery);
-
- window.open(url,"_blank");
+  document.getElementById("text").placeholder = t.placeholderText;
+  document.getElementById("tagInput").placeholder = t.placeholderTag;
+  document.getElementById("note").placeholder = t.placeholderNote;
 }
 
-/* THEME */
-function toggleTheme(){
- document.body.classList.toggle("light");
+function toggleLang() {
+  lang = (lang === "tr") ? "en" : "tr";
+  localStorage.setItem("lang", lang);
+  applyLang();
 }
 
+function ozetle() {
+  let text = document.getElementById("text").value;
+  let words = text.split(" ");
+  document.getElementById("summary").innerText =
+    words.slice(0, 20).join(" ") + "...";
+}
+
+function createTags() {
+  let input = document.getElementById("tagInput").value;
+  document.getElementById("tags").innerText =
+    "#" + input + " #viral #trend #explore #fyp";
+}
+
+function saveNote() {
+  let note = document.getElementById("note").value;
+  localStorage.setItem("note", note);
+  alert(lang === "tr" ? "Kaydedildi!" : "Saved!");
+}
+
+window.onload = function() {
+  applyLang();
+  let saved = localStorage.getItem("note");
+  if (saved) document.getElementById("note").value = saved;
+};
 </script>
 
 </body>
