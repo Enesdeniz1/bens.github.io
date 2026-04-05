@@ -3,94 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DERS PDF</title>
+<title>DERS PDF PRO</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #0f172a;
-    color: white;
-}
+body {margin:0;font-family:Arial;background:#0f172a;color:white;transition:.3s}
 
-/* HEADER RGB */
+/* HEADER */
 header {
-    padding: 15px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    background: linear-gradient(270deg, red, orange, yellow, green, cyan, blue, purple);
-    background-size: 1000% 100%;
-    animation: rgb 8s linear infinite;
+ padding:15px;
+ text-align:center;
+ font-size:24px;
+ font-weight:bold;
+ background:linear-gradient(270deg,red,orange,yellow,green,cyan,blue,purple);
+ background-size:1000% 100%;
+ animation:rgb 8s linear infinite;
 }
 
 @keyframes rgb {
-    0% {background-position: 0%}
-    100% {background-position: 100%}
+ 0%{background-position:0%}
+ 100%{background-position:100%}
 }
 
 /* MENU */
 .menu-btn {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    font-size: 25px;
-    cursor: pointer;
+ position:fixed;
+ top:15px;
+ left:15px;
+ font-size:25px;
+ cursor:pointer;
 }
 
 .sidebar {
-    position: fixed;
-    left: -250px;
-    top: 0;
-    width: 250px;
-    height: 100%;
-    background: #1e293b;
-    padding-top: 60px;
-    transition: 0.3s;
+ position:fixed;
+ left:-270px;
+ top:0;
+ width:270px;
+ height:100%;
+ background:#1e293b;
+ padding-top:60px;
+ transition:.3s;
+ overflow:auto;
 }
 
-.sidebar a {
-    display: block;
-    padding: 12px;
-    border-bottom: 1px solid #334155;
-    cursor: pointer;
+.sidebar button {
+ width:100%;
+ padding:12px;
+ border:none;
+ background:none;
+ color:white;
+ text-align:left;
+ border-bottom:1px solid #334155;
+ cursor:pointer;
 }
 
-.sidebar a:hover {
-    background: #334155;
-}
+.sidebar button:hover {background:#334155}
 
 /* SEARCH */
 .search {
-    padding: 10px;
-    width: 90%;
-    margin: 10px;
-    border-radius: 8px;
-    border: none;
+ width:90%;
+ margin:10px;
+ padding:10px;
+ border-radius:8px;
+ border:none;
+}
+
+/* FILTER */
+.filter {
+ margin:10px;
+ padding:10px;
+ width:90%;
+ border-radius:8px;
 }
 
 /* CARD */
-.container {
-    padding: 10px;
-}
+.container {padding:10px}
 
 .card {
-    background: #1e293b;
-    margin: 15px 0;
-    padding: 15px;
-    border-radius: 12px;
+ background:#1e293b;
+ margin:15px 0;
+ padding:15px;
+ border-radius:12px;
 }
 
-iframe {
-    width: 100%;
-    height: 200px;
-    margin-top: 10px;
+.play-btn {
+ padding:10px;
+ margin-top:10px;
+ width:100%;
+ background:#22c55e;
+ border:none;
+ border-radius:8px;
+ cursor:pointer;
 }
 
-/* FAVORITE */
 .star {
-    cursor: pointer;
-    font-size: 20px;
+ float:right;
+ cursor:pointer;
+ font-size:20px;
+}
+
+/* DARK LIGHT */
+.light {
+ background:white;
+ color:black;
+}
+
+/* STATS */
+.stats {
+ padding:10px;
+ font-size:14px;
 }
 </style>
 </head>
@@ -98,92 +118,185 @@ iframe {
 <body>
 
 <div class="menu-btn" onclick="toggleMenu()">☰</div>
-<header>DERS PDF</header>
+
+<header>DERS PDF PRO 🚀</header>
 
 <div class="sidebar" id="menu">
-<a onclick="show('mat')">📐 Matematik</a>
-<a onclick="show('din')">🕌 Din</a>
-<a onclick="show('fizik')">⚡ Fizik</a>
-<a onclick="show('kimya')">🧪 Kimya</a>
-<a onclick="show('biyoloji')">🧬 Biyoloji</a>
-<a onclick="showFavorites()">⭐ Favoriler</a>
+<button onclick="loadExam('1d1y')">📘 1. Dönem 1. Yazılı</button>
+<button onclick="loadExam('1d2y')">📗 1. Dönem 2. Yazılı</button>
+<button onclick="loadExam('2d1y')">📙 2. Dönem 1. Yazılı</button>
+<button onclick="loadExam('2d2y')">📕 2. Dönem 2. Yazılı</button>
+<button onclick="showFavorites()">⭐ Favoriler</button>
+<button onclick="showRecent()">⏱️ Son İzlenen</button>
+<button onclick="toggleTheme()">🌙 / ☀️ Tema</button>
 </div>
 
-<input type="text" class="search" placeholder="🔍 Ara..." onkeyup="search(this.value)">
+<input class="search" placeholder="🔍 Ders + konu ara..." onkeyup="search(this.value)">
+
+<select class="filter" onchange="filter(this.value)">
+<option value="">📂 Ders seç</option>
+<option>Matematik</option>
+<option>Fizik</option>
+<option>Kimya</option>
+<option>Biyoloji</option>
+<option>Tarih</option>
+<option>Coğrafya</option>
+<option>Felsefe</option>
+<option>Din</option>
+<option>İngilizce</option>
+</select>
+
+<div class="stats" id="stats">📊 İzlenen video: 0</div>
 
 <div class="container" id="content"></div>
 
 <script>
 
-let videos = [
- {title:"Mat 2D2Y", url:"https://www.youtube.com/embed/cI-l3zXT57U"},
- {title:"Mat 2D2Y 2", url:"https://www.youtube.com/embed/XeLppC_KnUk"},
- {title:"Din 2D2Y", url:"https://www.youtube.com/embed/Db8ltXb0Uz4"},
- {title:"Fizik Yazılı", url:"https://www.youtube.com/embed/8kYl6Z0FJ7Q"},
- {title:"Kimya Yazılı", url:"https://www.youtube.com/embed/3vYlP9Xz2A8"},
- {title:"Biyoloji Yazılı", url:"https://www.youtube.com/embed/7dKpL9Xc2B0"}
+let dersler = [
+"Matematik","Fizik","Kimya","Biyoloji","Tarih","Coğrafya","Felsefe","Din","İngilizce"
 ];
 
-function render(list){
-    let c = document.getElementById("content");
-    c.innerHTML = "";
+/* DATA */
+let currentExam = "2d2y";
 
-    list.forEach((v,i)=>{
-        let fav = isFav(v.url) ? "⭐" : "☆";
-
-        c.innerHTML += `
-        <div class="card">
-            <b>${v.title}</b>
-            <span class="star" onclick="toggleFav('${v.url}')">${fav}</span>
-            <iframe src="${v.url}"></iframe>
-        </div>
-        `;
-    });
-}
-
-function search(q){
-    let filtered = videos.filter(v => v.title.toLowerCase().includes(q.toLowerCase()));
-    render(filtered);
-}
-
-function show(ders){
-    let filtered = videos.filter(v => v.title.toLowerCase().includes(ders));
-    render(filtered);
-}
-
-function toggleMenu(){
-    let m = document.getElementById("menu");
-    m.style.left = (m.style.left === "0px") ? "-250px" : "0px";
-}
-
-/* FAVORITE SYSTEM */
+/* FAVORI */
 function getFav(){
-    return JSON.parse(localStorage.getItem("fav") || "[]");
+ return JSON.parse(localStorage.getItem("fav")||"[]");
 }
 
-function isFav(url){
-    return getFav().includes(url);
+/* RECENT */
+function getRecent(){
+ return JSON.parse(localStorage.getItem("recent")||"[]");
 }
 
-function toggleFav(url){
-    let fav = getFav();
-    if(fav.includes(url)){
-        fav = fav.filter(f => f !== url);
-    } else {
-        fav.push(url);
-    }
-    localStorage.setItem("fav", JSON.stringify(fav));
-    render(videos);
+/* COUNT */
+let count = localStorage.getItem("count") || 0;
+updateStats();
+
+/* CARD */
+function card(ders, text){
+ let id = btoa(text);
+ let fav = getFav().includes(id) ? "⭐" : "☆";
+
+ return `
+ <div class="card">
+  <b>${ders}</b>
+  <span class="star" onclick="toggleFav('${id}')">${fav}</span>
+
+  <button class="play-btn" onclick="openVideo('${text}')">
+  ▶ Videoları Aç
+  </button>
+ </div>
+ `;
 }
 
+/* OPEN VIDEO */
+function openVideo(q){
+ window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(q));
+
+ count++;
+ localStorage.setItem("count",count);
+ updateStats();
+
+ let recent = getRecent();
+ recent.unshift(q);
+ recent = recent.slice(0,10);
+ localStorage.setItem("recent",JSON.stringify(recent));
+}
+
+/* LOAD */
+function loadExam(type){
+ currentExam = type;
+
+ let map = {
+  "1d1y":"1. dönem 1. yazılı",
+  "1d2y":"1. dönem 2. yazılı",
+  "2d1y":"2. dönem 1. yazılı",
+  "2d2y":"2. dönem 2. yazılı"
+ };
+
+ let html = "";
+ dersler.forEach(d=>{
+  html += card(d, d+" "+map[type]);
+ });
+
+ document.getElementById("content").innerHTML = html;
+}
+
+/* SEARCH */
+function search(q){
+ let html = "";
+ dersler.forEach(d=>{
+  if(d.toLowerCase().includes(q.toLowerCase())){
+   html += card(d, d+" "+currentExam);
+  }
+ });
+ document.getElementById("content").innerHTML = html;
+}
+
+/* FILTER */
+function filter(val){
+ if(!val) return loadExam(currentExam);
+
+ let html = card(val, val+" "+currentExam);
+ document.getElementById("content").innerHTML = html;
+}
+
+/* FAVORI */
+function toggleFav(id){
+ let fav = getFav();
+ if(fav.includes(id)){
+  fav = fav.filter(f=>f!==id);
+ } else {
+  fav.push(id);
+ }
+ localStorage.setItem("fav",JSON.stringify(fav));
+}
+
+/* FAVORI GOSTER */
 function showFavorites(){
-    let fav = getFav();
-    let list = videos.filter(v => fav.includes(v.url));
-    render(list);
+ let fav = getFav();
+ let html = "";
+
+ fav.forEach(id=>{
+  let text = atob(id);
+  html += card(text.split(" ")[0], text);
+ });
+
+ document.getElementById("content").innerHTML = html;
+}
+
+/* RECENT */
+function showRecent(){
+ let r = getRecent();
+ let html = "";
+
+ r.forEach(text=>{
+  html += card(text.split(" ")[0], text);
+ });
+
+ document.getElementById("content").innerHTML = html;
+}
+
+/* STATS */
+function updateStats(){
+ document.getElementById("stats").innerText =
+ "📊 İzlenen video: " + count;
+}
+
+/* THEME */
+function toggleTheme(){
+ document.body.classList.toggle("light");
+}
+
+/* MENU */
+function toggleMenu(){
+ let m = document.getElementById("menu");
+ m.style.left = (m.style.left==="0px") ? "-270px" : "0px";
 }
 
 /* INIT */
-render(videos);
+loadExam("2d2y");
 
 </script>
 
