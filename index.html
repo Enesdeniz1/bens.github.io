@@ -181,4 +181,19 @@
 
 </body>
 </html>
+<div id="clock" style="font-size: 1.5rem; font-weight: bold; color: #00ffd5; text-shadow: 0 0 10px #00ffd5; margin-bottom: 20px;"></div>
 
+<script>
+    function updateClock() {
+        const now = new Date();
+        const time = now.toLocaleTimeString('tr-TR');
+        document.getElementById('clock').innerText = time;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
+<div style="width: 100%; overflow: hidden; white-space: nowrap; border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 10px 0; margin-bottom: 20px;">
+    <marquee behavior="scroll" direction="left" style="color: #ff00c8; font-weight: bold; letter-spacing: 2px;">
+        MOBILE APP DEVELOPER | HARDTEKK LOVER | BRAWL STARS | ANDROID MODDING | PYTHON & KIVY
+    </marquee>
+</div>
