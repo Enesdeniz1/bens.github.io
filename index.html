@@ -6,75 +6,60 @@
 <title>SnapTools</title>
 
 <style>
-* { box-sizing: border-box; font-family: Arial, sans-serif; }
-
-body {
-  margin: 0;
-  background: #f4f4f4;
-  text-align: center;
-}
+* { box-sizing: border-box; font-family: Arial; }
+body { margin:0; background:#f4f4f4; text-align:center; }
 
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background: black;
-  color: white;
+  display:flex;
+  justify-content:space-between;
+  padding:15px;
+  background:black;
+  color:white;
 }
 
-.logo {
-  font-weight: bold;
-  font-size: 18px;
-}
+.logo { font-weight:bold; }
 
 button.lang {
-  background: white;
-  color: black;
-  border-radius: 6px;
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
+  background:white;
+  color:black;
+  border:none;
+  padding:5px 10px;
+  border-radius:6px;
 }
 
-.container {
-  max-width: 500px;
-  margin: auto;
-}
+.container { max-width:500px; margin:auto; }
 
 .box {
-  background: white;
-  padding: 20px;
-  margin: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background:white;
+  padding:20px;
+  margin:15px;
+  border-radius:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
-textarea, input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+textarea,input {
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
 }
 
 button.action {
-  margin-top: 10px;
-  padding: 10px;
-  width: 100%;
-  border: none;
-  border-radius: 8px;
-  background: black;
-  color: white;
-  cursor: pointer;
+  margin-top:10px;
+  padding:10px;
+  width:100%;
+  border:none;
+  border-radius:8px;
+  background:black;
+  color:white;
 }
 
 .result {
-  margin-top: 10px;
-  background: #eee;
-  padding: 10px;
-  border-radius: 8px;
-  word-break: break-word;
+  margin-top:10px;
+  background:#eee;
+  padding:10px;
+  border-radius:8px;
 }
 
 .insta {
@@ -82,7 +67,6 @@ button.action {
   text-decoration:none;
   font-size:13px;
 }
-.insta:hover { color:black; }
 </style>
 </head>
 
@@ -95,36 +79,33 @@ button.action {
 
 <div class="container">
 
-  <!-- ÖZET -->
-  <div class="box">
-    <h3 id="sumTitle">Metin Özetleyici</h3>
-    <textarea id="text" placeholder="Metni buraya yaz..."></textarea>
-    <button class="action" onclick="ozetle()" id="sumBtn">Özetle</button>
-    <div class="result" id="summary"></div>
-  </div>
+<!-- ÖZET -->
+<div class="box">
+  <h3 id="sumTitle">Metin Özetleyici</h3>
+  <textarea id="text" placeholder="Metni yaz..."></textarea>
+  <button class="action" onclick="ozetle()" id="sumBtn">Özetle</button>
+  <div class="result" id="summary"></div>
+</div>
 
-  <!-- HASHTAG -->
-  <div class="box">
-    <h3 id="tagTitle">Hashtag Oluşturucu (30 adet)</h3>
-    <input id="tagInput" placeholder="Konu yaz (örn: ronaldo)">
-    <button class="action" onclick="createTags()" id="tagBtn">Oluştur</button>
-    <div class="result" id="tags"></div>
-  </div>
+<!-- HASHTAG -->
+<div class="box">
+  <h3 id="tagTitle">Hashtag Oluşturucu (Akıllı)</h3>
+  <input id="tagInput" placeholder="Konu yaz (örn: ronaldo)">
+  <button class="action" onclick="createTags()" id="tagBtn">Oluştur</button>
+  <div class="result" id="tags"></div>
+</div>
 
-  <!-- NOT -->
-  <div class="box">
-    <h3 id="noteTitle">Not Defteri</h3>
-    <textarea id="note" placeholder="Notunu yaz..."></textarea>
-    <button class="action" onclick="saveNote()" id="saveBtn">Kaydet</button>
-  </div>
+<!-- NOT -->
+<div class="box">
+  <h3 id="noteTitle">Not Defteri</h3>
+  <textarea id="note" placeholder="Not yaz..."></textarea>
+  <button class="action" onclick="saveNote()" id="saveBtn">Kaydet</button>
+</div>
 
 </div>
 
-<!-- INSTAGRAM -->
 <div style="margin:20px;">
-  <a href="https://instagram.com/hfwxq" target="_blank" class="insta">
-    @hfwxq
-  </a>
+  <a href="https://instagram.com/hfwxq" target="_blank" class="insta">@hfwxq</a>
 </div>
 
 <script>
@@ -132,92 +113,110 @@ let lang = localStorage.getItem("lang") || "tr";
 
 const texts = {
   tr: {
-    sumTitle: "Metin Özetleyici",
-    sumBtn: "Özetle",
-    tagTitle: "Hashtag Oluşturucu (30 adet)",
-    tagBtn: "Oluştur",
-    noteTitle: "Not Defteri",
-    saveBtn: "Kaydet",
-    textPH: "Metni buraya yaz...",
-    tagPH: "Konu yaz (örn: ronaldo)",
-    notePH: "Notunu yaz..."
+    sumTitle:"Metin Özetleyici",
+    sumBtn:"Özetle",
+    tagTitle:"Hashtag Oluşturucu (Akıllı)",
+    tagBtn:"Oluştur",
+    noteTitle:"Not Defteri",
+    saveBtn:"Kaydet",
+    textPH:"Metni yaz...",
+    tagPH:"Konu yaz (örn: ronaldo)",
+    notePH:"Not yaz..."
   },
   en: {
-    sumTitle: "Text Summarizer",
-    sumBtn: "Summarize",
-    tagTitle: "Hashtag Generator (30 tags)",
-    tagBtn: "Generate",
-    noteTitle: "Notepad",
-    saveBtn: "Save",
-    textPH: "Enter your text...",
-    tagPH: "Enter topic (e.g. ronaldo)",
-    notePH: "Write your note..."
+    sumTitle:"Text Summarizer",
+    sumBtn:"Summarize",
+    tagTitle:"Smart Hashtag Generator",
+    tagBtn:"Generate",
+    noteTitle:"Notepad",
+    saveBtn:"Save",
+    textPH:"Enter text...",
+    tagPH:"Enter topic",
+    notePH:"Write note..."
   }
 };
 
-function applyLang() {
+function applyLang(){
   let t = texts[lang];
-
-  document.getElementById("sumTitle").innerText = t.sumTitle;
-  document.getElementById("sumBtn").innerText = t.sumBtn;
-  document.getElementById("tagTitle").innerText = t.tagTitle;
-  document.getElementById("tagBtn").innerText = t.tagBtn;
-  document.getElementById("noteTitle").innerText = t.noteTitle;
-  document.getElementById("saveBtn").innerText = t.saveBtn;
-
-  document.getElementById("text").placeholder = t.textPH;
-  document.getElementById("tagInput").placeholder = t.tagPH;
-  document.getElementById("note").placeholder = t.notePH;
+  sumTitle.innerText = t.sumTitle;
+  sumBtn.innerText = t.sumBtn;
+  tagTitle.innerText = t.tagTitle;
+  tagBtn.innerText = t.tagBtn;
+  noteTitle.innerText = t.noteTitle;
+  saveBtn.innerText = t.saveBtn;
+  text.placeholder = t.textPH;
+  tagInput.placeholder = t.tagPH;
+  note.placeholder = t.notePH;
 }
 
-function toggleLang() {
-  lang = (lang === "tr") ? "en" : "tr";
-  localStorage.setItem("lang", lang);
+function toggleLang(){
+  lang = (lang==="tr")?"en":"tr";
+  localStorage.setItem("lang",lang);
   applyLang();
 }
 
-// ÖZET
-function ozetle() {
-  let text = document.getElementById("text").value.trim();
-  if (!text) return;
-
-  let words = text.split(" ");
-  document.getElementById("summary").innerText =
-    words.slice(0, 20).join(" ") + "...";
+// ÖZET (basit)
+function ozetle(){
+  let t = text.value.trim();
+  if(!t) return;
+  let s = t.split(/[.!?]/).slice(0,2).join(". ");
+  summary.innerText = s || t.slice(0,100);
 }
 
-// HASHTAG (30)
-function createTags() {
-  let input = document.getElementById("tagInput").value.trim().toLowerCase();
-  if (!input) return;
+// 🔥 AKILLI HASHTAG
+function createTags(){
+  let input = tagInput.value.trim().toLowerCase();
+  if(!input) return;
 
-  let base = input.replace(/\s+/g, "");
+  let base = input.replace(/\s+/g,"");
+
+  const football = ["ronaldo","messi","football","soccer","goal"];
+  const music = ["rap","song","music","dj"];
+  const motivation = ["money","success","motivation"];
+
+  let type = "general";
+
+  if(football.some(w=>input.includes(w))) type="football";
+  else if(music.some(w=>input.includes(w))) type="music";
+  else if(motivation.some(w=>input.includes(w))) type="motivation";
 
   let tags = [
-    base, base+"edit", base+"video", base+"fans", base+"love",
-    base+"trend", base+"viral", base+"reels", base+"tiktok",
-    base+"explore", base+"explorepage", base+"instagood",
-    base+"fyp", base+"like", base+"follow",
-    "football","soccer","skills","goals","highlights",
-    "legend","champion","best","top","world",
-    "star","motivation","success","editz","viralvideo"
+    base, base+"edit", base+"video", base+"viral", base+"trend"
   ];
 
-  let result = tags.map(t => "#" + t).join(" ");
-  document.getElementById("tags").innerText = result;
+  if(type==="football"){
+    tags.push("football","soccer","goals","skills","ucl","fifa");
+  } else if(type==="music"){
+    tags.push("music","rap","dj","beats","song");
+  } else if(type==="motivation"){
+    tags.push("motivation","success","hustle","grind","rich");
+  } else {
+    tags.push("viral","trend","fyp","explore","reels");
+  }
+
+  let extra = [
+    "instagood","like","follow","explorepage",
+    "viralvideo","trendingsound","contentcreator",
+    "audience","growth","creator"
+  ];
+
+  tags = [...new Set(tags.concat(extra))].slice(0,30);
+
+  tags = tags.map(t=>"#"+t).join(" ");
+
+  document.getElementById("tags").innerText = tags;
 }
 
 // NOT
-function saveNote() {
-  let note = document.getElementById("note").value;
-  localStorage.setItem("note", note);
-  alert(lang === "tr" ? "Kaydedildi!" : "Saved!");
+function saveNote(){
+  localStorage.setItem("note", note.value);
+  alert(lang==="tr"?"Kaydedildi":"Saved");
 }
 
-window.onload = function() {
+window.onload=()=>{
   applyLang();
-  let saved = localStorage.getItem("note");
-  if (saved) document.getElementById("note").value = saved;
+  let n = localStorage.getItem("note");
+  if(n) note.value=n;
 };
 </script>
 
