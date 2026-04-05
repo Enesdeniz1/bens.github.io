@@ -294,6 +294,95 @@ function toggleMenu(){
  let m = document.getElementById("menu");
  m.style.left = (m.style.left==="0px") ? "-270px" : "0px";
 }
+/* ==== GELİŞMİŞ VİDEO SİSTEMİ ==== */
+
+/* Aynı anda birden fazla video göster */
+function playVideo(id, query){
+
+ let container = document.getElementById("v-"+id);
+
+ container.innerHTML = `
+ 
+ <iframe src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}" allowfullscreen></iframe>
+
+ <iframe src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query + " konu anlatımı")}" allowfullscreen></iframe>
+
+ <iframe src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query + " soru çözümü")}" allowfullscreen></iframe>
+
+ `;
+
+}
+
+
+/* ==== DERS SAYISINI ARTIR ==== */
+dersler.push(
+"Türk Dili ve Edebiyatı",
+"T.C. İnkılap Tarihi",
+"Sağlık Bilgisi",
+"Geometri",
+"Psikoloji",
+"Sosyoloji",
+"Mantık",
+"Bilişim",
+"Görsel Sanatlar",
+"Müzik",
+"Beden Eğitimi"
+);
+
+
+/* ==== OTOMATİK MENÜ KAPANMA (HER YERDEN) ==== */
+document.addEventListener("keydown", function(e){
+ if(e.key === "Escape"){
+  closeMenu();
+ }
+});
+
+
+/* ==== TIKLAYINCA MENÜ KAPAT ==== */
+document.querySelectorAll(".sidebar button").forEach(btn=>{
+ btn.addEventListener("click", closeMenu);
+});
+
+
+/* ==== VIDEO RESET (TEKRAR BASINCA KAPANSIN) ==== */
+function playVideo(id, query){
+
+ let el = document.getElementById("v-"+id);
+
+ if(el.innerHTML !== ""){
+  el.innerHTML = "";
+  return;
+ }
+
+ el.innerHTML = `
+ <iframe src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}" allowfullscreen></iframe>
+ `;
+}
+
+
+/* ==== HIZLI KATEGORİ BUTONU (EKSTRA) ==== */
+function quickLoad(ders){
+ let map = {
+  "1d1y":"1. dönem 1. yazılı",
+  "1d2y":"1. dönem 2. yazılı",
+  "2d1y":"2. dönem 1. yazılı",
+  "2d2y":"2. dönem 2. yazılı"
+ };
+
+ document.getElementById("content").innerHTML =
+ card(ders, ders + " " + map[currentExam]);
+}
+
+
+/* ==== SCROLL ANİMASYON ==== */
+window.addEventListener("scroll", ()=>{
+ document.querySelectorAll(".card").forEach(c=>{
+  let top = c.getBoundingClientRect().top;
+  if(top < window.innerHeight){
+   c.style.opacity = 1;
+   c.style.transform = "translateY(0)";
+  }
+ });
 
 /* INIT */
 loadExam("2d2y");
