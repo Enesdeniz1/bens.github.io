@@ -7,14 +7,22 @@
 
 <style>
 *{box-sizing:border-box;font-family:Arial;}
-body{margin:0;background:#f4f4f4;text-align:center;}
+body{margin:0;background:#f4f4f4;}
 
 header{
 display:flex;justify-content:space-between;
+align-items:center;
 padding:15px;background:black;color:white;
 }
 
+.left{display:flex;align-items:center;gap:10px;}
 .menu{font-size:22px;cursor:pointer;}
+
+.lang{
+background:white;color:black;
+padding:5px 10px;border-radius:6px;
+cursor:pointer;font-size:12px;
+}
 
 .sidebar{
 position:fixed;left:-280px;top:0;
@@ -26,42 +34,48 @@ z-index:10;
 
 .sidebar.active{left:0;}
 
-.close{
-font-size:20px;
-cursor:pointer;
-text-align:right;
-}
+.close{text-align:right;cursor:pointer;}
+
+.container{max-width:500px;margin:auto;}
 
 .box{
 background:white;margin:15px;padding:20px;
 border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
 textarea,input{
 width:100%;padding:10px;margin-top:10px;
+border-radius:8px;border:1px solid #ccc;
 }
 
 button{
 margin-top:10px;padding:10px;width:100%;
 background:black;color:white;border:none;
+border-radius:8px;
 }
 
-.plan{
-background:#eee;margin-top:10px;padding:10px;
-border-radius:8px;cursor:pointer;
+.result{
+margin-top:10px;
+background:#eee;padding:10px;border-radius:8px;
+word-break:break-word;
+}
+
+.copy{
+background:#333;color:white;
+margin-top:5px;
 }
 
 .note-item{
 background:#eee;padding:8px;margin:5px 0;
-cursor:pointer;text-align:left;
+cursor:pointer;text-align:left;border-radius:6px;
 }
 
-.delete{
-float:right;color:red;cursor:pointer;
-}
+.delete{float:right;color:red;}
 
 .insta{
-font-size:13px;color:#777;text-decoration:none;
+display:block;text-align:center;
+font-size:13px;color:#777;margin:20px;
 }
 
 </style>
@@ -70,75 +84,108 @@ font-size:13px;color:#777;text-decoration:none;
 <body>
 
 <header>
+<div class="left">
 <div class="menu" onclick="toggleMenu()">☰</div>
 <div>⚡ SnapTools</div>
-<div></div>
+</div>
+
+<div class="lang" onclick="toggleLang()">TR / EN</div>
 </header>
 
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
-
 <div class="close" onclick="toggleMenu()">✖</div>
 
-<h3>📒 Notlar</h3>
+<h3 id="notesTitle">📒 Notlar</h3>
 <div id="noteList"></div>
 
-<h3>💎 Premium</h3>
-
-<div class="plan" onclick="startPayment('monthly')">
-Aylık - 50 TL
-</div>
-
-<div class="plan" onclick="startPayment('yearly')">
-Yıllık - 1000 TL
-</div>
-
-<p id="premiumStatus"></p>
+<h3 id="premiumTitle">💎 Premium</h3>
+<div class="plan" onclick="startPayment('monthly')" id="monthly">Aylık - 50 TL</div>
+<div class="plan" onclick="startPayment('yearly')" id="yearly">Yıllık - 1000 TL</div>
 
 </div>
 
+<div class="container">
+
+<!-- ÖZET -->
 <div class="box">
-<h3>Metin Özet</h3>
+<h3 id="sumTitle">Metin Özet</h3>
 <textarea id="text"></textarea>
-<button onclick="summarize()">Özetle</button>
-<div id="summary"></div>
+<button onclick="summarize()" id="sumBtn">Özetle</button>
+<div class="result" id="summary"></div>
+<button class="copy" onclick="copyText('summary')">Kopyala</button>
 </div>
 
+<!-- HASHTAG -->
 <div class="box">
-<h3>Hashtag</h3>
+<h3 id="tagTitle">Viral Hashtag</h3>
 <input id="tagInput">
-<button onclick="hashtags()">Oluştur</button>
-<div id="tags"></div>
+<button onclick="hashtags()" id="tagBtn">Oluştur</button>
+<div class="result" id="tags"></div>
+<button class="copy" onclick="copyText('tags')">Kopyala</button>
 </div>
 
+<!-- NOT -->
 <div class="box">
-<h3>Not Defteri</h3>
+<h3 id="noteTitle">Not Defteri</h3>
 <textarea id="note"></textarea>
-<button onclick="saveNote()">Kaydet</button>
+<button onclick="saveNote()" id="saveBtn">Kaydet</button>
 </div>
 
-<!-- 📸 Instagram -->
-<div style="margin:20px;">
-<a href="https://instagram.com/hfwxq" target="_blank" class="insta">
-@hfwxq
-</a>
 </div>
+
+<a href="https://instagram.com/hfwxq" target="_blank" class="insta">@hfwxq</a>
 
 <script>
 
-// Menü
-function toggleMenu(){
-sidebar.classList.toggle("active");
+// 🌍 DİL
+let lang = localStorage.getItem("lang") || "tr";
+
+const texts={
+tr:{
+notes:"📒 Notlar",
+premium:"💎 Premium",
+sum:"Metin Özet",
+sumBtn:"Özetle",
+tag:"Viral Hashtag",
+tagBtn:"Oluştur",
+note:"Not Defteri",
+save:"Kaydet"
+},
+en:{
+notes:"📒 Notes",
+premium:"💎 Premium",
+sum:"Text Summary",
+sumBtn:"Summarize",
+tag:"Viral Hashtags",
+tagBtn:"Generate",
+note:"Notepad",
+save:"Save"
+}
+};
+
+function applyLang(){
+let t=texts[lang];
+notesTitle.innerText=t.notes;
+premiumTitle.innerText=t.premium;
+sumTitle.innerText=t.sum;
+sumBtn.innerText=t.sumBtn;
+tagTitle.innerText=t.tag;
+tagBtn.innerText=t.tagBtn;
+noteTitle.innerText=t.note;
+saveBtn.innerText=t.save;
 }
 
-// Dışarı tıklayınca kapat
-document.addEventListener("click", function(e){
-if(!sidebar.contains(e.target) && !e.target.classList.contains("menu")){
-sidebar.classList.remove("active");
+function toggleLang(){
+lang=(lang==="tr")?"en":"tr";
+localStorage.setItem("lang",lang);
+applyLang();
 }
-});
 
-// Notları yükle
+// MENU
+function toggleMenu(){sidebar.classList.toggle("active");}
+
+// NOTLAR
 function loadNotes(){
 let notes=JSON.parse(localStorage.getItem("notes")||"[]");
 noteList.innerHTML="";
@@ -147,14 +194,10 @@ notes.forEach((n,i)=>{
 let div=document.createElement("div");
 div.className="note-item";
 
-div.innerHTML=
-n.substring(0,20)+"... "+
-"<span class='delete'>✖</span>";
+div.innerHTML=n.substring(0,20)+"... <span class='delete'>✖</span>";
 
-// NOTA TIKLAMA
-div.onclick=()=> note.value=n;
+div.onclick=()=>note.value=n;
 
-// SİL BUTONU (fix)
 div.querySelector(".delete").onclick=(e)=>{
 e.stopPropagation();
 deleteNote(i);
@@ -164,7 +207,6 @@ noteList.appendChild(div);
 });
 }
 
-// Kaydet
 function saveNote(){
 let n=note.value;
 if(!n)return;
@@ -173,11 +215,10 @@ let notes=JSON.parse(localStorage.getItem("notes")||"[]");
 notes.push(n);
 localStorage.setItem("notes",JSON.stringify(notes));
 
-alert("Kaydedildi");
+alert(lang==="tr"?"Kaydedildi":"Saved");
 loadNotes();
 }
 
-// Sil
 function deleteNote(i){
 let notes=JSON.parse(localStorage.getItem("notes"));
 notes.splice(i,1);
@@ -185,14 +226,13 @@ localStorage.setItem("notes",JSON.stringify(notes));
 loadNotes();
 }
 
-// Özet
+// AI ÖZET
 async function summarize(){
 let t=text.value;
 if(!t)return;
 
-summary.innerText="Yükleniyor...";
+summary.innerText="...";
 
-try{
 let res=await fetch("http://localhost:3000/summarize",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
@@ -201,12 +241,9 @@ body:JSON.stringify({text:t})
 
 let data=await res.json();
 summary.innerText=data.summary;
-}catch{
-summary.innerText="Hata!";
-}
 }
 
-// Hashtag
+// 🔥 VİRAL HASHTAG
 function hashtags(){
 let i=tagInput.value.toLowerCase().trim();
 if(!i)return;
@@ -214,33 +251,42 @@ if(!i)return;
 let base=i.replace(/\s+/g,"");
 
 let tags=[
-base,base+"edit",base+"video",
+base,base+"viral",base+"edit",
 "viral","trend","fyp","explore",
-"instagood","like","follow",
-"contentcreator","growth","audience"
+"instagood","reels","tiktok",
+"contentcreator","growth","audience",
+"viralvideo","trending","discover"
 ];
 
 tags=[...new Set(tags)].slice(0,30);
 tags=tags.map(t=>"#"+t).join(" ");
 
-document.getElementById("tags").innerText=tags;
+tagsDiv.innerText=tags;
 }
 
-// Ödeme
+// 📋 KOPYALA
+function copyText(id){
+let text=document.getElementById(id).innerText;
+navigator.clipboard.writeText(text);
+alert("Kopyalandı!");
+}
+
+// ödeme
 async function startPayment(plan){
 let res=await fetch("http://localhost:3000/create-payment",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body:JSON.stringify({plan})
 });
-
 let data=await res.json();
 window.location.href=data.url;
 }
 
-// Açılış
-window.onload=loadNotes;
-
+// INIT
+window.onload=()=>{
+applyLang();
+loadNotes();
+};
 </script>
 
 </body>
