@@ -3,24 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DERS PLATFORM PRO MAX</title>
+<title>ENES DENİZ | FINAL BOSS</title>
 
 <style>
+body{margin:0;font-family:Arial;background:#0f172a;color:white;transition:.3s}
 
-/* ================= GENEL ================= */
-body{
- margin:0;
- font-family:Arial;
- background:#0f172a;
- color:white;
- transition:0.3s;
-}
-
-/* ================= HEADER ================= */
+/* LOGO */
 header{
  padding:15px;
  text-align:center;
- font-size:24px;
+ font-size:26px;
  font-weight:bold;
  background:linear-gradient(270deg,red,orange,yellow,green,cyan,blue,purple);
  background-size:1000% 100%;
@@ -31,315 +23,180 @@ header{
  100%{background-position:100%}
 }
 
-/* ================= MENU ================= */
-.menu-btn{
- position:fixed;
- top:15px;
- left:15px;
- font-size:30px;
- cursor:pointer;
- z-index:2000;
+/* FORM */
+.form{padding:10px;background:#1e293b}
+input,textarea{
+ width:100%;margin:5px 0;padding:10px;border:none;border-radius:8px
+}
+button{
+ padding:10px;width:100%;border:none;border-radius:8px;
+ background:#22c55e;cursor:pointer
 }
 
-.sidebar{
- position:fixed;
- left:-300px;
- top:0;
- width:300px;
- height:100%;
- background:#1e293b;
- transition:0.3s;
- padding-top:60px;
- overflow:auto;
- z-index:1500;
-}
-
-.close-btn{
- position:absolute;
- top:10px;
- right:15px;
- font-size:26px;
- cursor:pointer;
-}
-
-.overlay{
- position:fixed;
- top:0;
- left:0;
- width:100%;
- height:100%;
- background:rgba(0,0,0,0.5);
- display:none;
- z-index:1000;
-}
-
-/* ================= BUTON ================= */
-.sidebar button{
- width:100%;
- padding:14px;
- border:none;
- background:none;
- color:white;
- text-align:left;
- border-bottom:1px solid #334155;
- cursor:pointer;
-}
-
-.sidebar button:hover{
- background:#334155;
-}
-
-/* ================= SEARCH ================= */
-.search{
- width:92%;
- margin:10px;
- padding:12px;
- border-radius:8px;
- border:none;
- font-size:16px;
-}
-
-/* ================= CARD ================= */
-.container{
- padding:10px;
-}
-
+/* CARD */
+.container{padding:10px}
 .card{
  background:#1e293b;
  margin:15px 0;
  padding:15px;
  border-radius:12px;
- transition:0.3s;
+ transition:.3s
 }
+.card:hover{transform:scale(1.02)}
 
-.card:hover{
- transform:scale(1.02);
-}
+video{width:100%;border-radius:10px;margin-top:10px}
 
-/* ================= BUTTON ================= */
-.play-btn{
+/* ACTIONS */
+.actions{display:flex;gap:10px;margin-top:10px}
+.delete{background:red}
+.edit{background:orange}
+.star{cursor:pointer;float:right;font-size:20px}
+
+/* SEARCH */
+.search{
+ width:95%;
+ margin:10px;
  padding:10px;
- margin-top:10px;
- width:100%;
- background:#22c55e;
- border:none;
  border-radius:8px;
- cursor:pointer;
+ border:none;
 }
 
-/* ================= VIDEO ================= */
-iframe{
- width:100%;
- height:220px;
- margin-top:10px;
- border-radius:10px;
-}
+/* THEME */
+.light{background:white;color:black}
 
-/* ================= FAVORI ================= */
-.star{
- float:right;
- cursor:pointer;
- font-size:20px;
-}
-
-/* ================= STATS ================= */
-.stats{
- padding:10px;
- font-size:14px;
-}
-
-/* ================= LIGHT MODE ================= */
-.light{
- background:white;
- color:black;
-}
+.stats{padding:10px;font-size:14px}
 
 </style>
 </head>
 
 <body>
 
-<div class="menu-btn" onclick="openMenu()">☰</div>
+<header>ENES DENİZ ⚡ FINAL BOSS</header>
 
-<header>DERS PLATFORM PRO MAX 🚀</header>
+<input class="search" placeholder="🔍 Ara..." onkeyup="search(this.value)">
 
-<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+<div class="stats" id="stats">📊 Video: 0</div>
 
-<div class="sidebar" id="menu">
-<div class="close-btn" onclick="closeMenu()">✖</div>
-
-<button onclick="loadExam('1d1y')">📘 1D1Y</button>
-<button onclick="loadExam('1d2y')">📗 1D2Y</button>
-<button onclick="loadExam('2d1y')">📙 2D1Y</button>
-<button onclick="loadExam('2d2y')">📕 2D2Y</button>
-
-<button onclick="showFavorites()">⭐ Favoriler</button>
-<button onclick="showRecent()">⏱️ Son İzlenen</button>
+<div class="form">
+<input id="title" placeholder="Başlık">
+<textarea id="desc" placeholder="Açıklama"></textarea>
+<input type="file" id="file">
+<button onclick="upload()">⬆ Yükle</button>
 <button onclick="toggleTheme()">🌙 Tema</button>
-
 </div>
 
-<input class="search" placeholder="🔍 Ders ara..." onkeyup="search(this.value)">
-
-<div class="stats" id="stats">📊 İzlenen: 0</div>
-
-<div class="container" id="content"></div>
+<div class="container" id="videos"></div>
 
 <script>
 
-/* ================= DERSLER ================= */
-let dersler=[
-"Matematik","Fizik","Kimya","Biyoloji",
-"Tarih","Coğrafya","Felsefe","Din",
-"İngilizce","Türk Dili","Geometri",
-"Psikoloji","Sosyoloji","Mantık"
-];
+/* STATE */
+let videos = JSON.parse(localStorage.getItem("videos")||"[]");
 
-/* ================= STATE ================= */
-let currentExam="2d2y";
-let count=localStorage.getItem("count")||0;
+/* UPLOAD */
+async function upload(){
+ let file=document.getElementById("file").files[0];
+ let title=document.getElementById("title").value;
+ let desc=document.getElementById("desc").value;
 
-/* ================= MENU ================= */
-function openMenu(){
- document.getElementById("menu").style.left="0";
- document.getElementById("overlay").style.display="block";
+ if(!file){alert("Video seç!");return;}
+
+ let form=new FormData();
+ form.append("video",file);
+
+ let res=await fetch("/upload",{method:"POST",body:form});
+ let data=await res.json();
+
+ videos.unshift({
+  title,desc,url:data.url,fav:false
+ });
+
+ save();
 }
 
-function closeMenu(){
- document.getElementById("menu").style.left="-300px";
- document.getElementById("overlay").style.display="none";
+/* SAVE */
+function save(){
+ localStorage.setItem("videos",JSON.stringify(videos));
+ render();
 }
 
-/* ================= FAVORI ================= */
-function getFav(){
- return JSON.parse(localStorage.getItem("fav")||"[]");
-}
-
-function toggleFav(id){
- let fav=getFav();
- if(fav.includes(id)){
-  fav=fav.filter(f=>f!==id);
- }else{
-  fav.push(id);
+/* DELETE */
+function del(i){
+ if(confirm("Sil?")){
+  videos.splice(i,1);
+  save();
  }
- localStorage.setItem("fav",JSON.stringify(fav));
 }
 
-/* ================= RECENT ================= */
-function getRecent(){
- return JSON.parse(localStorage.getItem("recent")||"[]");
+/* FAVORI */
+function fav(i){
+ videos[i].fav=!videos[i].fav;
+ save();
 }
 
-/* ================= CARD ================= */
-function card(ders,query){
- let id=btoa(query);
- let fav=getFav().includes(id)?"⭐":"☆";
+/* EDIT */
+function edit(i){
+ let t=prompt("Başlık:",videos[i].title);
+ let d=prompt("Açıklama:",videos[i].desc);
+
+ if(t) videos[i].title=t;
+ if(d) videos[i].desc=d;
+
+ save();
+}
+
+/* SEARCH */
+function search(q){
+ let html="";
+
+ videos.forEach((v,i)=>{
+  if(v.title.toLowerCase().includes(q.toLowerCase())){
+   html+=card(v,i);
+  }
+ });
+
+ document.getElementById("videos").innerHTML=html;
+}
+
+/* CARD */
+function card(v,i){
+ let star=v.fav?"⭐":"☆";
 
  return `
  <div class="card">
- <b>${ders}</b>
- <span class="star" onclick="toggleFav('${id}')">${fav}</span>
+ <b>${v.title}</b>
+ <span class="star" onclick="fav(${i})">${star}</span>
 
- <button class="play-btn" onclick="playVideo('${id}','${query}')">
- ▶ Aç
- </button>
+ <p>${v.desc}</p>
 
- <div id="v-${id}"></div>
+ <video controls src="${v.url}"></video>
+
+ <div class="actions">
+  <button class="delete" onclick="del(${i})">Sil</button>
+  <button class="edit" onclick="edit(${i})">Düzenle</button>
+ </div>
  </div>
  `;
 }
 
-/* ================= VIDEO ================= */
-function playVideo(id,query){
- let el=document.getElementById("v-"+id);
-
- if(el.innerHTML!==""){
-  el.innerHTML="";
-  return;
- }
-
- el.innerHTML=
- `<iframe src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}" allowfullscreen></iframe>`;
-
- count++;
- localStorage.setItem("count",count);
- updateStats();
-
- let recent=getRecent();
- recent.unshift(query);
- recent=recent.slice(0,10);
- localStorage.setItem("recent",JSON.stringify(recent));
-}
-
-/* ================= LOAD ================= */
-function loadExam(type){
- currentExam=type;
-
- let map={
-  "1d1y":"1. dönem 1. yazılı",
-  "1d2y":"1. dönem 2. yazılı",
-  "2d1y":"2. dönem 1. yazılı",
-  "2d2y":"2. dönem 2. yazılı"
- };
-
- let html="";
- dersler.forEach(d=>{
-  html+=card(d,d+" "+map[type]);
- });
-
- document.getElementById("content").innerHTML=html;
- closeMenu();
-}
-
-/* ================= SEARCH ================= */
-function search(q){
- let html="";
- dersler.forEach(d=>{
-  if(d.toLowerCase().includes(q.toLowerCase())){
-   html+=card(d,d+" "+currentExam);
-  }
- });
- document.getElementById("content").innerHTML=html;
-}
-
-/* ================= FAVORI GOSTER ================= */
-function showFavorites(){
- let fav=getFav();
+/* RENDER */
+function render(){
  let html="";
 
- fav.forEach(id=>{
-  let text=atob(id);
-  html+=card(text.split(" ")[0],text);
+ videos.forEach((v,i)=>{
+  html+=card(v,i);
  });
 
- document.getElementById("content").innerHTML=html;
+ document.getElementById("videos").innerHTML=html;
+ document.getElementById("stats").innerText="📊 Video: "+videos.length;
 }
 
-/* ================= RECENT ================= */
-function showRecent(){
- let r=getRecent();
- let html="";
-
- r.forEach(text=>{
-  html+=card(text.split(" ")[0],text);
- });
-
- document.getElementById("content").innerHTML=html;
-}
-
-/* ================= STATS ================= */
-function updateStats(){
- document.getElementById("stats").innerText="📊 İzlenen: "+count;
-}
-
-/* ================= THEME ================= */
+/* THEME */
 function toggleTheme(){
  document.body.classList.toggle("light");
 }
 
-/* ================= INIT ================= */
-updateStats();
-loadExam("2d2y");
+/* INIT */
+render();
 
 </script>
 
