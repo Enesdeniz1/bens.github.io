@@ -1,9 +1,9 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENES DENİZ | Eğitim Arama</title>
+<title>ENES DENİZ | PRO UI</title>
 
 <style>
 body{
@@ -17,10 +17,9 @@ body{
 header{
  padding:15px;
  text-align:center;
- font-size:24px;
+ font-size:22px;
  font-weight:bold;
  background:linear-gradient(270deg,red,orange,yellow,green,cyan,blue,purple);
- background-size:1000% 100%;
  animation:rgb 8s linear infinite;
 }
 @keyframes rgb{
@@ -28,106 +27,203 @@ header{
  100%{background-position:100%}
 }
 
+/* ☰ */
+.menu-btn{
+ position:fixed;
+ top:12px;
+ left:15px;
+ font-size:30px;
+ cursor:pointer;
+ z-index:2000;
+ transition:.3s;
+}
+.menu-btn:hover{transform:scale(1.2)}
+
+/* SIDEBAR */
+.sidebar{
+ position:fixed;
+ left:-280px;
+ top:0;
+ width:280px;
+ height:100%;
+ background:rgba(30,41,59,0.95);
+ backdrop-filter:blur(10px);
+ transition:.4s;
+ padding-top:60px;
+ z-index:1500;
+}
+
+/* ANIMATION */
+.sidebar.open{
+ left:0;
+}
+
+/* CLOSE */
+.close-btn{
+ position:absolute;
+ top:10px;
+ right:15px;
+ font-size:24px;
+ cursor:pointer;
+}
+
+/* OVERLAY */
+.overlay{
+ position:fixed;
+ top:0;
+ left:0;
+ width:100%;
+ height:100%;
+ background:rgba(0,0,0,0.6);
+ opacity:0;
+ visibility:hidden;
+ transition:.3s;
+}
+
+.overlay.show{
+ opacity:1;
+ visibility:visible;
+}
+
+/* BUTTON */
+.sidebar button{
+ width:100%;
+ padding:14px;
+ border:none;
+ background:none;
+ color:white;
+ cursor:pointer;
+ text-align:left;
+ transition:.3s;
+ font-size:15px;
+}
+
+.sidebar button:hover{
+ background:#334155;
+ padding-left:20px;
+}
+
 /* SEARCH */
 .search{
  width:95%;
  margin:10px;
  padding:12px;
- border-radius:8px;
+ border-radius:10px;
  border:none;
  font-size:16px;
+ outline:none;
 }
 
 /* CARD */
-.container{
- padding:10px;
-}
-
 .card{
- margin:12px 0;
- padding:10px;
- border-radius:12px;
- cursor:pointer;
+ margin:12px;
+ padding:12px;
+ border-radius:14px;
  display:flex;
- gap:10px;
- align-items:center;
- transition:0.3s;
+ gap:12px;
+ cursor:pointer;
+ background:#1e293b;
+ box-shadow:0 5px 15px rgba(0,0,0,0.3);
+ transition:.3s;
 }
 
 .card:hover{
- transform:scale(1.03);
+ transform:translateY(-5px) scale(1.02);
+ box-shadow:0 10px 25px rgba(0,0,0,0.5);
 }
 
-/* IMAGE */
 .card img{
  width:120px;
- border-radius:8px;
+ border-radius:10px;
 }
 
-/* DERS RENKLERİ */
-.matematik{background:linear-gradient(90deg,#2563eb,#60a5fa);}
-.fizik{background:linear-gradient(90deg,#f97316,#fb923c);}
-.kimya{background:linear-gradient(90deg,#22c55e,#4ade80);}
-.biyoloji{background:linear-gradient(90deg,#10b981,#34d399);}
-.tarih{background:linear-gradient(90deg,#eab308,#facc15);}
-.cografya{background:linear-gradient(90deg,#0ea5e9,#38bdf8);}
-.felsefe{background:linear-gradient(90deg,#a855f7,#e879f9);}
-.din{background:linear-gradient(90deg,#14b8a6,#2dd4bf);}
-.ingilizce{background:linear-gradient(90deg,#ef4444,#f87171);}
-.turk{background:linear-gradient(90deg,#6366f1,#818cf8);}
-.geometri{background:linear-gradient(90deg,#f43f5e,#fb7185);}
-.psikoloji{background:linear-gradient(90deg,#8b5cf6,#a78bfa);}
-.sosyoloji{background:linear-gradient(90deg,#06b6d4,#22d3ee);}
+/* ICON */
+.icon{
+ font-size:28px;
+}
 
+/* RENKLER */
+.matematik{border-left:5px solid #3b82f6;}
+.fizik{border-left:5px solid #f97316;}
+.kimya{border-left:5px solid #22c55e;}
+.biyoloji{border-left:5px solid #10b981;}
+.turkce{border-left:5px solid #6366f1;}
+.ingilizce{border-left:5px solid #ef4444;}
+.felsefe{border-left:5px solid #a855f7;}
+.din{border-left:5px solid #14b8a6;}
 </style>
 </head>
 
 <body>
 
-<header>ENES DENİZ 🔥 EĞİTİM ARAMA</header>
+<div class="menu-btn" onclick="openMenu()">☰</div>
 
-<input class="search" placeholder="🔍 Ders veya konu yaz..." onkeyup="search(this.value)">
+<header>ENES DENİZ 🚀 PRO PLATFORM</header>
 
-<div class="container" id="results"></div>
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+<div class="sidebar" id="menu">
+<div class="close-btn" onclick="closeMenu()">✖</div>
+
+<button onclick="setLevel('ilkokul')">📚 İlkokul</button>
+<button onclick="setLevel('ortaokul')">🧠 Ortaokul</button>
+<button onclick="setLevel('lise')">🎓 Lise</button>
+
+</div>
+
+<input class="search" placeholder="🔍 Ders ara..." onkeyup="search(this.value)">
+
+<div id="results"></div>
 
 <script>
 
-/* VIDEO DATABASE */
-let videoDB = [
-{title:"Matematik 1. dönem 1. yazılı", id:"cI-l3zXT57U"},
-{title:"Matematik 2. dönem 2. yazılı", id:"8kYl6Z0FJ7Q"},
-{title:"Fizik konu anlatımı", id:"3vYlP9Xz2A8"},
-{title:"Kimya yazılıya hazırlık", id:"7dKpL9Xc2B0"},
-{title:"Biyoloji tekrar", id:"Db8ltXb0Uz4"},
-{title:"Tarih konu anlatımı", id:"XeLppC_KnUk"},
-{title:"Coğrafya sınav", id:"GbJplVxtTEk"},
-{title:"Felsefe özet", id:"cI-l3zXT57U"},
-{title:"Din kültürü yazılı", id:"8kYl6Z0FJ7Q"},
-{title:"İngilizce grammar", id:"3vYlP9Xz2A8"},
-{title:"Türk dili anlatım", id:"7dKpL9Xc2B0"},
-{title:"Geometri konu", id:"Db8ltXb0Uz4"},
-{title:"Psikoloji ders", id:"XeLppC_KnUk"},
-{title:"Sosyoloji konu", id:"GbJplVxtTEk"}
+let currentLevel="lise";
+
+/* MENU */
+function openMenu(){
+ document.getElementById("menu").classList.add("open");
+ document.getElementById("overlay").classList.add("show");
+}
+
+function closeMenu(){
+ document.getElementById("menu").classList.remove("open");
+ document.getElementById("overlay").classList.remove("show");
+}
+
+/* DATA */
+let videoDB=[
+{title:"Matematik yazılı",level:"lise",id:"cI-l3zXT57U"},
+{title:"Fizik konu",level:"lise",id:"8kYl6Z0FJ7Q"},
+{title:"Kimya anlatım",level:"lise",id:"3vYlP9Xz2A8"},
+{title:"Türkçe okuma",level:"ilkokul",id:"7dKpL9Xc2B0"},
+{title:"İngilizce grammar",level:"ortaokul",id:"Db8ltXb0Uz4"}
 ];
 
-/* CLASS BELİRLE */
-function getClass(title){
- title = title.toLowerCase();
+/* ICON */
+function getIcon(t){
+ t=t.toLowerCase();
+ if(t.includes("matematik")) return "➗";
+ if(t.includes("fizik")) return "⚛";
+ if(t.includes("kimya")) return "🧪";
+ if(t.includes("biyoloji")) return "🧬";
+ if(t.includes("türk")) return "📖";
+ if(t.includes("ingilizce")) return "🌍";
+ if(t.includes("felsefe")) return "🧠";
+ if(t.includes("din")) return "🕌";
+ return "📚";
+}
 
- if(title.includes("matematik")) return "matematik";
- if(title.includes("fizik")) return "fizik";
- if(title.includes("kimya")) return "kimya";
- if(title.includes("biyoloji")) return "biyoloji";
- if(title.includes("tarih")) return "tarih";
- if(title.includes("coğrafya")) return "cografya";
- if(title.includes("felsefe")) return "felsefe";
- if(title.includes("din")) return "din";
- if(title.includes("ingilizce")) return "ingilizce";
- if(title.includes("türk")) return "turk";
- if(title.includes("geometri")) return "geometri";
- if(title.includes("psikoloji")) return "psikoloji";
- if(title.includes("sosyoloji")) return "sosyoloji";
-
+/* CLASS */
+function getClass(t){
+ t=t.toLowerCase();
+ if(t.includes("matematik")) return "matematik";
+ if(t.includes("fizik")) return "fizik";
+ if(t.includes("kimya")) return "kimya";
+ if(t.includes("biyoloji")) return "biyoloji";
+ if(t.includes("türk")) return "turkce";
+ if(t.includes("ingilizce")) return "ingilizce";
+ if(t.includes("felsefe")) return "felsefe";
+ if(t.includes("din")) return "din";
  return "";
 }
 
@@ -136,22 +232,30 @@ function search(q){
  let html="";
 
  videoDB.forEach(v=>{
-  if(v.title.toLowerCase().includes(q.toLowerCase())){
-   html += `
+  if(v.level===currentLevel && v.title.toLowerCase().includes(q.toLowerCase())){
+   html+=`
    <div class="card ${getClass(v.title)}" onclick="openVideo('${v.id}')">
     <img src="https://img.youtube.com/vi/${v.id}/0.jpg">
-    <div>${v.title}</div>
-   </div>
-   `;
+    <div>
+      <div class="icon">${getIcon(v.title)}</div>
+      <div>${v.title}</div>
+    </div>
+   </div>`;
   }
  });
 
- document.getElementById("results").innerHTML = html;
+ document.getElementById("results").innerHTML=html;
+}
+
+/* LEVEL */
+function setLevel(l){
+ currentLevel=l;
+ closeMenu();
 }
 
 /* OPEN */
 function openVideo(id){
- window.open("https://www.youtube.com/watch?v="+id, "_blank");
+ window.open("https://www.youtube.com/watch?v="+id);
 }
 
 </script>
