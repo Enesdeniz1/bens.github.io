@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mini Tools</title>
+<title>SnapTools</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
+* { box-sizing: border-box; font-family: Arial, sans-serif; }
 
 body {
   margin: 0;
@@ -20,9 +17,15 @@ body {
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 15px;
   background: black;
   color: white;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 18px;
 }
 
 button.lang {
@@ -31,6 +34,7 @@ button.lang {
   border-radius: 6px;
   padding: 5px 10px;
   border: none;
+  cursor: pointer;
 }
 
 .container {
@@ -54,7 +58,7 @@ textarea, input {
   border: 1px solid #ccc;
 }
 
-button {
+button.action {
   margin-top: 10px;
   padding: 10px;
   width: 100%;
@@ -70,53 +74,54 @@ button {
   background: #eee;
   padding: 10px;
   border-radius: 8px;
+  word-break: break-word;
 }
 
 .insta {
   color:#777;
   text-decoration:none;
-  transition:0.3s;
   font-size:13px;
 }
-.insta:hover {
-  color:black;
-}
+.insta:hover { color:black; }
 </style>
 </head>
 
 <body>
 
 <header>
-  <span id="title">⚡ Mini Araçlar</span>
+  <div class="logo">⚡ SnapTools</div>
   <button class="lang" onclick="toggleLang()">TR / EN</button>
 </header>
 
 <div class="container">
 
+  <!-- ÖZET -->
   <div class="box">
     <h3 id="sumTitle">Metin Özetleyici</h3>
-    <textarea id="text" placeholder="Metni buraya yapıştır..."></textarea>
-    <button onclick="ozetle()" id="sumBtn">Özetle</button>
+    <textarea id="text" placeholder="Metni buraya yaz..."></textarea>
+    <button class="action" onclick="ozetle()" id="sumBtn">Özetle</button>
     <div class="result" id="summary"></div>
   </div>
 
+  <!-- HASHTAG -->
   <div class="box">
-    <h3 id="tagTitle">Hashtag Oluşturucu</h3>
-    <input id="tagInput" placeholder="Konu yaz">
-    <button onclick="createTags()" id="tagBtn">Oluştur</button>
+    <h3 id="tagTitle">Hashtag Oluşturucu (30 adet)</h3>
+    <input id="tagInput" placeholder="Konu yaz (örn: ronaldo)">
+    <button class="action" onclick="createTags()" id="tagBtn">Oluştur</button>
     <div class="result" id="tags"></div>
   </div>
 
+  <!-- NOT -->
   <div class="box">
     <h3 id="noteTitle">Not Defteri</h3>
     <textarea id="note" placeholder="Notunu yaz..."></textarea>
-    <button onclick="saveNote()" id="saveBtn">Kaydet</button>
+    <button class="action" onclick="saveNote()" id="saveBtn">Kaydet</button>
   </div>
 
 </div>
 
-<!-- 🔥 Instagram Link -->
-<div style="text-align:center; margin:20px 0;">
+<!-- INSTAGRAM -->
+<div style="margin:20px;">
   <a href="https://instagram.com/hfwxq" target="_blank" class="insta">
     @hfwxq
   </a>
@@ -127,35 +132,32 @@ let lang = localStorage.getItem("lang") || "tr";
 
 const texts = {
   tr: {
-    title: "⚡ Mini Araçlar",
     sumTitle: "Metin Özetleyici",
     sumBtn: "Özetle",
-    tagTitle: "Hashtag Oluşturucu",
+    tagTitle: "Hashtag Oluşturucu (30 adet)",
     tagBtn: "Oluştur",
     noteTitle: "Not Defteri",
     saveBtn: "Kaydet",
-    placeholderText: "Metni buraya yapıştır...",
-    placeholderTag: "Konu yaz",
-    placeholderNote: "Notunu yaz..."
+    textPH: "Metni buraya yaz...",
+    tagPH: "Konu yaz (örn: ronaldo)",
+    notePH: "Notunu yaz..."
   },
   en: {
-    title: "⚡ Mini Tools",
     sumTitle: "Text Summarizer",
     sumBtn: "Summarize",
-    tagTitle: "Hashtag Generator",
+    tagTitle: "Hashtag Generator (30 tags)",
     tagBtn: "Generate",
     noteTitle: "Notepad",
     saveBtn: "Save",
-    placeholderText: "Paste your text here...",
-    placeholderTag: "Enter topic",
-    placeholderNote: "Write your note..."
+    textPH: "Enter your text...",
+    tagPH: "Enter topic (e.g. ronaldo)",
+    notePH: "Write your note..."
   }
 };
 
 function applyLang() {
-  const t = texts[lang];
+  let t = texts[lang];
 
-  document.getElementById("title").innerText = t.title;
   document.getElementById("sumTitle").innerText = t.sumTitle;
   document.getElementById("sumBtn").innerText = t.sumBtn;
   document.getElementById("tagTitle").innerText = t.tagTitle;
@@ -163,9 +165,9 @@ function applyLang() {
   document.getElementById("noteTitle").innerText = t.noteTitle;
   document.getElementById("saveBtn").innerText = t.saveBtn;
 
-  document.getElementById("text").placeholder = t.placeholderText;
-  document.getElementById("tagInput").placeholder = t.placeholderTag;
-  document.getElementById("note").placeholder = t.placeholderNote;
+  document.getElementById("text").placeholder = t.textPH;
+  document.getElementById("tagInput").placeholder = t.tagPH;
+  document.getElementById("note").placeholder = t.notePH;
 }
 
 function toggleLang() {
@@ -174,19 +176,38 @@ function toggleLang() {
   applyLang();
 }
 
+// ÖZET
 function ozetle() {
-  let text = document.getElementById("text").value;
+  let text = document.getElementById("text").value.trim();
+  if (!text) return;
+
   let words = text.split(" ");
   document.getElementById("summary").innerText =
     words.slice(0, 20).join(" ") + "...";
 }
 
+// HASHTAG (30)
 function createTags() {
-  let input = document.getElementById("tagInput").value;
-  document.getElementById("tags").innerText =
-    "#" + input + " #viral #trend #explore #fyp";
+  let input = document.getElementById("tagInput").value.trim().toLowerCase();
+  if (!input) return;
+
+  let base = input.replace(/\s+/g, "");
+
+  let tags = [
+    base, base+"edit", base+"video", base+"fans", base+"love",
+    base+"trend", base+"viral", base+"reels", base+"tiktok",
+    base+"explore", base+"explorepage", base+"instagood",
+    base+"fyp", base+"like", base+"follow",
+    "football","soccer","skills","goals","highlights",
+    "legend","champion","best","top","world",
+    "star","motivation","success","editz","viralvideo"
+  ];
+
+  let result = tags.map(t => "#" + t).join(" ");
+  document.getElementById("tags").innerText = result;
 }
 
+// NOT
 function saveNote() {
   let note = document.getElementById("note").value;
   localStorage.setItem("note", note);
