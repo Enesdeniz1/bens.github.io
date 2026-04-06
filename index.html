@@ -1,137 +1,173 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Digital Hacker</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenerbahçe Spor Kulübü Resmi Sitesi (Clone)</title>
+    <style>
+        :root {
+            --fb-dark-blue: #002d72;
+            --fb-yellow: #ffed00;
+            --fb-white: #ffffff;
+            --fb-text: #333;
+        }
 
-<link href="https://fonts.cdnfonts.com/css/digital-7-mono" rel="stylesheet">
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f8f8;
+        }
 
-<style>
-body{
-margin:0;
-overflow:hidden;
-background:black;
-font-family:'Digital-7 Mono', monospace;
-color:#00ff00;
-}
+        /* Üst İnce Bar */
+        .top-bar {
+            background-color: var(--fb-dark-blue);
+            height: 35px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0 10%;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
 
-/* CANVAS */
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
-}
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            margin-left: 15px;
+            text-transform: uppercase;
+        }
 
-/* SAAT */
-.clock{
-position:absolute;
-top:20px;
-width:100%;
-text-align:center;
-font-size:50px;
-text-shadow:0 0 10px #00ff00,0 0 20px #00ff00;
-}
+        /* Ana Header */
+        header {
+            background-color: var(--fb-white);
+            padding: 20px 10%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-/* ORTA */
-.text{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:70px;
-text-align:center;
-text-shadow:0 0 15px #00ff00,0 0 30px #00ff00;
-}
+        .logo-section img {
+            height: 80px; /* Logo buraya gelecek */
+        }
 
-/* ALT */
-.footer{
-position:absolute;
-bottom:20px;
-width:100%;
-text-align:center;
-font-size:20px;
-}
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
 
-.footer a{
-color:#00ff00;
-text-decoration:none;
-text-shadow:0 0 10px #00ff00;
-}
-</style>
+        .nav-menu li {
+            margin: 0 15px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--fb-dark-blue);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--fb-yellow);
+        }
+
+        /* Sarı-Lacivert Şerit */
+        .stripe-divider {
+            height: 10px;
+            display: flex;
+        }
+        .stripe-yellow { background-color: var(--fb-yellow); flex: 1; }
+        .stripe-blue { background-color: var(--fb-dark-blue); flex: 1; }
+
+        /* Ana Haber Alanı (Manşet) */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: #000 url('https://via.placeholder.com/1920x500') center/cover no-repeat;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, var(--fb-dark-blue));
+            padding: 50px 10%;
+            color: white;
+        }
+
+        .hero-overlay h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        /* Maç Kartı Tasarımı */
+        .match-bar {
+            background: #eee;
+            padding: 20px 10%;
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+        }
+
+        .match-card {
+            background: white;
+            min-width: 250px;
+            padding: 15px;
+            border-radius: 4px;
+            border-bottom: 3px solid var(--fb-yellow);
+            text-align: center;
+        }
+    </style>
 </head>
-
 <body>
 
-<canvas id="matrix"></canvas>
+    <div class="top-bar">
+        <a href="#">Fenerium</a>
+        <a href="#">FB TV</a>
+        <a href="#">Üye Girişi</a>
+    </div>
 
-<div class="clock" id="clock">00:00:00</div>
+    <header>
+        <div class="logo-section">
+            <h2 style="color: var(--fb-dark-blue); border: 2px solid var(--fb-yellow); padding: 5px;">FB</h2>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#">KULÜP</a></li>
+            <li><a href="#">HABERLER</a></li>
+            <li><a href="#">BRANŞLAR</a></li>
+            <li><a href="#">FİKSTÜR</a></li>
+            <li><a href="#">MULTİMEDYA</a></li>
+        </ul>
+    </header>
 
-<div class="text">
-YAPIM<br>ASAMASINDA
-</div>
+    <div class="stripe-divider">
+        <div class="stripe-yellow"></div>
+        <div class="stripe-blue"></div>
+    </div>
 
-<div class="footer">
-<a href="https://instagram.com/hfwxq" target="_blank">@hfwxq</a>
-</div>
+    <section class="hero-section">
+        <div class="hero-overlay">
+            <h1>Şampiyonluk Yolunda Hazırlıklar Sürüyor</h1>
+            <p>Futbol Takımımız, akşam antrenmanıyla günü tamamladı.</p>
+        </div>
+    </section>
 
-<script>
-
-/* SAAT */
-function updateClock(){
-let now=new Date();
-let h=String(now.getHours()).padStart(2,'0');
-let m=String(now.getMinutes()).padStart(2,'0');
-let s=String(now.getSeconds()).padStart(2,'0');
-document.getElementById("clock").innerText=h+":"+m+":"+s;
-}
-setInterval(updateClock,1000);
-updateClock();
-
-/* MATRIX KOD EFEKTİ */
-let canvas=document.getElementById("matrix");
-let ctx=canvas.getContext("2d");
-
-canvas.height=window.innerHeight;
-canvas.width=window.innerWidth;
-
-let letters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-letters=letters.split("");
-
-let fontSize=14;
-let columns=canvas.width/fontSize;
-
-let drops=[];
-for(let x=0;x<columns;x++) drops[x]=1;
-
-function draw(){
-ctx.fillStyle="rgba(0,0,0,0.05)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
-
-ctx.fillStyle="#00ff00";
-ctx.font=fontSize+"px monospace";
-
-for(let i=0;i<drops.length;i++){
-let text=letters[Math.floor(Math.random()*letters.length)];
-ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-
-if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
-drops[i]=0;
-
-drops[i]++;
-}
-}
-
-setInterval(draw,33);
-
-/* RESIZE FIX */
-window.addEventListener("resize",()=>{
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-});
-
-</script>
+    <div class="match-bar">
+        <div class="match-card">
+            <strong>Fenerbahçe - Rakip</strong>
+            <p>12 Temmuz | 20:00</p>
+        </div>
+        <div class="match-card">
+            <strong>Rakip - Fenerbahçe</strong>
+            <p>19 Temmuz | 21:45</p>
+        </div>
+    </div>
 
 </body>
 </html>
