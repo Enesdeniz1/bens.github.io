@@ -3,243 +3,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SnapTools</title>
+<title>Hayat Motoru PRO</title>
 
 <style>
-*{box-sizing:border-box;font-family:Arial;}
-body{margin:0;background:#f4f4f4;text-align:center;}
+body{
+margin:0;
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+}
 
+/* HEADER */
 header{
-display:flex;justify-content:space-between;
-padding:15px;background:black;color:white;
+padding:15px;
+font-size:22px;
+font-weight:bold;
+background:linear-gradient(270deg,#ff0080,#7928ca,#2af598);
+background-size:600% 600%;
+animation:rgb 6s infinite;
 }
 
-.menu{font-size:22px;cursor:pointer;}
-
-.sidebar{
-position:fixed;left:-280px;top:0;
-width:280px;height:100%;
-background:white;transition:.3s;
-padding:15px;overflow:auto;
-z-index:10;
+@keyframes rgb{
+0%{background-position:0%}
+100%{background-position:100%}
 }
 
-.sidebar.active{left:0;}
-
-.close{
-font-size:20px;
-cursor:pointer;
-text-align:right;
-}
-
-.box{
-background:white;margin:15px;padding:20px;
-border-radius:12px;
-}
-
-textarea,input{
-width:100%;padding:10px;margin-top:10px;
+/* BUTTON GRID */
+.buttons{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+padding:10px;
 }
 
 button{
-margin-top:10px;padding:10px;width:100%;
-background:black;color:white;border:none;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#1e293b;
+color:white;
+font-size:14px;
+cursor:pointer;
 }
 
-.plan{
-background:#eee;margin-top:10px;padding:10px;
-border-radius:8px;cursor:pointer;
+button:hover{
+background:#334155;
 }
 
-.note-item{
-background:#eee;padding:8px;margin:5px 0;
-cursor:pointer;text-align:left;
+/* RESULT */
+.result{
+padding:10px;
 }
 
-.delete{
-float:right;color:red;cursor:pointer;
+/* CARD */
+.card{
+background:#1e293b;
+margin:10px 0;
+padding:15px;
+border-radius:10px;
+text-align:left;
+position:relative;
 }
 
-.insta{
-font-size:13px;color:#777;text-decoration:none;
+/* STAR */
+.star{
+position:absolute;
+right:10px;
+top:10px;
+cursor:pointer;
 }
 
+/* VIDEO */
+iframe{
+width:100%;
+height:200px;
+margin-top:10px;
+border-radius:10px;
+}
 </style>
 </head>
 
 <body>
 
-<header>
-<div class="menu" onclick="toggleMenu()">☰</div>
-<div>⚡ SnapTools</div>
-<div></div>
-</header>
+<header>🧠 Hayat Motoru PRO</header>
 
-<!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
+<div class="buttons">
 
-<div class="close" onclick="toggleMenu()">✖</div>
+<button onclick="run('sinav')">📚 Sınav</button>
+<button onclick="run('para')">💸 Para</button>
+<button onclick="run('sikildim')">😐 Sıkıldım</button>
+<button onclick="run('uyku')">😴 Uyku</button>
+<button onclick="run('motivasyon')">🔥 Motivasyon</button>
+<button onclick="run('spor')">🏋️ Spor</button>
+<button onclick="run('aşk')">❤️ Aşk</button>
+<button onclick="run('arkadas')">👥 Arkadaş</button>
+<button onclick="run('odak')">🎯 Odak</button>
+<button onclick="run('alışkanlık')">🔁 Alışkanlık</button>
+<button onclick="run('paraonline')">💻 Online Para</button>
+<button onclick="run('zengin')">💎 Zenginlik</button>
+<button onclick="run('film')">🎬 Film</button>
+<button onclick="run('kitap')">📖 Kitap</button>
+<button onclick="run('yazılım')">💻 Yazılım</button>
 
-<h3>📒 Notlar</h3>
-<div id="noteList"></div>
-
-<h3>💎 Premium</h3>
-
-<div class="plan" onclick="startPayment('monthly')">
-Aylık - 50 TL
-</div>
-
-<div class="plan" onclick="startPayment('yearly')">
-Yıllık - 1000 TL
-</div>
-
-<p id="premiumStatus"></p>
+<button onclick="makePlan()">📅 Plan</button>
+<button onclick="showFav()">⭐ Favoriler</button>
 
 </div>
 
-<div class="box">
-<h3>Metin Özet</h3>
-<textarea id="text"></textarea>
-<button onclick="summarize()">Özetle</button>
-<div id="summary"></div>
-</div>
-
-<div class="box">
-<h3>Hashtag</h3>
-<input id="tagInput">
-<button onclick="hashtags()">Oluştur</button>
-<div id="tags"></div>
-</div>
-
-<div class="box">
-<h3>Not Defteri</h3>
-<textarea id="note"></textarea>
-<button onclick="saveNote()">Kaydet</button>
-</div>
-
-<!-- 📸 Instagram -->
-<div style="margin:20px;">
-<a href="https://instagram.com/hfwxq" target="_blank" class="insta">
-@hfwxq
-</a>
-</div>
+<div class="result" id="result"></div>
 
 <script>
 
-// Menü
-function toggleMenu(){
-sidebar.classList.toggle("active");
-}
+/* DATA */
+let data = {
 
-// Dışarı tıklayınca kapat
-document.addEventListener("click", function(e){
-if(!sidebar.contains(e.target) && !e.target.classList.contains("menu")){
-sidebar.classList.remove("active");
-}
-});
+sinav:["Pomodoro başla","Özet oku","Çıkmış çöz"],
+para:["Freelance başla","Site yap","Edit öğren"],
+sikildim:["Film izle","Oyun oyna","Yürüyüş yap"],
+uyku:["Telefon bırak","Müzik aç","Işık kapat"],
 
-// Notları yükle
-function loadNotes(){
-let notes=JSON.parse(localStorage.getItem("notes")||"[]");
-noteList.innerHTML="";
+motivasyon:["Hedef yaz","Kendine söz ver","Hemen başla"],
+spor:["20 şınav","Koşu yap","Evde antrenman"],
+aşk:["Mesaj at","Kendine odaklan","Sabırlı ol"],
+arkadas:["Mesaj at","Dışarı çık","Yeni kişi tanı"],
 
-notes.forEach((n,i)=>{
-let div=document.createElement("div");
-div.className="note-item";
+odak:["Telefonu kapat","Sessiz ortam","Zamanlayıcı kur"],
+alışkanlık:["21 gün devam et","Küçük başla","Takip et"],
+paraonline:["Dropshipping bak","İçerik üret","Freelance"],
+zengin:["Yatırım öğren","Risk al","Disiplin"],
 
-div.innerHTML=
-n.substring(0,20)+"... "+
-"<span class='delete'>✖</span>";
+film:["Aksiyon izle","Komedi izle","Bilim kurgu"],
+kitap:["Kişisel gelişim","Roman oku","Not al"],
+yazılım:["HTML öğren","JS çalış","Proje yap"]
 
-// NOTA TIKLAMA
-div.onclick=()=> note.value=n;
-
-// SİL BUTONU (fix)
-div.querySelector(".delete").onclick=(e)=>{
-e.stopPropagation();
-deleteNote(i);
 };
 
-noteList.appendChild(div);
-});
-}
-
-// Kaydet
-function saveNote(){
-let n=note.value;
-if(!n)return;
-
-let notes=JSON.parse(localStorage.getItem("notes")||"[]");
-notes.push(n);
-localStorage.setItem("notes",JSON.stringify(notes));
-
-alert("Kaydedildi");
-loadNotes();
-}
-
-// Sil
-function deleteNote(i){
-let notes=JSON.parse(localStorage.getItem("notes"));
-notes.splice(i,1);
-localStorage.setItem("notes",JSON.stringify(notes));
-loadNotes();
-}
-
-// Özet
-async function summarize(){
-let t=text.value;
-if(!t)return;
-
-summary.innerText="Yükleniyor...";
-
-try{
-let res=await fetch("http://localhost:3000/summarize",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({text:t})
-});
-
-let data=await res.json();
-summary.innerText=data.summary;
-}catch{
-summary.innerText="Hata!";
-}
-}
-
-// Hashtag
-function hashtags(){
-let i=tagInput.value.toLowerCase().trim();
-if(!i)return;
-
-let base=i.replace(/\s+/g,"");
-
-let tags=[
-base,base+"edit",base+"video",
-"viral","trend","fyp","explore",
-"instagood","like","follow",
-"contentcreator","growth","audience"
+let videos = [
+"https://www.youtube.com/embed/ZXsQAXx_ao0",
+"https://www.youtube.com/embed/5MgBikgcWnY",
+"https://www.youtube.com/embed/tbnzAVRZ9Xc",
+"https://www.youtube.com/embed/dQw4w9WgXcQ"
 ];
 
-tags=[...new Set(tags)].slice(0,30);
-tags=tags.map(t=>"#"+t).join(" ");
-
-document.getElementById("tags").innerText=tags;
+/* RANDOM */
+function rand(arr){
+return arr[Math.floor(Math.random()*arr.length)];
 }
 
-// Ödeme
-async function startPayment(plan){
-let res=await fetch("http://localhost:3000/create-payment",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({plan})
+/* FAVORITE */
+function getFav(){
+return JSON.parse(localStorage.getItem("fav")||"[]");
+}
+
+function toggleFav(text){
+let fav=getFav();
+
+if(fav.includes(text)){
+fav=fav.filter(f=>f!==text);
+}else{
+fav.push(text);
+}
+
+localStorage.setItem("fav",JSON.stringify(fav));
+renderCard(text);
+}
+
+/* CARD */
+function renderCard(text){
+let video=rand(videos);
+let fav = getFav().includes(text) ? "⭐" : "☆";
+
+document.getElementById("result").innerHTML=`
+<div class="card">
+<span class="star" onclick="toggleFav('${text}')">${fav}</span>
+${text}
+<iframe src="${video}" allowfullscreen></iframe>
+</div>
+`;
+}
+
+/* RUN */
+function run(type){
+let text=rand(data[type]);
+renderCard(text);
+}
+
+/* PLAN */
+function makePlan(){
+let saatler=["10:00","12:00","14:00","16:00","18:00"];
+let aktiviteler=["Ders","Video","Yürüyüş","Tekrar","Dinlen"];
+
+let html="<div class='card'>";
+
+for(let i=0;i<saatler.length;i++){
+html+=`⏰ ${saatler[i]} → ${rand(aktiviteler)}<br>`;
+}
+
+html+="</div>";
+
+document.getElementById("result").innerHTML=html;
+}
+
+/* FAVORITES */
+function showFav(){
+let fav=getFav();
+let html="";
+
+fav.forEach(f=>{
+html+=`<div class="card">${f}</div>`;
 });
 
-let data=await res.json();
-window.location.href=data.url;
+document.getElementById("result").innerHTML=html || "Favori yok 😢";
 }
-
-// Açılış
-window.onload=loadNotes;
 
 </script>
 
