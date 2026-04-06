@@ -3,16 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Digital</title>
+<title>Yapım Aşamasında</title>
 
-<!-- DIGITAL FONT -->
 <link href="https://fonts.cdnfonts.com/css/digital-7-mono" rel="stylesheet">
 
 <style>
 body{
 margin:0;
-background:black;
-color:#00ff00;
+background:#FFD700; /* SARI */
+color:#0a1f44; /* LACİVERT */
 font-family:'Digital-7 Mono', monospace;
 display:flex;
 flex-direction:column;
@@ -24,27 +23,36 @@ height:100vh;
 /* SAAT */
 .clock{
 margin-top:30px;
-font-size:50px;
-text-shadow:0 0 10px #00ff00,0 0 20px #00ff00;
+font-size:48px;
+letter-spacing:3px;
+text-shadow:
+0 0 5px #0a1f44,
+0 0 10px #0a1f44,
+0 0 20px rgba(10,31,68,0.6);
 }
 
 /* ORTA YAZI */
 .text{
-font-size:70px;
+font-size:64px;
 text-align:center;
-text-shadow:0 0 15px #00ff00,0 0 30px #00ff00;
+line-height:1.2;
+letter-spacing:5px;
+text-shadow:
+0 0 5px #0a1f44,
+0 0 10px #0a1f44,
+0 0 20px rgba(10,31,68,0.6);
 }
 
 /* ALT */
 .footer{
 margin-bottom:20px;
-font-size:20px;
+font-size:18px;
 }
 
 .footer a{
-color:#00ff00;
+color:#0a1f44;
 text-decoration:none;
-text-shadow:0 0 10px #00ff00;
+text-shadow:0 0 8px #0a1f44;
 }
 </style>
 </head>
@@ -54,7 +62,7 @@ text-shadow:0 0 10px #00ff00;
 <div class="clock" id="clock">00:00:00</div>
 
 <div class="text">
-YAPIM<br>AŞAMASINDA
+YAPIM<br>ASAMASINDA
 </div>
 
 <div class="footer">
@@ -67,8 +75,10 @@ let now = new Date();
 let h = String(now.getHours()).padStart(2,'0');
 let m = String(now.getMinutes()).padStart(2,'0');
 let s = String(now.getSeconds()).padStart(2,'0');
-document.getElementById("clock").innerText = h+":"+m+":"+s;
+
+document.getElementById("clock").innerText = h + ":" + m + ":" + s;
 }
+
 setInterval(updateClock,1000);
 updateClock();
 </script>
