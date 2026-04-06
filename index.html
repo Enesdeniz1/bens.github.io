@@ -353,3 +353,169 @@
     <footer style="background:#222; color:white; padding:40px 10%; text-align:center;">
         <p>© 2026 Fenerbahçe Spor Kulübü. Tüm Hakları Saklıdır.</p>
     </footer>
+    <style>
+    .match-center-container {
+        background: #f0f0f0;
+        padding: 20px 10%;
+        border-bottom: 2px solid var(--fb-yellow);
+    }
+    .match-scroll {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding-bottom: 10px;
+    }
+    .match-item {
+        background: white;
+        min-width: 220px;
+        padding: 15px;
+        border-radius: 4px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .match-item .league-name {
+        font-size: 10px;
+        color: #888;
+        display: block;
+        margin-bottom: 8px;
+    }
+    .teams {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .match-score {
+        background: var(--fb-dark-blue);
+        color: var(--fb-yellow);
+        padding: 2px 8px;
+        border-radius: 3px;
+    }
+</style>
+
+<div class="match-center-container">
+    <h4 style="margin-bottom:10px; color: var(--fb-dark-blue);">MAÇ MERKEZİ</h4>
+    <div class="match-scroll">
+        <div class="match-item">
+            <span class="league-name">Trendyol Süper Lig</span>
+            <div class="teams">
+                <span>FB</span>
+                <span class="match-score">3 - 1</span>
+                <span>GS</span>
+            </div>
+            <p style="font-size:11px; margin-top:5px;">MAÇ SONUCU</p>
+        </div>
+        <div class="match-item">
+            <span class="league-name">EuroLeague</span>
+            <div class="teams">
+                <span>FB BEKO</span>
+                <span class="match-score">88 - 74</span>
+                <span>RM</span>
+            </div>
+            <p style="font-size:11px; margin-top:5px;">CANLI</p>
+        </div>
+        <div class="match-item">
+            <span class="league-name">Voleybol Sultanlar Ligi</span>
+            <div class="teams">
+                <span>FB OPET</span>
+                <span class="match-score">0 - 0</span>
+                <span>Eczacıbaşı</span>
+            </div>
+            <p style="font-size:11px; margin-top:5px;">12.04.2026 | 19:00</p>
+        </div>
+    </div>
+</div>
+<style>
+    .video-gallery {
+        background: var(--fb-dark-blue);
+        padding: 50px 10%;
+        color: white;
+    }
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+    .video-card {
+        position: relative;
+        cursor: pointer;
+    }
+    .video-card img {
+        width: 100%;
+        border: 2px solid var(--fb-yellow);
+        transition: 0.3s;
+    }
+    .video-card:hover img {
+        opacity: 0.7;
+    }
+    .play-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 40px;
+        color: var(--fb-yellow);
+    }
+</style>
+
+<section class="video-gallery">
+    <h2 style="border-left: 5px solid var(--fb-yellow); padding-left: 15px;">FENERBAHÇE TV & VİDEO</h2>
+    <div class="video-grid">
+        <div class="video-card">
+            <img src="https://via.placeholder.com/300x180" alt="Video">
+            <div class="play-icon">▶</div>
+            <p style="margin-top:10px; font-weight:bold;">Maç Özeti: FB 3-1 GS</p>
+        </div>
+        <div class="video-card">
+            <img src="https://via.placeholder.com/300x180" alt="Video">
+            <div class="play-icon">▶</div>
+            <p style="margin-top:10px; font-weight:bold;">Antrenman Günlüğü: 06.04.2026</p>
+        </div>
+        <div class="video-card">
+            <img src="https://via.placeholder.com/300x180" alt="Video">
+            <div class="play-icon">▶</div>
+            <p style="margin-top:10px; font-weight:bold;">Özel Röportaj: Yeni Transferimiz</p>
+        </div>
+    </div>
+</section>
+<style>
+    .branch-selector {
+        background: #fff;
+        padding: 30px 10%;
+        text-align: center;
+    }
+    .branch-list {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 20px;
+    }
+    .branch-btn {
+        padding: 10px 25px;
+        border: 1px solid var(--fb-dark-blue);
+        color: var(--fb-dark-blue);
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: 0.3s;
+        background: transparent;
+    }
+    .branch-btn:hover {
+        background: var(--fb-dark-blue);
+        color: white;
+    }
+</style>
+
+<div class="branch-selector">
+    <h3>TÜM BRANŞLARIMIZ</h3>
+    <div class="branch-list">
+        <button class="branch-btn">Futbol</button>
+        <button class="branch-btn">Basketbol Erkek</button>
+        <button class="branch-btn">Basketbol Kadın</button>
+        <button class="branch-btn">Voleybol</button>
+        <button class="branch-btn">E-Spor</button>
+    </div>
+</div>
