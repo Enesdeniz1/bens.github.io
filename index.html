@@ -3,154 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Engine of Life</title>
+<title>Yapım Aşamasında</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#0f172a;color:white}
-header{padding:15px;text-align:center;font-size:20px;background:linear-gradient(270deg,#ff0080,#7928ca,#2af598)}
-.menu-btn{position:fixed;top:15px;left:15px;font-size:25px;cursor:pointer;z-index:1001}
-.sidebar{position:fixed;left:-270px;top:0;width:270px;height:100%;background:#1e293b;overflow:auto;transition:0.3s;padding-top:60px;z-index:1000}
-.sidebar a{display:block;padding:12px;border-bottom:1px solid #334155;cursor:pointer}
-.sidebar a:hover{background:#334155}
-.overlay{position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;top:0;z-index:999}
-.search{width:90%;margin:15px;padding:12px;border-radius:8px;border:none}
-.card{background:#1e293b;margin:10px;padding:15px;border-radius:12px;position:relative}
-.star{position:absolute;right:10px;top:10px;cursor:pointer}
-iframe{width:100%;height:200px;margin-top:10px;border-radius:10px;border:none}
+body{
+margin:0;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+align-items:center;
+background:#FFD700; /* SARI */
+color:#0a1f44; /* LACİVERT */
+font-family:Arial;
+}
+
+/* SAAT */
+.clock{
+margin-top:20px;
+font-size:28px;
+font-weight:bold;
+}
+
+/* ORTA YAZI */
+.center{
+flex:1;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:32px;
+font-weight:bold;
+text-align:center;
+}
+
+/* ALT */
+.footer{
+margin-bottom:15px;
+font-size:14px;
+}
+
+.footer a{
+color:#0a1f44;
+text-decoration:none;
+font-weight:bold;
+}
 </style>
 </head>
 
 <body>
 
-<div class="menu-btn" onclick="toggleMenu()">☰</div>
-<header>🧠 Engine of Life</header>
+<div class="clock" id="clock">00:00:00</div>
 
-<input class="search" placeholder="🔍 Ara..." onkeyup="search(this.value)">
-
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
-<div class="sidebar" id="menu">
-<a onclick="run('motivasyon')">🔥 Motivasyon</a>
-<a onclick="run('para')">💸 Para</a>
-<a onclick="run('sinav')">📚 Sınav</a>
-<a onclick="run('uyku')">😴 Uyku</a>
-<a onclick="run('spor')">🏋️ Spor</a>
-<a onclick="run('yazilim')">💻 Yazılım</a>
-<a onclick="run('film')">🎬 Film</a>
-<a onclick="run('muzik')">🎵 Müzik</a>
-<a onclick="showFav()">⭐ Favoriler</a>
+<div class="center">
+YAPIM AŞAMASINDA
 </div>
 
-<div id="result"></div>
+<div class="footer">
+<a href="https://instagram.com/hfwxq" target="_blank">@hfwxq</a>
+</div>
 
 <script>
-
-/* MENU */
-function toggleMenu(){
-menu.style.left="0px";
-overlay.style.display="block";
+function updateClock(){
+let now = new Date();
+let h = String(now.getHours()).padStart(2,'0');
+let m = String(now.getMinutes()).padStart(2,'0');
+let s = String(now.getSeconds()).padStart(2,'0');
+document.getElementById("clock").innerText = h + ":" + m + ":" + s;
 }
-function closeMenu(){
-menu.style.left="-270px";
-overlay.style.display="none";
-}
-
-/* STORAGE */
-function get(k,d){return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}
-function set(k,v){localStorage.setItem(k,JSON.stringify(v))}
-
-/* TÜRKÇE VİDEOLAR (KATEGORİYE GÖRE) */
-let videos = {
-motivasyon:[
-"https://www.youtube.com/embed/ZXsQAXx_ao0",
-"https://www.youtube.com/embed/5MgBikgcWnY"
-],
-para:[
-"https://www.youtube.com/embed/3vYlP9Xz2A8",
-"https://www.youtube.com/embed/XeLppC_KnUk"
-],
-sinav:[
-"https://www.youtube.com/embed/cI-l3zXT57U",
-"https://www.youtube.com/embed/Db8ltXb0Uz4"
-],
-uyku:[
-"https://www.youtube.com/embed/2OEL4P1Rz04"
-],
-spor:[
-"https://www.youtube.com/embed/8kYl6Z0FJ7Q"
-],
-yazilim:[
-"https://www.youtube.com/embed/7dKpL9Xc2B0"
-],
-film:[
-"https://www.youtube.com/embed/UNQhuFL6CWg"
-],
-muzik:[
-"https://www.youtube.com/embed/ktvTqknDobU"
-]
-};
-
-/* RANDOM VIDEO */
-function getVideo(type){
-let list = videos[type] || videos["motivasyon"];
-return list[Math.floor(Math.random()*list.length)];
-}
-
-/* AI TEXT */
-function generateText(type){
-return "🤖 " + type + " için bugün küçük başla. Disiplin kazanır.";
-}
-
-/* RUN */
-function run(type){
-let text = generateText(type);
-render(text, type);
-closeMenu();
-}
-
-/* FAVORITE */
-function toggleFav(text){
-let fav=get("fav",[]);
-fav.includes(text)?fav=fav.filter(f=>f!==text):fav.push(text);
-set("fav",fav);
-render(text,"motivasyon");
-}
-
-function showFav(){
-let fav=get("fav",[]);
-let html="";
-fav.forEach(f=>html+=card(f,"motivasyon"));
-result.innerHTML=html||"Favori yok";
-closeMenu();
-}
-
-/* CARD */
-function card(text,type){
-let fav=get("fav",[]).includes(text)?"⭐":"☆";
-return `
-<div class="card">
-<span class="star" onclick="toggleFav('${text}')">${fav}</span>
-${text}
-<iframe src="${getVideo(type)}" allowfullscreen></iframe>
-</div>`;
-}
-
-function render(text,type){
-result.innerHTML=card(text,type);
-}
-
-/* SEARCH */
-function search(q){
-q=q.toLowerCase();
-let html="";
-document.querySelectorAll(".sidebar a").forEach(a=>{
-if(a.innerText.toLowerCase().includes(q)){
-html+=`<div class="card">${a.innerText}</div>`;
-}
-});
-result.innerHTML=html||"Sonuç yok";
-}
-
+setInterval(updateClock,1000);
+updateClock();
 </script>
 
 </body>
