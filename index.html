@@ -1618,3 +1618,131 @@
         }
     });
 </script>
+<style>
+    /* Canlı Maç Skoru (Görseldeki gibi alt bilgi bandı) */
+    .live-score-strip {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 11px;
+        border-top: 1px solid #333;
+    }
+
+    .score-box {
+        background: var(--fb-header-blue);
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+
+    /* Video Kategori Bölümü */
+    .video-categories {
+        padding: 20px;
+        background: #00112e;
+    }
+
+    .category-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: var(--fb-yellow);
+        text-transform: uppercase;
+    }
+
+    .video-grid-horizontal {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding-bottom: 10px;
+    }
+
+    .video-thumb-card {
+        min-width: 160px;
+        position: relative;
+    }
+
+    .video-thumb-card img {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid #222;
+    }
+
+    .video-duration {
+        position: absolute;
+        bottom: 40px;
+        right: 5px;
+        background: rgba(0,0,0,0.8);
+        padding: 2px 5px;
+        font-size: 10px;
+        border-radius: 3px;
+    }
+
+    .video-title-small {
+        font-size: 11px;
+        margin-top: 5px;
+        color: #ddd;
+        height: 30px;
+        overflow: hidden;
+    }
+
+    /* Yayın Akışı "Hepsini Gör" Butonu Efekti */
+    .view-all-btn {
+        display: block;
+        text-align: center;
+        padding: 15px;
+        background: #002255;
+        margin: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: white;
+        font-size: 13px;
+        font-weight: bold;
+        border: 1px solid #003377;
+    }
+</style>
+
+<div class="live-score-strip">
+    <div class="score-box">VOLEYBOL</div>
+    <div>GALATASARAY ÇAĞDAŞ <span style="color:var(--fb-yellow)">66 - 75</span> FENERBAHÇE OPET</div>
+    <div style="margin-left: auto; color: #888;">4. ÇEYREK | 04:21</div>
+</div>
+
+<section class="video-categories">
+    <div class="category-title">ÖNE ÇIKAN VİDEOLAR</div>
+    <div class="video-grid-horizontal">
+        <div class="video-thumb-card">
+            <img src="https://via.placeholder.com/160x90/001a44/ffffff?text=MAÇ+ÖZETİ" alt="Video">
+            <span class="video-duration">08:45</span>
+            <div class="video-title-small">Fenerbahçe 3-1 Galatasaray Özet</div>
+        </div>
+        <div class="video-thumb-card">
+            <img src="https://via.placeholder.com/160x90/001a44/ffffff?text=RÖPORTAJ" alt="Video">
+            <span class="video-duration">12:20</span>
+            <div class="video-title-small">Edin Dzeko Maç Sonu Açıklamaları</div>
+        </div>
+        <div class="video-thumb-card">
+            <img src="https://via.placeholder.com/160x90/001a44/ffffff?text=ANTRENMAN" alt="Video">
+            <span class="video-duration">05:10</span>
+            <div class="video-title-small">Bodrum FK Maçı Hazırlıkları</div>
+        </div>
+        <div class="video-thumb-card">
+            <img src="https://via.placeholder.com/160x90/001a44/ffffff?text=TARİH" alt="Video">
+            <span class="video-duration">15:00</span>
+            <div class="video-title-small">Unutulmaz Avrupa Geceleri</div>
+        </div>
+    </div>
+</section>
+
+<a href="#" class="view-all-btn">TÜM YAYIN AKIŞINI GÖRÜNTÜLE</a>
+
+<section class="video-categories" style="background: transparent;">
+    <div class="category-title">BRANŞLARA GÖRE</div>
+    <div style="display: flex; gap: 10px; overflow-x: auto;">
+        <span style="background:#003377; padding: 8px 15px; border-radius: 20px; font-size: 12px;">Futbol</span>
+        <span style="background:#003377; padding: 8px 15px; border-radius: 20px; font-size: 12px;">Basketbol</span>
+        <span style="background:#003377; padding: 8px 15px; border-radius: 20px; font-size: 12px;">Voleybol</span>
+        <span style="background:#003377; padding: 8px 15px; border-radius: 20px; font-size: 12px;">Boks</span>
+    </div>
+</section>
