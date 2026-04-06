@@ -6,19 +6,7 @@
 <title>Engine of Life</title>
 
 <style>
-:root{
---bg:#0f172a;
---card:#1e293b;
---text:#fff;
-}
-
-body{
-margin:0;
-font-family:Arial;
-background:var(--bg);
-color:var(--text);
-overflow-x:hidden;
-}
+body{margin:0;font-family:Arial;background:#0f172a;color:white}
 
 /* HEADER */
 header{
@@ -28,28 +16,27 @@ font-size:20px;
 background:linear-gradient(270deg,#ff0080,#7928ca,#2af598);
 }
 
-/* MENU BUTTON */
+/* MENU */
 .menu-btn{
 position:fixed;
 top:15px;
 left:15px;
-font-size:24px;
+font-size:25px;
 cursor:pointer;
 z-index:1001;
 }
 
-/* SIDEBAR */
 .sidebar{
 position:fixed;
-top:0;
 left:-270px;
+top:0;
 width:270px;
 height:100%;
 background:#1e293b;
-overflow-y:auto;
+overflow:auto;
 transition:0.3s;
-z-index:1000;
 padding-top:60px;
+z-index:1000;
 }
 
 .sidebar a{
@@ -59,19 +46,16 @@ border-bottom:1px solid #334155;
 cursor:pointer;
 }
 
-.sidebar a:hover{
-background:#334155;
-}
+.sidebar a:hover{background:#334155}
 
 /* OVERLAY */
 .overlay{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
 background:rgba(0,0,0,0.5);
 display:none;
+top:0;
 z-index:999;
 }
 
@@ -84,21 +68,15 @@ border-radius:8px;
 border:none;
 }
 
-/* CONTENT */
-#result{
-padding:10px;
-}
-
 /* CARD */
 .card{
 background:#1e293b;
-margin:10px 0;
+margin:10px;
 padding:15px;
 border-radius:12px;
 position:relative;
 }
 
-/* FAVORITE */
 .star{
 position:absolute;
 right:10px;
@@ -106,7 +84,6 @@ top:10px;
 cursor:pointer;
 }
 
-/* VIDEO */
 iframe{
 width:100%;
 height:200px;
@@ -128,7 +105,7 @@ border:none;
 
 <div class="sidebar" id="menu">
 
-<!-- 50 kategori -->
+<!-- 50 KATEGORİ -->
 <a onclick="run('motivasyon')">🔥 Motivasyon</a>
 <a onclick="run('para')">💸 Para</a>
 <a onclick="run('sinav')">📚 Sınav</a>
@@ -188,7 +165,7 @@ border:none;
 
 <script>
 
-/* MENU FIX */
+/* MENU */
 function toggleMenu(){
 menu.style.left="0px";
 overlay.style.display="block";
@@ -203,9 +180,27 @@ overlay.style.display="none";
 function get(k,d){return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}
 function set(k,v){localStorage.setItem(k,JSON.stringify(v))}
 
+/* VIDEOLAR */
+let videosTR=[
+"https://www.youtube.com/embed/cI-l3zXT57U",
+"https://www.youtube.com/embed/XeLppC_KnUk",
+"https://www.youtube.com/embed/Db8ltXb0Uz4"
+];
+
+let videosEN=[
+"https://www.youtube.com/embed/ZXsQAXx_ao0",
+"https://www.youtube.com/embed/5MgBikgcWnY",
+"https://www.youtube.com/embed/UNQhuFL6CWg"
+];
+
+function getVideo(){
+let all=[...videosTR,...videosEN];
+return all[Math.floor(Math.random()*all.length)];
+}
+
 /* AI */
 function generateText(type){
-return "🤖 " + type + " için bugün küçük bir adım at. Başlamak kazanmaktır.";
+return "🤖 " + type + " için bugün küçük başla. Disiplin kazanır.";
 }
 
 /* RUN */
@@ -237,7 +232,7 @@ return `
 <div class="card">
 <span class="star" onclick="toggleFav('${text}')">${fav}</span>
 ${text}
-<iframe src="https://www.youtube.com/embed/ZXsQAXx_ao0"></iframe>
+<iframe src="${getVideo()}" allowfullscreen></iframe>
 </div>`;
 }
 
