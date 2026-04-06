@@ -6,57 +6,105 @@
 <title>Engine of Life</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#0f172a;color:white}
+:root{
+--bg:#0f172a;
+--card:#1e293b;
+--text:#fff;
+}
+
+body{
+margin:0;
+font-family:Arial;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+}
 
 /* HEADER */
 header{
 padding:15px;
 text-align:center;
-font-size:22px;
-font-weight:bold;
+font-size:20px;
 background:linear-gradient(270deg,#ff0080,#7928ca,#2af598);
-background-size:600% 600%;
-animation:rgb 6s infinite;
 }
 
-@keyframes rgb{
-0%{background-position:0%}
-100%{background-position:100%}
+/* MENU BUTTON */
+.menu-btn{
+position:fixed;
+top:15px;
+left:15px;
+font-size:24px;
+cursor:pointer;
+z-index:1001;
 }
 
-/* MENU */
-.menu-btn{position:fixed;top:15px;left:15px;font-size:25px;cursor:pointer}
+/* SIDEBAR */
 .sidebar{
-position:fixed;left:-270px;top:0;width:270px;height:100%;
-background:#1e293b;overflow:auto;transition:0.3s;padding-top:60px
+position:fixed;
+top:0;
+left:-270px;
+width:270px;
+height:100%;
+background:#1e293b;
+overflow-y:auto;
+transition:0.3s;
+z-index:1000;
+padding-top:60px;
 }
-.sidebar a{display:block;padding:12px;border-bottom:1px solid #334155;cursor:pointer}
-.sidebar a:hover{background:#334155}
+
+.sidebar a{
+display:block;
+padding:12px;
+border-bottom:1px solid #334155;
+cursor:pointer;
+}
+
+.sidebar a:hover{
+background:#334155;
+}
 
 /* OVERLAY */
 .overlay{
-position:fixed;width:100%;height:100%;
-background:rgba(0,0,0,0.6);
-display:none;top:0
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+display:none;
+z-index:999;
 }
 
 /* SEARCH */
 .search{
-width:90%;margin:15px;padding:12px;border-radius:8px;border:none
+width:90%;
+margin:15px;
+padding:12px;
+border-radius:8px;
+border:none;
+}
+
+/* CONTENT */
+#result{
+padding:10px;
 }
 
 /* CARD */
 .card{
 background:#1e293b;
-margin:10px;
+margin:10px 0;
 padding:15px;
 border-radius:12px;
 position:relative;
-box-shadow:0 0 10px rgba(0,0,0,0.4);
 }
 
-/* STAR */
-.star{position:absolute;right:10px;top:10px;cursor:pointer}
+/* FAVORITE */
+.star{
+position:absolute;
+right:10px;
+top:10px;
+cursor:pointer;
+}
 
 /* VIDEO */
 iframe{
@@ -64,29 +112,7 @@ width:100%;
 height:200px;
 margin-top:10px;
 border-radius:10px;
-}
-
-/* STATS */
-.stats{
-text-align:center;
-font-size:14px;
-margin-top:5px;
-opacity:0.8;
-}
-
-/* LEADERBOARD */
-.leaderboard{
-padding:10px;
-}
-
-/* AD */
-.ad{
-background:#111827;
-margin:10px;
-padding:15px;
-border-radius:10px;
-text-align:center;
-opacity:0.8;
+border:none;
 }
 </style>
 </head>
@@ -96,54 +122,96 @@ opacity:0.8;
 <div class="menu-btn" onclick="toggleMenu()">☰</div>
 <header>🧠 Engine of Life</header>
 
-<div class="stats" id="stats"></div>
+<input class="search" placeholder="🔍 Ara..." onkeyup="search(this.value)">
 
-<input class="search" placeholder="🔍 Hayatında ne lazım?" onkeyup="search(this.value)">
-
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
 <div class="sidebar" id="menu">
+
+<!-- 50 kategori -->
 <a onclick="run('motivasyon')">🔥 Motivasyon</a>
 <a onclick="run('para')">💸 Para</a>
 <a onclick="run('sinav')">📚 Sınav</a>
 <a onclick="run('uyku')">😴 Uyku</a>
 <a onclick="run('sikildim')">😐 Sıkıldım</a>
+<a onclick="run('ders')">🧠 Ders</a>
+<a onclick="run('kitap')">📖 Kitap</a>
+<a onclick="run('dil')">🌍 Dil</a>
+<a onclick="run('yazilim')">💻 Yazılım</a>
+<a onclick="run('uni')">🎓 Üniversite</a>
+<a onclick="run('mat')">🧮 Matematik</a>
+<a onclick="run('bilim')">🔬 Bilim</a>
+<a onclick="run('online')">💻 Online Para</a>
+<a onclick="run('kariyer')">🧑‍💼 Kariyer</a>
+<a onclick="run('is')">📊 İş</a>
+<a onclick="run('zengin')">💎 Zenginlik</a>
+<a onclick="run('yatirim')">📈 Yatırım</a>
+<a onclick="run('kripto')">🪙 Kripto</a>
+<a onclick="run('eticaret')">🛒 E-Ticaret</a>
+<a onclick="run('odak')">🎯 Odak</a>
+<a onclick="run('alis')">🔁 Alışkanlık</a>
+<a onclick="run('zihin')">🧠 Zihin</a>
+<a onclick="run('zaman')">⏳ Zaman</a>
+<a onclick="run('hedef')">🚀 Hedef</a>
+<a onclick="run('uretken')">💡 Üretkenlik</a>
+<a onclick="run('ask')">❤️ Aşk</a>
+<a onclick="run('ayrilik')">💔 Ayrılık</a>
+<a onclick="run('arkadas')">👥 Arkadaş</a>
+<a onclick="run('iletisim')">🗣️ İletişim</a>
+<a onclick="run('sosyal')">🧑‍🤝‍🧑 Sosyal</a>
+<a onclick="run('stres')">😡 Stres</a>
+<a onclick="run('depresyon')">😔 Depresyon</a>
+<a onclick="run('kaygi')">😨 Kaygı</a>
+<a onclick="run('ozguven')">😎 Özgüven</a>
+<a onclick="run('spor')">🏋️ Spor</a>
+<a onclick="run('beslenme')">🥗 Beslenme</a>
+<a onclick="run('enerji')">⚡ Enerji</a>
+<a onclick="run('meditasyon')">🧘 Meditasyon</a>
+<a onclick="run('film')">🎬 Film</a>
+<a onclick="run('dizi')">📺 Dizi</a>
+<a onclick="run('oyun')">🎮 Oyun</a>
+<a onclick="run('muzik')">🎵 Müzik</a>
+<a onclick="run('mizah')">😂 Mizah</a>
+<a onclick="run('gunluk')">🏠 Günlük</a>
+<a onclick="run('seyahat')">🧳 Seyahat</a>
+<a onclick="run('yemek')">🍔 Yemek</a>
+<a onclick="run('alisveris')">🛍️ Alışveriş</a>
+<a onclick="run('uygulama')">📱 Uygulama</a>
+<a onclick="run('ai')">🤖 Yapay Zeka</a>
+<a onclick="run('trend')">🔥 Trend</a>
+
 <a onclick="showFav()">⭐ Favoriler</a>
-<a onclick="smart()">🧠 AI Öner</a>
-<a onclick="showBoard()">🏆 Leaderboard</a>
+
 </div>
 
 <div id="result"></div>
 
-<div class="ad">💰 Reklam Alanı (Google AdSense eklenebilir)</div>
-
 <script>
 
-/* DATA */
-let data={
-motivasyon:["Şimdi başla, sonra değil","Bahaneleri bırak","Hedefine odaklan"],
-para:["Freelance öğren","Video edit yap","Site kur para kazan"],
-sinav:["Pomodoro yap","Çıkmış çöz","Özet oku"],
-uyku:["Telefonu bırak","Gözlerini dinlendir","Rahat müzik aç"],
-sikildim:["Film izle","Oyun oyna","Dışarı çık"]
-};
+/* MENU FIX */
+function toggleMenu(){
+menu.style.left="0px";
+overlay.style.display="block";
+}
 
-let videos=[
-"https://www.youtube.com/embed/ZXsQAXx_ao0",
-"https://www.youtube.com/embed/5MgBikgcWnY"
-];
+function closeMenu(){
+menu.style.left="-270px";
+overlay.style.display="none";
+}
 
 /* STORAGE */
 function get(k,d){return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}
 function set(k,v){localStorage.setItem(k,JSON.stringify(v))}
 
-/* RANDOM */
-function rand(a){return a[Math.floor(Math.random()*a.length)]}
+/* AI */
+function generateText(type){
+return "🤖 " + type + " için bugün küçük bir adım at. Başlamak kazanmaktır.";
+}
 
-/* MENU */
-function toggleMenu(){
-menu.style.left = menu.style.left==="0px"?"-270px":"0px";
-overlay.style.display = overlay.style.display==="block"?"none":"block";
+/* RUN */
+function run(type){
+render(generateText(type));
+closeMenu();
 }
 
 /* FAVORITE */
@@ -159,52 +227,17 @@ let fav=get("fav",[]);
 let html="";
 fav.forEach(f=>html+=card(f));
 result.innerHTML=html||"Favori yok";
-toggleMenu();
-}
-
-/* SCORE + STREAK */
-function statsUpdate(){
-let score=get("score",0);
-let streak=get("streak",1);
-let online=Math.floor(Math.random()*500)+100;
-stats.innerHTML=`⭐ ${score} Puan | 🔥 ${streak} Gün | 🌐 ${online} Online`;
-}
-
-function addScore(){
-let s=get("score",0)+10;
-set("score",s);
-statsUpdate();
-}
-
-/* SMART AI */
-function smart(){
-let usage=get("usage",{});
-let best=Object.keys(usage).sort((a,b)=>usage[b]-usage[a])[0];
-run(best||"motivasyon");
-}
-
-/* RUN */
-function run(type){
-let usage=get("usage",{});
-usage[type]=(usage[type]||0)+1;
-set("usage",usage);
-
-let text=rand(data[type]);
-render(text);
-addScore();
-toggleMenu();
+closeMenu();
 }
 
 /* CARD */
 function card(text){
 let fav=get("fav",[]).includes(text)?"⭐":"☆";
-let video=rand(videos);
-
 return `
 <div class="card">
 <span class="star" onclick="toggleFav('${text}')">${fav}</span>
-🤖 AI: ${text}
-<iframe src="${video}"></iframe>
+${text}
+<iframe src="https://www.youtube.com/embed/ZXsQAXx_ao0"></iframe>
 </div>`;
 }
 
@@ -216,28 +249,13 @@ result.innerHTML=card(text);
 function search(q){
 q=q.toLowerCase();
 let html="";
-Object.keys(data).forEach(k=>{
-data[k].forEach(v=>{
-if(v.toLowerCase().includes(q)) html+=card(v);
-});
+document.querySelectorAll(".sidebar a").forEach(a=>{
+if(a.innerText.toLowerCase().includes(q)){
+html+=`<div class="card">${a.innerText}</div>`;
+}
 });
 result.innerHTML=html||"Sonuç yok";
 }
-
-/* LEADERBOARD (fake global) */
-function showBoard(){
-let names=["Alex","Mehmet","John","Ayşe","Ali"];
-let html="<div class='leaderboard'>";
-names.forEach(n=>{
-html+=`<div class="card">🏆 ${n} - ${Math.floor(Math.random()*1000)} puan</div>`;
-});
-html+="</div>";
-result.innerHTML=html;
-toggleMenu();
-}
-
-/* INIT */
-statsUpdate();
 
 </script>
 
