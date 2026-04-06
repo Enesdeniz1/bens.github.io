@@ -3,20 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hayat Motoru PRO</title>
+<title>Engine of Life</title>
 
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:#0f172a;
-color:white;
-text-align:center;
-}
+body{margin:0;font-family:Arial;background:#0f172a;color:white}
 
 /* HEADER */
 header{
 padding:15px;
+text-align:center;
 font-size:22px;
 font-weight:bold;
 background:linear-gradient(270deg,#ff0080,#7928ca,#2af598);
@@ -29,50 +24,39 @@ animation:rgb 6s infinite;
 100%{background-position:100%}
 }
 
-/* BUTTON GRID */
-.buttons{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-padding:10px;
+/* MENU */
+.menu-btn{position:fixed;top:15px;left:15px;font-size:25px;cursor:pointer}
+.sidebar{
+position:fixed;left:-270px;top:0;width:270px;height:100%;
+background:#1e293b;overflow:auto;transition:0.3s;padding-top:60px
+}
+.sidebar a{display:block;padding:12px;border-bottom:1px solid #334155;cursor:pointer}
+.sidebar a:hover{background:#334155}
+
+/* OVERLAY */
+.overlay{
+position:fixed;width:100%;height:100%;
+background:rgba(0,0,0,0.6);
+display:none;top:0
 }
 
-button{
-padding:12px;
-border:none;
-border-radius:10px;
-background:#1e293b;
-color:white;
-font-size:14px;
-cursor:pointer;
-}
-
-button:hover{
-background:#334155;
-}
-
-/* RESULT */
-.result{
-padding:10px;
+/* SEARCH */
+.search{
+width:90%;margin:15px;padding:12px;border-radius:8px;border:none
 }
 
 /* CARD */
 .card{
 background:#1e293b;
-margin:10px 0;
+margin:10px;
 padding:15px;
-border-radius:10px;
-text-align:left;
+border-radius:12px;
 position:relative;
+box-shadow:0 0 10px rgba(0,0,0,0.4);
 }
 
 /* STAR */
-.star{
-position:absolute;
-right:10px;
-top:10px;
-cursor:pointer;
-}
+.star{position:absolute;right:10px;top:10px;cursor:pointer}
 
 /* VIDEO */
 iframe{
@@ -81,141 +65,179 @@ height:200px;
 margin-top:10px;
 border-radius:10px;
 }
+
+/* STATS */
+.stats{
+text-align:center;
+font-size:14px;
+margin-top:5px;
+opacity:0.8;
+}
+
+/* LEADERBOARD */
+.leaderboard{
+padding:10px;
+}
+
+/* AD */
+.ad{
+background:#111827;
+margin:10px;
+padding:15px;
+border-radius:10px;
+text-align:center;
+opacity:0.8;
+}
 </style>
 </head>
 
 <body>
 
-<header>🧠 Hayat Motoru PRO</header>
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+<header>🧠 Engine of Life</header>
 
-<div class="buttons">
+<div class="stats" id="stats"></div>
 
-<button onclick="run('sinav')">📚 Sınav</button>
-<button onclick="run('para')">💸 Para</button>
-<button onclick="run('sikildim')">😐 Sıkıldım</button>
-<button onclick="run('uyku')">😴 Uyku</button>
-<button onclick="run('motivasyon')">🔥 Motivasyon</button>
-<button onclick="run('spor')">🏋️ Spor</button>
-<button onclick="run('aşk')">❤️ Aşk</button>
-<button onclick="run('arkadas')">👥 Arkadaş</button>
-<button onclick="run('odak')">🎯 Odak</button>
-<button onclick="run('alışkanlık')">🔁 Alışkanlık</button>
-<button onclick="run('paraonline')">💻 Online Para</button>
-<button onclick="run('zengin')">💎 Zenginlik</button>
-<button onclick="run('film')">🎬 Film</button>
-<button onclick="run('kitap')">📖 Kitap</button>
-<button onclick="run('yazılım')">💻 Yazılım</button>
+<input class="search" placeholder="🔍 Hayatında ne lazım?" onkeyup="search(this.value)">
 
-<button onclick="makePlan()">📅 Plan</button>
-<button onclick="showFav()">⭐ Favoriler</button>
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
+<div class="sidebar" id="menu">
+<a onclick="run('motivasyon')">🔥 Motivasyon</a>
+<a onclick="run('para')">💸 Para</a>
+<a onclick="run('sinav')">📚 Sınav</a>
+<a onclick="run('uyku')">😴 Uyku</a>
+<a onclick="run('sikildim')">😐 Sıkıldım</a>
+<a onclick="showFav()">⭐ Favoriler</a>
+<a onclick="smart()">🧠 AI Öner</a>
+<a onclick="showBoard()">🏆 Leaderboard</a>
 </div>
 
-<div class="result" id="result"></div>
+<div id="result"></div>
+
+<div class="ad">💰 Reklam Alanı (Google AdSense eklenebilir)</div>
 
 <script>
 
 /* DATA */
-let data = {
-
-sinav:["Pomodoro başla","Özet oku","Çıkmış çöz"],
-para:["Freelance başla","Site yap","Edit öğren"],
-sikildim:["Film izle","Oyun oyna","Yürüyüş yap"],
-uyku:["Telefon bırak","Müzik aç","Işık kapat"],
-
-motivasyon:["Hedef yaz","Kendine söz ver","Hemen başla"],
-spor:["20 şınav","Koşu yap","Evde antrenman"],
-aşk:["Mesaj at","Kendine odaklan","Sabırlı ol"],
-arkadas:["Mesaj at","Dışarı çık","Yeni kişi tanı"],
-
-odak:["Telefonu kapat","Sessiz ortam","Zamanlayıcı kur"],
-alışkanlık:["21 gün devam et","Küçük başla","Takip et"],
-paraonline:["Dropshipping bak","İçerik üret","Freelance"],
-zengin:["Yatırım öğren","Risk al","Disiplin"],
-
-film:["Aksiyon izle","Komedi izle","Bilim kurgu"],
-kitap:["Kişisel gelişim","Roman oku","Not al"],
-yazılım:["HTML öğren","JS çalış","Proje yap"]
-
+let data={
+motivasyon:["Şimdi başla, sonra değil","Bahaneleri bırak","Hedefine odaklan"],
+para:["Freelance öğren","Video edit yap","Site kur para kazan"],
+sinav:["Pomodoro yap","Çıkmış çöz","Özet oku"],
+uyku:["Telefonu bırak","Gözlerini dinlendir","Rahat müzik aç"],
+sikildim:["Film izle","Oyun oyna","Dışarı çık"]
 };
 
-let videos = [
+let videos=[
 "https://www.youtube.com/embed/ZXsQAXx_ao0",
-"https://www.youtube.com/embed/5MgBikgcWnY",
-"https://www.youtube.com/embed/tbnzAVRZ9Xc",
-"https://www.youtube.com/embed/dQw4w9WgXcQ"
+"https://www.youtube.com/embed/5MgBikgcWnY"
 ];
 
+/* STORAGE */
+function get(k,d){return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}
+function set(k,v){localStorage.setItem(k,JSON.stringify(v))}
+
 /* RANDOM */
-function rand(arr){
-return arr[Math.floor(Math.random()*arr.length)];
+function rand(a){return a[Math.floor(Math.random()*a.length)]}
+
+/* MENU */
+function toggleMenu(){
+menu.style.left = menu.style.left==="0px"?"-270px":"0px";
+overlay.style.display = overlay.style.display==="block"?"none":"block";
 }
 
 /* FAVORITE */
-function getFav(){
-return JSON.parse(localStorage.getItem("fav")||"[]");
-}
-
 function toggleFav(text){
-let fav=getFav();
-
-if(fav.includes(text)){
-fav=fav.filter(f=>f!==text);
-}else{
-fav.push(text);
+let fav=get("fav",[]);
+fav.includes(text)?fav=fav.filter(f=>f!==text):fav.push(text);
+set("fav",fav);
+render(text);
 }
 
-localStorage.setItem("fav",JSON.stringify(fav));
-renderCard(text);
+function showFav(){
+let fav=get("fav",[]);
+let html="";
+fav.forEach(f=>html+=card(f));
+result.innerHTML=html||"Favori yok";
+toggleMenu();
 }
 
-/* CARD */
-function renderCard(text){
-let video=rand(videos);
-let fav = getFav().includes(text) ? "⭐" : "☆";
+/* SCORE + STREAK */
+function statsUpdate(){
+let score=get("score",0);
+let streak=get("streak",1);
+let online=Math.floor(Math.random()*500)+100;
+stats.innerHTML=`⭐ ${score} Puan | 🔥 ${streak} Gün | 🌐 ${online} Online`;
+}
 
-document.getElementById("result").innerHTML=`
-<div class="card">
-<span class="star" onclick="toggleFav('${text}')">${fav}</span>
-${text}
-<iframe src="${video}" allowfullscreen></iframe>
-</div>
-`;
+function addScore(){
+let s=get("score",0)+10;
+set("score",s);
+statsUpdate();
+}
+
+/* SMART AI */
+function smart(){
+let usage=get("usage",{});
+let best=Object.keys(usage).sort((a,b)=>usage[b]-usage[a])[0];
+run(best||"motivasyon");
 }
 
 /* RUN */
 function run(type){
+let usage=get("usage",{});
+usage[type]=(usage[type]||0)+1;
+set("usage",usage);
+
 let text=rand(data[type]);
-renderCard(text);
+render(text);
+addScore();
+toggleMenu();
 }
 
-/* PLAN */
-function makePlan(){
-let saatler=["10:00","12:00","14:00","16:00","18:00"];
-let aktiviteler=["Ders","Video","Yürüyüş","Tekrar","Dinlen"];
+/* CARD */
+function card(text){
+let fav=get("fav",[]).includes(text)?"⭐":"☆";
+let video=rand(videos);
 
-let html="<div class='card'>";
-
-for(let i=0;i<saatler.length;i++){
-html+=`⏰ ${saatler[i]} → ${rand(aktiviteler)}<br>`;
+return `
+<div class="card">
+<span class="star" onclick="toggleFav('${text}')">${fav}</span>
+🤖 AI: ${text}
+<iframe src="${video}"></iframe>
+</div>`;
 }
 
-html+="</div>";
-
-document.getElementById("result").innerHTML=html;
+function render(text){
+result.innerHTML=card(text);
 }
 
-/* FAVORITES */
-function showFav(){
-let fav=getFav();
+/* SEARCH */
+function search(q){
+q=q.toLowerCase();
 let html="";
-
-fav.forEach(f=>{
-html+=`<div class="card">${f}</div>`;
+Object.keys(data).forEach(k=>{
+data[k].forEach(v=>{
+if(v.toLowerCase().includes(q)) html+=card(v);
 });
-
-document.getElementById("result").innerHTML=html || "Favori yok 😢";
+});
+result.innerHTML=html||"Sonuç yok";
 }
+
+/* LEADERBOARD (fake global) */
+function showBoard(){
+let names=["Alex","Mehmet","John","Ayşe","Ali"];
+let html="<div class='leaderboard'>";
+names.forEach(n=>{
+html+=`<div class="card">🏆 ${n} - ${Math.floor(Math.random()*1000)} puan</div>`;
+});
+html+="</div>";
+result.innerHTML=html;
+toggleMenu();
+}
+
+/* INIT */
+statsUpdate();
 
 </script>
 
