@@ -7,90 +7,16 @@
 
 <style>
 body{margin:0;font-family:Arial;background:#0f172a;color:white}
-
-/* HEADER */
-header{
-padding:15px;
-text-align:center;
-font-size:20px;
-background:linear-gradient(270deg,#ff0080,#7928ca,#2af598);
-}
-
-/* MENU */
-.menu-btn{
-position:fixed;
-top:15px;
-left:15px;
-font-size:25px;
-cursor:pointer;
-z-index:1001;
-}
-
-.sidebar{
-position:fixed;
-left:-270px;
-top:0;
-width:270px;
-height:100%;
-background:#1e293b;
-overflow:auto;
-transition:0.3s;
-padding-top:60px;
-z-index:1000;
-}
-
-.sidebar a{
-display:block;
-padding:12px;
-border-bottom:1px solid #334155;
-cursor:pointer;
-}
-
+header{padding:15px;text-align:center;font-size:20px;background:linear-gradient(270deg,#ff0080,#7928ca,#2af598)}
+.menu-btn{position:fixed;top:15px;left:15px;font-size:25px;cursor:pointer;z-index:1001}
+.sidebar{position:fixed;left:-270px;top:0;width:270px;height:100%;background:#1e293b;overflow:auto;transition:0.3s;padding-top:60px;z-index:1000}
+.sidebar a{display:block;padding:12px;border-bottom:1px solid #334155;cursor:pointer}
 .sidebar a:hover{background:#334155}
-
-/* OVERLAY */
-.overlay{
-position:fixed;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-display:none;
-top:0;
-z-index:999;
-}
-
-/* SEARCH */
-.search{
-width:90%;
-margin:15px;
-padding:12px;
-border-radius:8px;
-border:none;
-}
-
-/* CARD */
-.card{
-background:#1e293b;
-margin:10px;
-padding:15px;
-border-radius:12px;
-position:relative;
-}
-
-.star{
-position:absolute;
-right:10px;
-top:10px;
-cursor:pointer;
-}
-
-iframe{
-width:100%;
-height:200px;
-margin-top:10px;
-border-radius:10px;
-border:none;
-}
+.overlay{position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;top:0;z-index:999}
+.search{width:90%;margin:15px;padding:12px;border-radius:8px;border:none}
+.card{background:#1e293b;margin:10px;padding:15px;border-radius:12px;position:relative}
+.star{position:absolute;right:10px;top:10px;cursor:pointer}
+iframe{width:100%;height:200px;margin-top:10px;border-radius:10px;border:none}
 </style>
 </head>
 
@@ -104,61 +30,15 @@ border:none;
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
 <div class="sidebar" id="menu">
-
-<!-- 50 KATEGORİ -->
 <a onclick="run('motivasyon')">🔥 Motivasyon</a>
 <a onclick="run('para')">💸 Para</a>
 <a onclick="run('sinav')">📚 Sınav</a>
 <a onclick="run('uyku')">😴 Uyku</a>
-<a onclick="run('sikildim')">😐 Sıkıldım</a>
-<a onclick="run('ders')">🧠 Ders</a>
-<a onclick="run('kitap')">📖 Kitap</a>
-<a onclick="run('dil')">🌍 Dil</a>
-<a onclick="run('yazilim')">💻 Yazılım</a>
-<a onclick="run('uni')">🎓 Üniversite</a>
-<a onclick="run('mat')">🧮 Matematik</a>
-<a onclick="run('bilim')">🔬 Bilim</a>
-<a onclick="run('online')">💻 Online Para</a>
-<a onclick="run('kariyer')">🧑‍💼 Kariyer</a>
-<a onclick="run('is')">📊 İş</a>
-<a onclick="run('zengin')">💎 Zenginlik</a>
-<a onclick="run('yatirim')">📈 Yatırım</a>
-<a onclick="run('kripto')">🪙 Kripto</a>
-<a onclick="run('eticaret')">🛒 E-Ticaret</a>
-<a onclick="run('odak')">🎯 Odak</a>
-<a onclick="run('alis')">🔁 Alışkanlık</a>
-<a onclick="run('zihin')">🧠 Zihin</a>
-<a onclick="run('zaman')">⏳ Zaman</a>
-<a onclick="run('hedef')">🚀 Hedef</a>
-<a onclick="run('uretken')">💡 Üretkenlik</a>
-<a onclick="run('ask')">❤️ Aşk</a>
-<a onclick="run('ayrilik')">💔 Ayrılık</a>
-<a onclick="run('arkadas')">👥 Arkadaş</a>
-<a onclick="run('iletisim')">🗣️ İletişim</a>
-<a onclick="run('sosyal')">🧑‍🤝‍🧑 Sosyal</a>
-<a onclick="run('stres')">😡 Stres</a>
-<a onclick="run('depresyon')">😔 Depresyon</a>
-<a onclick="run('kaygi')">😨 Kaygı</a>
-<a onclick="run('ozguven')">😎 Özgüven</a>
 <a onclick="run('spor')">🏋️ Spor</a>
-<a onclick="run('beslenme')">🥗 Beslenme</a>
-<a onclick="run('enerji')">⚡ Enerji</a>
-<a onclick="run('meditasyon')">🧘 Meditasyon</a>
+<a onclick="run('yazilim')">💻 Yazılım</a>
 <a onclick="run('film')">🎬 Film</a>
-<a onclick="run('dizi')">📺 Dizi</a>
-<a onclick="run('oyun')">🎮 Oyun</a>
 <a onclick="run('muzik')">🎵 Müzik</a>
-<a onclick="run('mizah')">😂 Mizah</a>
-<a onclick="run('gunluk')">🏠 Günlük</a>
-<a onclick="run('seyahat')">🧳 Seyahat</a>
-<a onclick="run('yemek')">🍔 Yemek</a>
-<a onclick="run('alisveris')">🛍️ Alışveriş</a>
-<a onclick="run('uygulama')">📱 Uygulama</a>
-<a onclick="run('ai')">🤖 Yapay Zeka</a>
-<a onclick="run('trend')">🔥 Trend</a>
-
 <a onclick="showFav()">⭐ Favoriler</a>
-
 </div>
 
 <div id="result"></div>
@@ -170,7 +50,6 @@ function toggleMenu(){
 menu.style.left="0px";
 overlay.style.display="block";
 }
-
 function closeMenu(){
 menu.style.left="-270px";
 overlay.style.display="none";
@@ -180,32 +59,52 @@ overlay.style.display="none";
 function get(k,d){return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}
 function set(k,v){localStorage.setItem(k,JSON.stringify(v))}
 
-/* VIDEOLAR */
-let videosTR=[
-"https://www.youtube.com/embed/cI-l3zXT57U",
-"https://www.youtube.com/embed/XeLppC_KnUk",
-"https://www.youtube.com/embed/Db8ltXb0Uz4"
-];
-
-let videosEN=[
+/* TÜRKÇE VİDEOLAR (KATEGORİYE GÖRE) */
+let videos = {
+motivasyon:[
 "https://www.youtube.com/embed/ZXsQAXx_ao0",
-"https://www.youtube.com/embed/5MgBikgcWnY",
+"https://www.youtube.com/embed/5MgBikgcWnY"
+],
+para:[
+"https://www.youtube.com/embed/3vYlP9Xz2A8",
+"https://www.youtube.com/embed/XeLppC_KnUk"
+],
+sinav:[
+"https://www.youtube.com/embed/cI-l3zXT57U",
+"https://www.youtube.com/embed/Db8ltXb0Uz4"
+],
+uyku:[
+"https://www.youtube.com/embed/2OEL4P1Rz04"
+],
+spor:[
+"https://www.youtube.com/embed/8kYl6Z0FJ7Q"
+],
+yazilim:[
+"https://www.youtube.com/embed/7dKpL9Xc2B0"
+],
+film:[
 "https://www.youtube.com/embed/UNQhuFL6CWg"
-];
+],
+muzik:[
+"https://www.youtube.com/embed/ktvTqknDobU"
+]
+};
 
-function getVideo(){
-let all=[...videosTR,...videosEN];
-return all[Math.floor(Math.random()*all.length)];
+/* RANDOM VIDEO */
+function getVideo(type){
+let list = videos[type] || videos["motivasyon"];
+return list[Math.floor(Math.random()*list.length)];
 }
 
-/* AI */
+/* AI TEXT */
 function generateText(type){
 return "🤖 " + type + " için bugün küçük başla. Disiplin kazanır.";
 }
 
 /* RUN */
 function run(type){
-render(generateText(type));
+let text = generateText(type);
+render(text, type);
 closeMenu();
 }
 
@@ -214,30 +113,30 @@ function toggleFav(text){
 let fav=get("fav",[]);
 fav.includes(text)?fav=fav.filter(f=>f!==text):fav.push(text);
 set("fav",fav);
-render(text);
+render(text,"motivasyon");
 }
 
 function showFav(){
 let fav=get("fav",[]);
 let html="";
-fav.forEach(f=>html+=card(f));
+fav.forEach(f=>html+=card(f,"motivasyon"));
 result.innerHTML=html||"Favori yok";
 closeMenu();
 }
 
 /* CARD */
-function card(text){
+function card(text,type){
 let fav=get("fav",[]).includes(text)?"⭐":"☆";
 return `
 <div class="card">
 <span class="star" onclick="toggleFav('${text}')">${fav}</span>
 ${text}
-<iframe src="${getVideo()}" allowfullscreen></iframe>
+<iframe src="${getVideo(type)}" allowfullscreen></iframe>
 </div>`;
 }
 
-function render(text){
-result.innerHTML=card(text);
+function render(text,type){
+result.innerHTML=card(text,type);
 }
 
 /* SEARCH */
