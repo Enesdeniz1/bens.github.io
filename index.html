@@ -519,3 +519,1102 @@
         <button class="branch-btn">E-Spor</button>
     </div>
 </div>
+<style>
+    /* Basketbol Temalı Bölüm */
+    .basketball-section {
+        background: #1a1a1a; /* Koyu tema senin tarzın */
+        padding: 50px 10%;
+        color: white;
+    }
+
+    .player-slider {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        padding: 20px 0;
+    }
+
+    .player-card {
+        min-width: 200px;
+        background: #222;
+        border-bottom: 5px solid var(--fb-yellow);
+        text-align: center;
+        padding-bottom: 15px;
+        transition: 0.3s;
+    }
+
+    .player-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255, 237, 0, 0.3);
+    }
+
+    .player-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .player-info h3 { font-size: 16px; margin: 10px 0 5px; color: var(--fb-yellow); }
+    .player-info p { font-size: 12px; color: #ccc; }
+
+    /* Bilet Satış Tablosu */
+    .ticket-section {
+        background: #fff;
+        padding: 50px 10%;
+    }
+
+    .ticket-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .ticket-table th {
+        background: var(--fb-dark-blue);
+        color: white;
+        padding: 15px;
+        text-align: left;
+    }
+
+    .ticket-table td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .status-badge {
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .status-sale { background: #e6fffa; color: #2c7a7b; } /* Satışta */
+    .status-soldout { background: #fff5f5; color: #c53030; } /* Tükendi */
+
+    .buy-btn {
+        background: var(--fb-yellow);
+        color: var(--fb-dark-blue);
+        padding: 8px 15px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+</style>
+
+<section class="basketball-section">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="border-left: 5px solid var(--fb-yellow); padding-left: 15px;">FENERBAHÇE BEKO</h2>
+        <a href="#" style="color: var(--fb-yellow); text-decoration: none; font-size: 14px;">TÜM KADRO ></a>
+    </div>
+    
+    <div class="player-slider">
+        <div class="player-card">
+            <img src="https://via.placeholder.com/200x250" alt="Oyuncu">
+            <div class="player-info">
+                <h3>Nigel Hayes-Davis</h3>
+                <p>FORVET | #11</p>
+            </div>
+        </div>
+        <div class="player-card">
+            <img src="https://via.placeholder.com/200x250" alt="Oyuncu">
+            <div class="player-info">
+                <h3>Scottie Wilbekin</h3>
+                <p>GARD | #2</p>
+            </div>
+        </div>
+        <div class="player-card">
+            <img src="https://via.placeholder.com/200x250" alt="Oyuncu">
+            <div class="player-info">
+                <h3>Bonzie Colson</h3>
+                <p>FORVET | #50</p>
+            </div>
+        </div>
+        <div class="player-card">
+            <img src="https://via.placeholder.com/200x250" alt="Oyuncu">
+            <div class="player-info">
+                <h3>Boban Marjanovic</h3>
+                <p>PIVOT | #51</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ticket-section">
+    <h2 style="color: var(--fb-dark-blue);">MAÇ BİLETLERİ (PASSO)</h2>
+    <table class="ticket-table">
+        <thead>
+            <tr>
+                <th>ETKİNLİK</th>
+                <th>TARİH</th>
+                <th>DURUM / FİYAT</th>
+                <th>İŞLEM</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Fenerbahçe - Manchester United</strong><br><small>UEFA Avrupa Ligi</small></td>
+                <td>24 Ekim 2026</td>
+                <td><span class="status-badge status-sale">SATIŞTA - 1.250 TL'den başlayan</span></td>
+                <td><button class="buy-btn">BİLET AL</button></td>
+            </tr>
+            <tr>
+                <td><strong>Fenerbahçe Beko - Panathinaikos</strong><br><small>EuroLeague</small></td>
+                <td>25 Ekim 2026</td>
+                <td><span class="status-badge status-sale">SATIŞTA - 600 TL'den başlayan</span></td>
+                <td><button class="buy-btn">BİLET AL</button></td>
+            </tr>
+            <tr>
+                <td><strong>Fenerbahçe - Bodrum FK</strong><br><small>Trendyol Süper Lig</small></td>
+                <td>27 Ekim 2026</td>
+                <td><span class="status-badge status-soldout">BİLETLER TÜKENDİ</span></td>
+                <td><button class="buy-btn" style="background:#ccc; cursor:not-allowed;">TÜKENDİ</button></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<style>
+    /* Fenerium Mağaza Alanı */
+    .fenerium-store {
+        background: #fdfdfd;
+        padding: 60px 10%;
+        border-top: 5px solid var(--fb-yellow);
+    }
+
+    .store-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    .product-card {
+        background: #fff;
+        border: 1px solid #eee;
+        padding: 15px;
+        text-align: center;
+        transition: 0.3s ease;
+    }
+
+    .product-card:hover {
+        border-color: var(--fb-dark-blue);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .product-card img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 15px;
+    }
+
+    .price-tag {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--fb-dark-blue);
+        margin: 10px 0;
+    }
+
+    .add-to-cart {
+        background: var(--fb-dark-blue);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        width: 100%;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    /* Maç İstatistik Paneli (Neon Dokunuşlu) */
+    .match-stats-live {
+        background: #001a44;
+        color: white;
+        padding: 50px 10%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 40px;
+    }
+
+    .stat-circle {
+        width: 120px;
+        height: 120px;
+        border: 4px solid var(--fb-yellow);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 0 15px rgba(255, 237, 0, 0.4);
+    }
+
+    .stat-circle span { font-size: 24px; font-weight: 900; }
+    .stat-label { margin-top: 10px; font-size: 12px; font-weight: 600; color: #aaa; }
+
+    /* Kulüp Tarihçe & Müze */
+    .museum-section {
+        background: url('https://via.placeholder.com/1920x600/002d72/ffffff?text=FENERBAHÇE+MÜZESİ') center/cover;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+    }
+
+    .museum-content {
+        background: rgba(0, 45, 114, 0.85);
+        padding: 40px;
+        max-width: 600px;
+        border: 2px solid var(--fb-yellow);
+    }
+</style>
+
+<section class="fenerium-store">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="color: var(--fb-dark-blue); font-weight: 900;">FENERİUM <span style="color: #aaa; font-weight: 300;">| YENİ SEZON</span></h2>
+        <a href="#" style="font-weight: bold; color: var(--fb-dark-blue);">TÜMÜNÜ GÖR ></a>
+    </div>
+
+    <div class="store-grid">
+        <div class="product-card">
+            <img src="https://via.placeholder.com/200x250/f0f0f0?text=Çubuklu+Forma" alt="Forma">
+            <h4>2024/25 Çubuklu Forma</h4>
+            <div class="price-tag">2.999,00 TL</div>
+            <button class="add-to-cart">SEPETE EKLE</button>
+        </div>
+        <div class="product-card">
+            <img src="https://via.placeholder.com/200x250/f0f0f0?text=Antrenman+Üstü" alt="Ürün">
+            <h4>Lacivert Antrenman Üstü</h4>
+            <div class="price-tag">1.450,00 TL</div>
+            <button class="add-to-cart">SEPETE EKLE</button>
+        </div>
+        <div class="product-card">
+            <img src="https://via.placeholder.com/200x250/f0f0f0?text=Sarı+Sweat" alt="Ürün">
+            <h4>Fenerbahçe Logo Sweatshirt</h4>
+            <div class="price-tag">1.850,00 TL</div>
+            <button class="add-to-cart">SEPETE EKLE</button>
+        </div>
+    </div>
+</section>
+
+<section class="match-stats-live">
+    <div style="width: 100%; text-align: center; margin-bottom: 30px;">
+        <h3>SON MAÇ VERİLERİ (FENERBAHÇE - RAKİP)</h3>
+    </div>
+    <div style="text-align: center;">
+        <div class="stat-circle"><span>%62</span></div>
+        <div class="stat-label">TOPLA OYNAMA</div>
+    </div>
+    <div style="text-align: center;">
+        <div class="stat-circle"><span>18</span></div>
+        <div class="stat-label">TOPLAM ŞUT</div>
+    </div>
+    <div style="text-align: center;">
+        <div class="stat-circle"><span>540</span></div>
+        <div class="stat-label">İSABETLİ PAS</div>
+    </div>
+    <div style="text-align: center;">
+        <div class="stat-circle"><span>9</span></div>
+        <div class="stat-label">KORNER</div>
+    </div>
+</section>
+
+<section class="museum-section">
+    <div class="museum-content">
+        <h2 style="color: var(--fb-yellow);">FENERBAHÇE EFSANESİ</h2>
+        <p style="margin: 20px 0; line-height: 1.6;">1907'den günümüze, şanlı tarihimizin kupaları ve hatıralarıyla dolu müzemizi online olarak keşfedin veya ziyaret edin.</p>
+        <button class="buy-btn" style="padding: 12px 30px;">MÜZEYİ KEŞFET</button>
+    </div>
+</section>
+<style>
+    /* Sosyal Medya Hub - Neon Dokunuşlu */
+    .social-hub {
+        background: #050505;
+        padding: 60px 10%;
+        color: white;
+    }
+
+    .social-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .social-post {
+        background: #111;
+        border: 1px solid #222;
+        padding: 20px;
+        border-radius: 12px;
+        transition: 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .social-post:hover {
+        border-color: var(--fb-yellow);
+        box-shadow: 0 0 15px rgba(255, 237, 0, 0.2);
+    }
+
+    .post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+    .post-avatar { width: 40px; height: 40px; background: var(--fb-dark-blue); border-radius: 50%; }
+    .post-content { font-size: 14px; color: #ccc; line-height: 1.5; }
+
+    /* FBTV Yayın Akışı Çizelgesi */
+    .tv-schedule {
+        background: #fff;
+        padding: 50px 10%;
+    }
+
+    .schedule-list {
+        border-left: 3px solid var(--fb-dark-blue);
+        margin-left: 20px;
+        padding-left: 30px;
+    }
+
+    .schedule-item {
+        position: relative;
+        margin-bottom: 25px;
+    }
+
+    .schedule-item::before {
+        content: '';
+        position: absolute;
+        left: -37px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        background: var(--fb-yellow);
+        border: 3px solid var(--fb-dark-blue);
+        border-radius: 50%;
+    }
+
+    .time-slot { font-weight: 800; color: var(--fb-dark-blue); margin-right: 15px; }
+    .program-name { font-weight: 600; color: #333; }
+
+    /* Üye Giriş / Katıl Paneli */
+    .membership-cta {
+        background: linear-gradient(90deg, var(--fb-dark-blue) 0%, #00122e 100%);
+        padding: 60px 10%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: white;
+    }
+
+    .login-form {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 30px;
+        border-radius: 8px;
+        backdrop-filter: blur(10px);
+        width: 350px;
+    }
+
+    .login-form input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        background: rgba(0,0,0,0.3);
+        border: 1px solid #333;
+        color: white;
+        border-radius: 4px;
+    }
+
+    .login-form button {
+        width: 100%;
+        padding: 12px;
+        background: var(--fb-yellow);
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+</style>
+
+<section class="social-hub">
+    <h2 style="color: var(--fb-yellow); text-align: center;">DÜNYANIN EN BÜYÜK SPOR KULÜBÜ <span style="color:white">SOSYAL MEDYA</span></h2>
+    <div class="social-grid">
+        <div class="social-post">
+            <div class="post-header"><div class="post-avatar"></div> <strong>@Fenerbahce (X)</strong></div>
+            <p class="post-content">Maç sonucu: Fenerbahçe 3 - 1 Manchester United. Tebrikler Takım! 💛💙 #Fenerbahçe #UEL</p>
+        </div>
+        <div class="social-post">
+            <div class="post-header"><div class="post-avatar"></div> <strong>@FenerbahceBeko (X)</strong></div>
+            <p class="post-content">EuroLeague'de zafer gecesi! Ataşehir'de taraftarımızla kazandık. 🏀🔥</p>
+        </div>
+        <div class="social-post">
+            <div class="post-header"><div class="post-avatar"></div> <strong>Instagram</strong></div>
+            <div style="background:#222; height:150px; margin-top:10px; display:flex; align-items:center; justify-content:center; color:#444;">[INSTAGRAM GÖRSELİ]</div>
+        </div>
+    </div>
+</section>
+
+<section class="tv-schedule">
+    <h2 style="margin-bottom: 40px; color: var(--fb-dark-blue);">FBTV YAYIN AKIŞI <small style="font-size: 12px; color: #999;">(BUGÜN)</small></h2>
+    <div class="schedule-list">
+        <div class="schedule-item">
+            <span class="time-slot">09:00</span> <span class="program-name">Günaydın Fenerbahçe (Canlı)</span>
+        </div>
+        <div class="schedule-item">
+            <span class="time-slot">12:30</span> <span class="program-name">Haber Bülteni</span>
+        </div>
+        <div class="schedule-item">
+            <span class="time-slot">14:00</span> <span class="program-name">Maç Önü: Fenerbahçe - Bodrum FK</span>
+        </div>
+        <div class="schedule-item">
+            <span class="time-slot">19:07</span> <span class="program-name">19:07 Ana Haber Bülteni</span>
+        </div>
+    </div>
+</section>
+
+<section class="membership-cta">
+    <div>
+        <h1 style="font-size: 40px; color: var(--fb-yellow);">KULÜBE ÜYE OL</h1>
+        <p style="font-size: 18px; margin-top: 10px;">Fenerbahçeli olmanın ayrıcalıklarını yaşa, biletlerde öncelik kazan.</p>
+    </div>
+    <div class="login-form">
+        <h4 style="margin-bottom: 20px;">ÜYE GİRİŞİ</h4>
+        <input type="text" placeholder="E-Posta veya TC Kimlik">
+        <input type="password" placeholder="Şifre">
+        <button>GİRİŞ YAP</button>
+        <p style="font-size: 11px; margin-top: 15px; text-align: center; color: #888;">Şifremi Unuttum | Yeni Kayıt</p>
+    </div>
+</section>
+<style>
+    /* Maç Geri Sayım Paneli (Neon Efektli) */
+    .countdown-section {
+        background: #000;
+        color: white;
+        padding: 40px 10%;
+        text-align: center;
+        border-bottom: 2px solid var(--fb-sari);
+    }
+
+    .countdown-timer {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .timer-box {
+        background: var(--fb-lacivert);
+        padding: 20px;
+        min-width: 100px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px var(--fb-lacivert);
+    }
+
+    .timer-box span { font-size: 32px; font-weight: 900; display: block; color: var(--fb-sari); }
+    .timer-label { font-size: 12px; text-transform: uppercase; margin-top: 5px; }
+
+    /* İnteraktif Tarihçe (Zaman Tüneli) */
+    .history-timeline {
+        padding: 60px 10%;
+        background: #f4f4f4;
+    }
+
+    .timeline-container {
+        position: relative;
+        padding: 20px 0;
+    }
+
+    .timeline-item {
+        background: white;
+        padding: 20px;
+        margin: 10px 0;
+        border-left: 5px solid var(--fb-lacivert);
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .timeline-item:hover {
+        background: var(--fb-lacivert);
+        color: white;
+        transform: translateX(10px);
+    }
+
+    /* Canlı Destek / Sohbet Balonu */
+    .chat-widget {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: var(--fb-lacivert);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--fb-sari);
+        font-size: 24px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        cursor: pointer;
+        z-index: 9999;
+        border: 2px solid var(--fb-sari);
+    }
+
+    .chat-window {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 300px;
+        height: 400px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        display: none; /* Başlangıçta gizli */
+        flex-direction: column;
+        z-index: 9999;
+        overflow: hidden;
+    }
+</style>
+
+<section class="countdown-section">
+    <h3>BİR SONRAKİ MAÇA KALAN SÜRE</h3>
+    <p style="color: #888;">Fenerbahçe - Bodrum FK | Süper Lig</p>
+    <div class="countdown-timer">
+        <div class="timer-box"><span id="days">00</span><div class="timer-label">Gün</div></div>
+        <div class="timer-box"><span id="hours">00</span><div class="timer-label">Saat</div></div>
+        <div class="timer-box"><span id="minutes">00</span><div class="timer-label">Dakika</div></div>
+        <div class="timer-box"><span id="seconds">00</span><div class="timer-label">Saniye</div></div>
+    </div>
+</section>
+
+<section class="history-timeline">
+    <h2 style="color: var(--fb-lacivert); margin-bottom: 30px;">TARİHİMİZDEN ÖNEMLİ ANLAR</h2>
+    <div class="timeline-container">
+        <div class="timeline-item"><strong>1907</strong> - Kulübümüzün Nurizade Ziya Bey, Ayetullah Bey ve Necip Bey tarafından kuruluşu.</div>
+        <div class="timeline-item"><strong>1923</strong> - General Harrington Kupası Zaferi.</div>
+        <div class="timeline-item"><strong>1959</strong> - Türkiye Profesyonel Ligi'nin ilk şampiyonu: Fenerbahçe.</div>
+        <div class="timeline-item"><strong>2017</strong> - Fenerbahçe Beko EuroLeague Şampiyonu!</div>
+    </div>
+</section>
+
+<div class="chat-widget" onclick="toggleChat()">💬</div>
+<div class="chat-window" id="chatWindow">
+    <div style="background: var(--fb-lacivert); color: white; padding: 15px; font-weight: bold;">FB Destek Merkezi</div>
+    <div style="flex: 1; padding: 15px; font-size: 13px; color: #666; overflow-y: auto;" id="chatBody">
+        <p>Merhaba! Size nasıl yardımcı olabiliriz?</p>
+    </div>
+    <div style="padding: 10px; border-top: 1px solid #eee; display: flex;">
+        <input type="text" placeholder="Mesajınızı yazın..." style="flex: 1; border: none; outline: none; padding: 5px;">
+        <button style="background: none; border: none; color: var(--fb-lacivert); font-weight: bold;">GÖNDER</button>
+    </div>
+</div>
+
+<script>
+    // Geri Sayım Mantığı
+    function updateCountdown() {
+        const targetDate = new Date("Oct 27, 2026 19:00:00").getTime();
+        const now = new Date().getTime();
+        const gap = targetDate - now;
+
+        const d = Math.floor(gap / (1000 * 60 * 60 * 24));
+        const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((gap % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = d < 10 ? "0" + d : d;
+        document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+        document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+        document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
+    }
+    setInterval(updateCountdown, 1000);
+
+    // Chat Açma/Kapama
+    function toggleChat() {
+        const win = document.getElementById("chatWindow");
+        win.style.display = (win.style.display === "flex") ? "none" : "flex";
+    }
+</script>
+<style>
+    /* Oyuncu İstatistik Kartları (FIFA Tarzı / Neon) */
+    .player-stats-section {
+        background: #0a0a0a;
+        padding: 60px 10%;
+        color: white;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    .player-stat-card {
+        background: #151515;
+        border: 1px solid #333;
+        padding: 20px;
+        border-radius: 15px;
+        position: relative;
+    }
+
+    .player-stat-card:hover {
+        border-color: var(--fb-sari);
+        box-shadow: 0 0 20px rgba(255, 237, 0, 0.1);
+    }
+
+    .stat-bar-container { margin-top: 15px; }
+    .stat-bar-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
+    .stat-bar-bg { background: #333; height: 8px; border-radius: 4px; overflow: hidden; }
+    .stat-bar-fill { background: var(--fb-sari); height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--fb-sari); }
+
+    /* Video Modal (Pop-up) */
+    .modal-overlay {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+    }
+
+    .modal-content {
+        width: 80%;
+        max-width: 800px;
+        background: #000;
+        position: relative;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: -40px; right: 0;
+        color: white; font-size: 30px; cursor: pointer;
+    }
+
+    /* Dev Footer */
+    .mega-footer {
+        background: var(--fb-lacivert);
+        color: white;
+        padding: 60px 10% 20px;
+        border-top: 10px solid var(--fb-sari);
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .footer-col h4 { color: var(--fb-sari); margin-bottom: 20px; text-transform: uppercase; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { color: #ccc; text-decoration: none; font-size: 14px; }
+    .footer-col ul li a:hover { color: white; padding-left: 5px; transition: 0.3s; }
+
+    .copyright-bar {
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        color: #888;
+    }
+</style>
+
+<section class="player-stats-section">
+    <h2 style="margin-bottom: 30px; border-left: 5px solid var(--fb-sari); padding-left: 15px;">HAFTANIN YILDIZLARI</h2>
+    <div class="stats-grid">
+        <div class="player-stat-card">
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div style="width: 60px; height: 60px; background: #222; border-radius: 50%;"></div>
+                <div><strong>Edin Dzeko</strong><br><small>FORVET | #9</small></div>
+            </div>
+            <div class="stat-bar-container">
+                <div class="stat-bar-label"><span>HIZ (PAC)</span><span>82</span></div>
+                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 82%;"></div></div>
+            </div>
+            <div class="stat-bar-container">
+                <div class="stat-bar-label"><span>ŞUT (SHO)</span><span>91</span></div>
+                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 91%;"></div></div>
+            </div>
+        </div>
+        <div class="player-stat-card">
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div style="width: 60px; height: 60px; background: #222; border-radius: 50%;"></div>
+                <div><strong>Fred</strong><br><small>ORTA SAHA | #35</small></div>
+            </div>
+            <div class="stat-bar-container">
+                <div class="stat-bar-label"><span>PAS (PAS)</span><span>88</span></div>
+                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 88%;"></div></div>
+            </div>
+            <div class="stat-bar-container">
+                <div class="stat-bar-label"><span>FİZİK (PHY)</span><span>85</span></div>
+                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 85%;"></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal-overlay" id="videoModal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeVideo()">×</span>
+        <div style="padding-top: 56.25%; position: relative;">
+            <iframe id="videoPlayer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                    src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<footer class="mega-footer">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>KULÜP</h4>
+            <ul>
+                <li><a href="#">Tarihçe</a></li>
+                <li><a href="#">Müze</a></li>
+                <li><a href="#">Tesisler</a></li>
+                <li><a href="#">Başkan</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>BRANŞLAR</h4>
+            <ul>
+                <li><a href="#">Futbol</a></li>
+                <li><a href="#">Basketbol</a></li>
+                <li><a href="#">Voleybol</a></li>
+                <li><a href="#">Masa Tenisi</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>İLETİŞİM</h4>
+            <ul>
+                <li><a href="#">Bize Ulaşın</a></li>
+                <li><a href="#">Medya Girişi</a></li>
+                <li><a href="#">İnsan Kaynakları</a></li>
+                <li><a href="#">KVKK</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>SOSYAL MEDYA</h4>
+            <div style="display: flex; gap: 15px; font-size: 20px;">
+                <a href="#" style="color: white;">𝕏</a>
+                <a href="#" style="color: white;">📸</a>
+                <a href="#" style="color: white;">🎥</a>
+                <a href="#" style="color: white;">📱</a>
+            </div>
+        </div>
+    </div>
+    <div class="copyright-bar">
+        <span>© 2026 Fenerbahçe Spor Kulübü</span>
+        <span>Made by ENES ⚡</span>
+    </div>
+</footer>
+
+<script>
+    function openVideo(videoUrl) {
+        document.getElementById('videoPlayer').src = videoUrl;
+        document.getElementById('videoModal').style.display = 'flex';
+    }
+
+    function closeVideo() {
+        document.getElementById('videoModal').style.display = 'none';
+        document.getElementById('videoPlayer').src = "";
+    }
+</script>
+<style>
+    /* Canlı Maç Anlatım Akışı */
+    .live-match-commentary {
+        background: #fff;
+        padding: 60px 10%;
+        border-top: 4px solid var(--fb-lacivert);
+    }
+
+    .commentary-box {
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid #eee;
+        padding: 20px;
+        background: #f9f9f9;
+    }
+
+    .comment-item {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px dashed #ccc;
+    }
+
+    .minute-tag {
+        background: var(--fb-lacivert);
+        color: var(--fb-sari);
+        font-weight: 900;
+        padding: 5px 10px;
+        border-radius: 4px;
+        height: fit-content;
+    }
+
+    /* Taktik Tahtası (Kadro Kurma Görünümü) */
+    .tactics-board {
+        background: #1a3c1a; /* Saha Yeşili */
+        padding: 60px 10%;
+        color: white;
+        text-align: center;
+        position: relative;
+    }
+
+    .pitch {
+        width: 100%;
+        max-width: 500px;
+        height: 600px;
+        margin: 30px auto;
+        border: 2px solid white;
+        position: relative;
+        background: repeating-linear-gradient(0deg, #1a4d1a, #1a4d1a 40px, #1e5a1e 40px, #1e5a1e 80px);
+    }
+
+    .player-node {
+        width: 40px;
+        height: 40px;
+        background: var(--fb-lacivert);
+        border: 2px solid var(--fb-sari);
+        border-radius: 50%;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: bold;
+        box-shadow: 0 0 10px rgba(255,237,0,0.5);
+    }
+
+    /* Anket / Oylama Bölümü */
+    .poll-section {
+        background: var(--fb-sari);
+        padding: 50px 10%;
+        color: var(--fb-lacivert);
+        text-align: center;
+    }
+
+    .poll-option {
+        background: white;
+        margin: 10px auto;
+        padding: 15px;
+        max-width: 500px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+        border: 2px solid transparent;
+    }
+
+    .poll-option:hover {
+        border-color: var(--fb-lacivert);
+        background: #f0f0f0;
+    }
+</style>
+
+<section class="live-match-commentary">
+    <h2 style="color: var(--fb-lacivert); margin-bottom: 20px;">
+        <span class="live-dot"></span> CANLI ANLATIM
+    </h2>
+    <div class="commentary-box">
+        <div class="comment-item">
+            <div class="minute-tag">90+5'</div>
+            <div><strong>MAÇ BİTTİ!</strong> Hakem son düdüğü çalıyor. Fenerbahçe sahadan 3-1 galip ayrılıyor!</div>
+        </div>
+        <div class="comment-item">
+            <div class="minute-tag">88'</div>
+            <div><strong>SARI KART!</strong> Rakip oyuncu sert müdahale sonrası sarı kart görüyor.</div>
+        </div>
+        <div class="comment-item">
+            <div class="minute-tag">72'</div>
+            <div><strong>GOOOOOL!</strong> Edin Dzeko! Harika bir kafa vuruşuyla farkı ikiye çıkarıyoruz! ⚽</div>
+        </div>
+        <div class="comment-item">
+            <div class="minute-tag">45'</div>
+            <div>İlk yarı sona erdi. Fenerbahçe 1 - 1 Rakip Takım.</div>
+        </div>
+    </div>
+</section>
+
+<section class="tactics-board">
+    <h2>İLK 11 DİZİLİŞİ (4-2-3-1)</h2>
+    <div class="pitch">
+        <div class="player-node" style="bottom: 20px; left: 45%;">GK</div>
+        <div class="player-node" style="bottom: 100px; left: 10%;">LB</div>
+        <div class="player-node" style="bottom: 80px; left: 35%;">CB</div>
+        <div class="player-node" style="bottom: 80px; left: 55%;">CB</div>
+        <div class="player-node" style="bottom: 100px; left: 80%;">RB</div>
+        <div class="player-node" style="bottom: 220px; left: 30%;">CDM</div>
+        <div class="player-node" style="bottom: 220px; left: 60%;">CDM</div>
+        <div class="player-node" style="bottom: 350px; left: 45%;">CAM</div>
+        <div class="player-node" style="bottom: 380px; left: 15%;">LW</div>
+        <div class="player-node" style="bottom: 380px; left: 75%;">RW</div>
+        <div class="player-node" style="top: 50px; left: 45%;">ST</div>
+    </div>
+</section>
+
+<section class="poll-section">
+    <h2>HAFTANIN GOLÜNÜ SEN SEÇ!</h2>
+    <p>Oylamaya katıl, taraftarın sesini duyur.</p>
+    <div style="margin-top: 30px;">
+        <div class="poll-option" onclick="alert('Oyunuz Kaydedildi!')">Edin Dzeko (Füze)</div>
+        <div class="poll-option" onclick="alert('Oyunuz Kaydedildi!')">Dusan Tadic (Aşırtma)</div>
+        <div class="poll-option" onclick="alert('Oyunuz Kaydedildi!')">Fred (Uzaktan Şut)</div>
+    </div>
+</section>
+<style>
+    /* Canlı Yayın Stüdyosu */
+    .fbtv-live-studio {
+        background: #000;
+        padding: 40px 10%;
+        color: white;
+        border-bottom: 5px solid var(--fb-sari);
+    }
+
+    .studio-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+        background: #111;
+        padding: 15px;
+        border: 1px solid #333;
+    }
+
+    .video-player-area {
+        position: relative;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        background: #000 url('https://via.placeholder.com/1280x720/002d72/ffffff?text=FBTV+CANLI+YAYIN') center/cover;
+    }
+
+    .live-indicator {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(255, 0, 0, 0.8);
+        padding: 5px 15px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        z-index: 10;
+    }
+
+    /* Yayın Chat Akışı */
+    .live-chat-sidebar {
+        background: #1a1a1a;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        border-left: 1px solid #333;
+    }
+
+    .chat-messages {
+        flex: 1;
+        padding: 15px;
+        font-size: 13px;
+        overflow-y: auto;
+        max-height: 400px;
+    }
+
+    .msg { margin-bottom: 10px; line-height: 1.4; }
+    .msg b { color: var(--fb-sari); }
+
+    .chat-input-area {
+        padding: 10px;
+        background: #222;
+        display: flex;
+        gap: 5px;
+    }
+
+    .chat-input-area input {
+        flex: 1;
+        background: #000;
+        border: 1px solid #444;
+        color: white;
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    /* Program Akışı (Mini) */
+    .mini-schedule {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+    }
+
+    .prog-card {
+        background: #222;
+        padding: 10px;
+        min-width: 150px;
+        border-left: 3px solid var(--fb-sari);
+        font-size: 11px;
+    }
+
+    @media (max-width: 900px) {
+        .studio-container { grid-template-columns: 1fr; }
+    }
+</style>
+
+<section class="fbtv-live-studio">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="color: var(--fb-sari); font-weight: 900;">FBTV <span style="color:white">CANLI YAYIN</span></h2>
+        <div style="color: #888; font-size: 13px;">Şu an: <strong>Haber Bülteni</strong> | 24,532 İzleyici</div>
+    </div>
+
+    <div class="studio-container">
+        <div class="video-player-area">
+            <div class="live-indicator">
+                <span class="live-dot"></span> CANLI
+            </div>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                <button style="background: rgba(255,237,0,0.9); border: none; padding: 15px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 18px;">
+                    YAYINI BAŞLAT
+                </button>
+            </div>
+        </div>
+
+        <div class="live-chat-sidebar">
+            <div style="padding: 10px; background: var(--fb-lacivert); font-weight: bold; font-size: 12px; text-align: center;">
+                TARAFTAR SOHBETİ
+            </div>
+            <div class="chat-messages" id="liveChat">
+                <div class="msg"><b>Enes:</b> Şampiyonluk yakın, meşaleleri yakın! 💛💙</div>
+                <div class="msg"><b>Fettah:</b> Bu sene o sene, baskıya devam!</div>
+                <div class="msg"><b>SarıKanarya:</b> Dzeko'nun golü muazzamdı...</div>
+                <div class="msg"><b>FB_Admin:</b> Küfürlü içerik yasaktır, iyi seyirler.</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Mesaj gönder...">
+                <button onclick="sendMsg()" style="background: var(--fb-sari); border: none; padding: 5px 10px; font-weight: bold; cursor: pointer;">></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mini-schedule">
+        <div class="prog-card"><b>14:00</b><br>Haber Bülteni</div>
+        <div class="prog-card" style="background: #333;"><b>15:00</b><br>Maç Önü Özel</div>
+        <div class="prog-card"><b>17:00</b><br>Arşivden Goller</div>
+        <div class="prog-card"><b>19:07</b><br>Ana Haber</div>
+    </div>
+</section>
+
+<script>
+    // Basit Chat Fonksiyonu
+    function sendMsg() {
+        const input = document.getElementById('chatInput');
+        const chat = document.getElementById('liveChat');
+        if(input.value.trim() !== "") {
+            const newMsg = document.createElement('div');
+            newMsg.className = 'msg';
+            newMsg.innerHTML = `<b>Sen:</b> ${input.value}`;
+            chat.appendChild(newMsg);
+            input.value = "";
+            chat.scrollTop = chat.scrollHeight;
+        }
+    }
+
+    // Enter tuşu ile mesaj gönderme
+    document.getElementById('chatInput')?.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            sendMsg();
+        }
+    });
+</script>
