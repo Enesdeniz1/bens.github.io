@@ -171,3 +171,185 @@
 
 </body>
 </html>
+    <style>
+        /* Ana İçerik Düzeni */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* Sol: Haberler, Sağ: Yan Panel */
+            gap: 30px;
+            padding: 40px 10%;
+        }
+
+        /* Haber Kartları */
+        .news-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .news-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            transition: 0.3s;
+        }
+
+        .news-item:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .news-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .news-text {
+            padding: 15px;
+        }
+
+        .news-text span {
+            color: var(--fb-dark-blue);
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Yan Panel: Puan Durumu ve Fikstür */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-box {
+            background: #fff;
+            border-top: 4px solid var(--fb-dark-blue);
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .sidebar-title {
+            font-weight: 800;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            color: var(--fb-dark-blue);
+        }
+
+        /* Mini Puan Tablosu */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th { text-align: left; color: #777; padding-bottom: 10px; }
+        td { padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+        .pos { font-weight: bold; width: 25px; }
+        .pts { font-weight: bold; text-align: right; }
+
+        /* FB TV Alanı */
+        .fbtv-box {
+            background: var(--fb-dark-blue);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .fbtv-logo {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--fb-yellow);
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Ayarı */
+        @media (max-width: 900px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .news-section { grid-template-columns: 1fr; }
+        }
+    </style>
+
+    <main class="main-layout">
+        <section>
+            <h2 style="margin-bottom: 20px; color: var(--fb-dark-blue);">SON HABERLER</h2>
+            <div class="news-section">
+                <div class="news-item">
+                    <img src="https://via.placeholder.com/400x200" alt="Haber">
+                    <div class="news-text">
+                        <span>FUTBOL</span>
+                        <h4>Kadıköy'de Hazırlıklar Tamamlandı</h4>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <img src="https://via.placeholder.com/400x200" alt="Haber">
+                    <div class="news-text">
+                        <span>BASKETBOL</span>
+                        <h4>EuroLeague'de Rakip Belli Oldu</h4>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <img src="https://via.placeholder.com/400x200" alt="Haber">
+                    <div class="news-text">
+                        <span>KULÜP</span>
+                        <h4>Yeni Üyelik Sistemi Hakkında Bilgilendirme</h4>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <img src="https://via.placeholder.com/400x200" alt="Haber">
+                    <div class="news-text">
+                        <span>VOLEYBOL</span>
+                        <h4>Sultanlar Ligi'nde Büyük Derbi</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="sidebar">
+            <div class="sidebar-box">
+                <div class="sidebar-title">PUAN DURUMU</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S</th>
+                            <th>TAKIM</th>
+                            <th class="pts">P</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="pos">1</td>
+                            <td>GALATASARAY</td>
+                            <td class="pts">84</td>
+                        </tr>
+                        <tr style="background: rgba(255, 237, 0, 0.1);">
+                            <td class="pos" style="color: var(--fb-dark-blue);">2</td>
+                            <td style="font-weight: bold;">FENERBAHÇE</td>
+                            <td class="pts">82</td>
+                        </tr>
+                        <tr>
+                            <td class="pos">3</td>
+                            <td>TRABZONSPOR</td>
+                            <td class="pts">52</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="fbtv-box">
+                <div class="fbtv-logo">FBTV</div>
+                <p style="font-size: 12px;">CANLI YAYIN: Günaydın Fenerbahçe</p>
+                <button style="margin-top:10px; background:var(--fb-yellow); border:none; padding:5px 15px; cursor:pointer; font-weight:bold;">İZLE</button>
+            </div>
+
+            <div class="sidebar-box">
+                <div class="sidebar-title">FENERIUM</div>
+                <img src="https://via.placeholder.com/300x150" style="width:100%;" alt="Fenerium">
+                <p style="font-size:13px; margin-top:10px;">Yeni sezon formaları şimdi satışta!</p>
+            </div>
+        </aside>
+    </main>
+
+    <footer style="background:#222; color:white; padding:40px 10%; text-align:center;">
+        <p>© 2026 Fenerbahçe Spor Kulübü. Tüm Hakları Saklıdır.</p>
+    </footer>
