@@ -3,61 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yapım Aşamasında</title>
+<title>Digital Hacker</title>
 
 <link href="https://fonts.cdnfonts.com/css/digital-7-mono" rel="stylesheet">
 
 <style>
 body{
 margin:0;
-background:#FFD700; /* SARI */
-color:#0a1f44; /* LACİVERT */
+overflow:hidden;
+background:black;
 font-family:'Digital-7 Mono', monospace;
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-align-items:center;
-height:100vh;
+color:#00ff00;
+}
+
+/* CANVAS */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
 }
 
 /* SAAT */
 .clock{
-margin-top:30px;
-font-size:48px;
-letter-spacing:3px;
-text-shadow:
-0 0 5px #0a1f44,
-0 0 10px #0a1f44,
-0 0 20px rgba(10,31,68,0.6);
+position:absolute;
+top:20px;
+width:100%;
+text-align:center;
+font-size:50px;
+text-shadow:0 0 10px #00ff00,0 0 20px #00ff00;
 }
 
-/* ORTA YAZI */
+/* ORTA */
 .text{
-font-size:64px;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:70px;
 text-align:center;
-line-height:1.2;
-letter-spacing:5px;
-text-shadow:
-0 0 5px #0a1f44,
-0 0 10px #0a1f44,
-0 0 20px rgba(10,31,68,0.6);
+text-shadow:0 0 15px #00ff00,0 0 30px #00ff00;
 }
 
 /* ALT */
 .footer{
-margin-bottom:20px;
-font-size:18px;
+position:absolute;
+bottom:20px;
+width:100%;
+text-align:center;
+font-size:20px;
 }
 
 .footer a{
-color:#0a1f44;
+color:#00ff00;
 text-decoration:none;
-text-shadow:0 0 8px #0a1f44;
+text-shadow:0 0 10px #00ff00;
 }
 </style>
 </head>
 
 <body>
+
+<canvas id="matrix"></canvas>
 
 <div class="clock" id="clock">00:00:00</div>
 
@@ -70,17 +77,60 @@ YAPIM<br>ASAMASINDA
 </div>
 
 <script>
+
+/* SAAT */
 function updateClock(){
-let now = new Date();
-let h = String(now.getHours()).padStart(2,'0');
-let m = String(now.getMinutes()).padStart(2,'0');
-let s = String(now.getSeconds()).padStart(2,'0');
-
-document.getElementById("clock").innerText = h + ":" + m + ":" + s;
+let now=new Date();
+let h=String(now.getHours()).padStart(2,'0');
+let m=String(now.getMinutes()).padStart(2,'0');
+let s=String(now.getSeconds()).padStart(2,'0');
+document.getElementById("clock").innerText=h+":"+m+":"+s;
 }
-
 setInterval(updateClock,1000);
 updateClock();
+
+/* MATRIX KOD EFEKTİ */
+let canvas=document.getElementById("matrix");
+let ctx=canvas.getContext("2d");
+
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
+
+let letters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+letters=letters.split("");
+
+let fontSize=14;
+let columns=canvas.width/fontSize;
+
+let drops=[];
+for(let x=0;x<columns;x++) drops[x]=1;
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#00ff00";
+ctx.font=fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+let text=letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
+drops[i]=0;
+
+drops[i]++;
+}
+}
+
+setInterval(draw,33);
+
+/* RESIZE FIX */
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
+
 </script>
 
 </body>
